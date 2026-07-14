@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Iceland Plan 2025</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+/* ══════════════════════════════════════════════════
+   DESIGN SYSTEM — Iceland Plan 2025
+   4-level bg · 3-level text · Iceland-inspired palette
+   ══════════════════════════════════════════════════ */
+:root{
+  /* Background layers (4 levels, clear hierarchy) */
+  --bg0: #030a14;   /* deepest – page base            */
+  --bg1: #060f1c;   /* sidebar surface                */
+  --bg2: #0a1828;   /* cards / panels                 */
+  --bg3: #0f2035;   /* elevated / hover               */
+
+  /* Borders (3 levels) */
+  --bd1: #0f2030;   /* very subtle separator          */
+  --bd2: #183448;   /* standard card border           */
+  --bd3: #224460;   /* visible / active border        */
+
+  /* Text (3 levels) */
+  --t1:  #ddeeff;   /* primary – headings             */
+  --t2:  #7aa4c0;   /* secondary – body               */
+  --t3:  #3a6080;   /* muted – metadata               */
+
+  /* Brand accents */
+  --gold: #f2c53d;   /* midnight sun gold              */
+  --gold-bg: rgba(242,197,61,.08);
+  --gold-bd: rgba(242,197,61,.22);
+  --sky:  #48b8e8;   /* glacial ice blue               */
+  --danger: #e04848;
+  --success:#40c880;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;
+  background:var(--bg0);color:var(--t1);
+  height:100vh;display:flex;overflow:hidden;
+}
+
+/* ──────────── SIDEBAR ──────────── */
+#sidebar{
+  width:540px;min-width:540px;
+  display:flex;flex-direction:column;
+  background:var(--bg1);
+  border-right:1px solid var(--bd2);
+  box-shadow:6px 0 32px rgba(0,0,0,.55);
+  overflow:hidden;z-index:400;
+}
+
+/* Header – aurora gradient */
+.sb-head{
+  flex-shrink:0;padding:14px 16px 12px;
+  background:linear-gradient(150deg,#071428 0%,#0c1e38 60%,#0a1830 100%);
+  border-bottom:1px solid var(--bd2);
+}
+.sb-title{
+  font-size:22px;font-weight:900;color:var(--gold);
+  letter-spacing:.5px;margin-bottom:2px;
+  text-shadow:0 0 20px rgba(242,197,61,.25);
+}
+.sb-en{font-size:9px;color:var(--t3);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+.sb-chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{
+  padding:3px 9px;border-radius:10px;font-size:10px;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd2);color:var(--t3);
+  transition:border-color .15s;
+}
+.chip b{color:var(--sky)}
+
+
+/* Edit bar */
+.edit-bar{
+  flex-shrink:0;display:flex;align-items:center;gap:6px;
+  padding:6px 12px;background:var(--bg0);border-bottom:1px solid var(--bd1);
+}
+.edit-bar small{font-size:10px;color:var(--t3);flex:1}
+.ebtn{
+  padding:4px 10px;border-radius:5px;font-size:10.5px;
+  border:1px solid var(--bd2);background:transparent;
+  color:var(--t3);cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.ebtn:hover{color:var(--t1);border-color:var(--bd3);background:var(--bg2)}
+.ebtn.on{color:var(--gold);border-color:var(--gold);background:var(--gold-bg);
+  box-shadow:0 0 8px rgba(242,197,61,.15)}
+#resetBtn{color:#c04040;border-color:#3a1010}
+#resetBtn:hover{background:rgba(200,60,60,.08);color:#e06060;border-color:#602020}
+
+/* Edit-mode highlight */
+body.editing .ep{cursor:pointer;border-bottom:1.5px dashed var(--gold);padding-bottom:1px}
+body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
+.ep-input{
+  background:var(--bg0);border:1.5px solid var(--gold);border-radius:5px;
+  color:var(--gold);font-size:12px;font-family:inherit;
+  padding:3px 8px;min-width:160px;outline:none;
+  box-shadow:0 0 10px rgba(242,197,61,.12);
+}
+
+/* ──────────── TABS ──────────── */
+.tab-bar{flex-shrink:0;background:var(--bg1);border-bottom:1px solid var(--bd2)}
+.all-btn{
+  display:flex;align-items:center;gap:7px;
+  width:100%;padding:9px 15px;
+  background:transparent;border:none;border-bottom:1px solid var(--bd2);
+  color:var(--t2);font-size:12px;cursor:pointer;
+  font-family:inherit;transition:all .18s;text-align:left;
+}
+.all-btn:hover{color:var(--gold);background:var(--gold-bg)}
+.all-btn.on{color:var(--gold);background:var(--gold-bg);
+  border-bottom:2px solid var(--gold);box-shadow:0 2px 12px rgba(242,197,61,.08)}
+.dtabs{display:grid;grid-template-columns:repeat(10,1fr)}
+.dtab{
+  padding:7px 2px 6px;background:transparent;
+  border:none;border-right:1px solid var(--bd2);
+  color:var(--t2);font-size:9px;font-weight:700;
+  cursor:pointer;transition:all .15s;font-family:inherit;text-align:center;
+  position:relative;
+}
+.dtab .n{font-size:12px;display:block}
+.dtab .d{font-size:9px;font-weight:400;display:block;margin-top:1px;color:var(--t3)}
+.dtab:hover{color:var(--t1);background:var(--bg2)}
+/* Active tab: colored bottom border + subtle glow */
+.dtab.on{color:#fff;background:var(--bg2)}
+.dtab.on .d{color:rgba(255,255,255,.6)}
+.dtab.on::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:var(--dc);box-shadow:0 0 8px var(--dc);
+}
+
+/* ──────────── PANELS ──────────── */
+#panels{flex:1;overflow:hidden;position:relative}
+.panel{position:absolute;inset:0;overflow-y:auto;display:none}
+.panel.on{display:block}
+.panel::-webkit-scrollbar{width:4px}
+.panel::-webkit-scrollbar-track{background:transparent}
+.panel::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+.panel::-webkit-scrollbar-thumb:hover{background:var(--bd3)}
+
+/* ──────────── OVERVIEW ──────────── */
+.ov-top{
+  padding:12px 14px 10px;
+  background:linear-gradient(135deg,#071428,#0c1e38);
+  border-bottom:1px solid var(--bd2);
+  position:sticky;top:0;z-index:10;
+}
+.ov-top h2{font-size:14px;color:var(--gold);font-weight:800;margin-bottom:2px}
+.ov-top p{font-size:10px;color:var(--t3)}
+.stats-row{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.stat{
+  padding:4px 10px;border-radius:6px;font-size:10px;
+  background:var(--bg2);border:1px solid var(--bd2);
+}
+.stat span{color:var(--t3);display:block;font-size:8px;margin-bottom:1px}
+.stat b{color:var(--sky);font-size:11px}
+
+/* Discrepancy box */
+.diff-wrap{
+  margin:10px 12px;border-radius:0 8px 8px 0;overflow:hidden;
+  border:1px solid rgba(232,130,40,.18);border-left:3px solid #d07020;
+  background:rgba(232,130,40,.04);
+}
+.diff-toggle{
+  width:100%;padding:8px 12px;background:transparent;border:none;
+  display:flex;align-items:center;justify-content:space-between;
+  color:#b87020;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.diff-toggle:hover{color:#d08030}
+.diff-body{padding:0 12px 8px;display:none}
+.diff-body.open{display:block}
+.di{font-size:10.5px;color:var(--t3);padding:4px 0;
+  border-bottom:1px solid var(--bd1);line-height:1.55}
+.di:last-child{border:none}
+.fix{color:var(--success);font-weight:700}
+.wrn{color:#c09028;font-weight:700}
+
+/* Overview day cards */
+.ov-list{padding:8px 12px 16px}
+.ov-card{
+  display:flex;align-items:stretch;margin-bottom:5px;
+  border-radius:8px;overflow:hidden;
+  border:1px solid var(--bd2);cursor:pointer;
+  transition:border-color .15s,box-shadow .15s,transform .1s;
+}
+.ov-card:hover{
+  border-color:var(--bd3);
+  box-shadow:0 2px 12px rgba(0,0,0,.3),inset 0 0 0 1px rgba(255,255,255,.03);
+  transform:translateX(1px);
+}
+.ov-stripe{width:5px;flex-shrink:0;transition:width .15s}
+.ov-card:hover .ov-stripe{width:6px}
+.ov-body{flex:1;padding:8px 11px;background:var(--bg2)}
+.ov-row1{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.ov-num{
+  width:22px;height:22px;border-radius:50%;
+  font-size:9px;font-weight:900;color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 1px 5px rgba(0,0,0,.4);
+}
+.ov-title{font-size:12px;font-weight:700;color:var(--t1);flex:1}
+.ov-date{font-size:9px;color:var(--t3)}
+.ov-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
+.ov-tag{
+  padding:1px 6px;border-radius:5px;font-size:9px;
+  background:rgba(255,255,255,.03);border:1px solid var(--bd1);color:var(--t3);
+}
+.ov-bot{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ov-acc{font-size:9px;color:var(--t3)}
+.ov-acc b{color:var(--t2)}
+.ov-km{font-size:9px;color:var(--t3);margin-left:auto}
+.ov-price{font-size:11px;font-weight:700}
+
+/* ──────────── DAY PANEL ──────────── */
+.d-head{
+  position:sticky;top:0;z-index:10;padding:12px 14px 11px;
+  box-shadow:0 4px 16px rgba(0,0,0,.5);
+}
+/* Diagonal gradient on header using day color */
+.d-head::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(120deg,rgba(255,255,255,.06) 0%,transparent 60%);
+}
+.d-head-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+.d-num{font-size:10px;opacity:.75;letter-spacing:.3px}
+.d-name{font-size:17px;font-weight:900;color:#fff;margin:2px 0;
+  text-shadow:0 1px 6px rgba(0,0,0,.4);}
+.d-meta{display:flex;gap:10px;font-size:10px;color:rgba(255,255,255,.65);
+  margin-top:3px;flex-wrap:wrap}
+.d-date-badge{font-size:12px;font-weight:800;color:rgba(255,255,255,.95);
+  background:rgba(0,0,0,.2);padding:2px 8px;border-radius:6px;white-space:nowrap}
+
+.d-infobar{display:flex;border-bottom:1px solid var(--bd1);background:var(--bg2)}
+.dib{flex:1;padding:7px 10px;border-right:1px solid var(--bd1);display:flex;flex-direction:column}
+.dib:last-child{border-right:none}
+.dib-l{font-size:8px;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.dib-v{font-size:11px;font-weight:700;color:var(--sky)}
+
+/* Tips box */
+.tips-box{
+  margin:10px 12px;padding:10px 12px;
+  background:var(--gold-bg);
+  border:1px solid var(--gold-bd);
+  border-left:3px solid var(--gold);border-radius:0 8px 8px 0;
+}
+.tips-title{font-size:9px;color:var(--gold);letter-spacing:.6px;margin-bottom:5px;font-weight:800;text-transform:uppercase}
+.tip-item{font-size:11px;color:var(--t2);line-height:1.65;padding-left:12px;position:relative}
+.tip-item::before{content:"·";position:absolute;left:4px;color:var(--gold);font-weight:900}
+
+/* Flight box */
+.flight-box{
+  margin:10px 12px;padding:10px 12px;
+  border:1px solid rgba(72,184,232,.15);
+  border-left:3px solid var(--sky);border-radius:0 8px 8px 0;
+  background:rgba(72,184,232,.04);
+}
+.flight-title{font-size:9px;color:var(--sky);letter-spacing:.6px;margin-bottom:6px;font-weight:800;text-transform:uppercase}
+.flight-row{display:flex;align-items:center;gap:9px;margin-bottom:5px;font-size:11px}
+.flight-row:last-child{margin-bottom:0}
+.flight-who{
+  padding:2px 8px;border-radius:4px;
+  background:rgba(72,184,232,.12);color:var(--sky);
+  font-size:10px;font-weight:700;min-width:38px;text-align:center;
+}
+.flight-info{color:var(--t2)}
+
+/* Timeline */
+.timeline{padding:10px 12px 6px}
+.tl-gap{
+  display:flex;align-items:center;gap:8px;
+  padding:2px 0 2px 11px;font-size:10px;color:var(--t3);font-style:italic;
+}
+.tl-gap-line{width:2px;height:20px;opacity:.25;flex-shrink:0}
+.tl-row{
+  display:flex;align-items:flex-start;gap:9px;
+  padding:8px 7px;border-radius:10px;cursor:pointer;
+  transition:background .12s,box-shadow .12s;margin-bottom:1px;
+}
+.tl-row:hover{background:rgba(255,255,255,.035);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.tl-left{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0}
+.tl-dot{
+  width:28px;height:28px;border-radius:50%;
+  font-size:11px;font-weight:900;color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.45);
+  transition:transform .12s,box-shadow .12s;
+}
+.tl-row:hover .tl-dot{transform:scale(1.08);box-shadow:0 3px 12px rgba(0,0,0,.5)}
+.tl-vline{width:2px;flex:1;min-height:12px;opacity:.25;margin-top:4px;border-radius:1px}
+.tl-main{flex:1;min-width:0}
+.tl-time{font-size:9px;font-weight:700;margin-bottom:2px;letter-spacing:.3px}
+.tl-zh{font-size:13px;font-weight:700;color:var(--t1);line-height:1.3}
+.tl-en{font-size:10px;color:var(--t3);margin:2px 0 4px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.tt{padding:2px 7px;border-radius:5px;font-size:10px}
+.tt.fee{background:rgba(230,185,40,.07);color:#c8a030;border:1px solid rgba(230,185,40,.15)}
+.tt.dur{background:rgba(72,184,232,.07);color:#4898b8;border:1px solid rgba(72,184,232,.14)}
+.tt.tag{background:rgba(64,200,128,.06);color:#40a870;border:1px solid rgba(64,200,128,.12)}
+.tt.warn{background:rgba(220,80,80,.06);color:#b85050;border:1px solid rgba(220,80,80,.12)}
+.tl-desc{font-size:10.5px;color:var(--t3);line-height:1.65;margin-top:5px}
+.tl-photo{
+  width:52px;height:52px;flex-shrink:0;
+  border-radius:50%;background:var(--bg3) center/cover no-repeat;
+  margin-top:2px;border-width:2.5px;border-style:solid;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+  transition:transform .15s,box-shadow .15s;
+}
+.tl-row:hover .tl-photo{transform:scale(1.06);box-shadow:0 4px 14px rgba(0,0,0,.5)}
+
+/* Google Maps button */
+.gmap-btn{
+  display:inline-flex;align-items:center;gap:3px;
+  margin-top:6px;padding:3px 9px;border-radius:5px;font-size:10px;
+  background:rgba(66,133,244,.08);border:1px solid rgba(66,133,244,.18);
+  color:#5888e8;text-decoration:none;transition:all .15s;cursor:pointer;
+}
+.gmap-btn:hover{background:rgba(66,133,244,.18);color:#88aaff;border-color:rgba(66,133,244,.35)}
+
+/* Restaurants */
+.section-head{
+  font-size:9px;color:var(--t3);letter-spacing:.8px;text-transform:uppercase;
+  padding:8px 13px 4px;border-top:1px solid var(--bd1);margin:4px 0 0;
+}
+.rest-card{
+  margin:0 12px 5px;padding:8px 11px;
+  background:var(--bg2);
+  border:1px solid var(--bd1);border-radius:8px;
+  transition:border-color .12s;
+}
+.rest-card:hover{border-color:var(--bd2)}
+.rest-name{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:2px}
+.rest-type{font-size:9px;margin-bottom:3px;font-weight:700;letter-spacing:.3px}
+.rest-note{font-size:10.5px;color:var(--t3);line-height:1.55}
+
+/* Accommodation */
+.acc-block{
+  margin:6px 12px 16px;padding:12px 13px;
+  background:var(--bg2);
+  border:1px solid var(--bd1);
+  border-radius:0 10px 10px 0;border-left-width:3px;border-left-style:solid;
+}
+.acc-label{font-size:8px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}
+.acc-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.acc-sub{font-size:10.5px;color:var(--t3);margin-bottom:7px;line-height:1.5}
+.acc-price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.acc-price-badge{
+  padding:4px 11px;border-radius:6px;font-size:12px;font-weight:700;
+  border-width:1px;border-style:solid;letter-spacing:.3px;
+}
+.acc-edit-hint{font-size:9px;color:var(--bd3)}
+
+/* ──────────── MAP ──────────── */
+#map{flex:1;height:100vh}
+
+/* Leaflet popup */
+.leaflet-popup-content-wrapper{
+  background:#081422!important;border:1px solid #1a3454!important;
+  border-radius:12px!important;
+  box-shadow:0 12px 40px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.04)!important;
+  padding:0!important;
+}
+.leaflet-popup-content{margin:0!important}
+.leaflet-popup-tip-container{display:none}
+.leaflet-popup-close-button{
+  color:var(--t3)!important;font-size:18px!important;
+  top:8px!important;right:10px!important;z-index:10;
+  transition:color .12s!important;
+}
+.leaflet-popup-close-button:hover{color:var(--t1)!important}
+.pw{width:264px;border-radius:12px;overflow:hidden}
+.pw-img{
+  width:100%;height:148px;background:var(--bg3) center/cover no-repeat;
+  position:relative;
+}
+.pw-img-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(8,20,34,.85) 0%,transparent 50%);
+}
+.pw-badge{
+  position:absolute;bottom:9px;left:11px;
+  padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;color:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.pw-body{padding:10px 14px 13px;background:#081422}
+.pw-zh{font-size:15px;font-weight:900;color:#fff;line-height:1.2}
+.pw-en{font-size:10px;color:var(--t3);margin-top:3px}
+.pw-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:8px}
+.pw-tag{
+  padding:2px 7px;border-radius:5px;font-size:10px;
+  background:rgba(255,255,255,.05);color:var(--t3);border:1px solid var(--bd1);
+}
+.pw-links{display:flex;gap:6px;margin-top:9px}
+.pw-wiki{
+  padding:3px 8px;border-radius:5px;font-size:10px;color:var(--t3);
+  text-decoration:none;border:1px solid var(--bd2);background:transparent;
+  transition:all .14s;
+}
+.pw-wiki:hover{color:var(--t1);background:var(--bg3);border-color:var(--bd3)}
+
+/* Photo shimmer loading animation */
+@keyframes shimmer{
+  0%{background-position:-200% center}
+  100%{background-position:200% center}
+}
+.tl-photo.loading,.pw-img.loading{
+  background:linear-gradient(90deg,var(--bg3) 25%,var(--bg2) 50%,var(--bg3) 75%)!important;
+  background-size:200% 100%!important;
+  animation:shimmer 1.4s infinite linear;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══════════════════════════════════ -->
+<div id="sidebar">
+  <div class="sb-head">
+    <div class="sb-title">Iceland Plan</div>
+    <div class="sb-en">ICELAND RING ROAD SELF-DRIVE · 9/24–10/3, 2025</div>
+    <div class="sb-chips">
+      <div class="chip">📅 9/24–10/3</div>
+      <div class="chip"><b>10</b> 天</div>
+      <div class="chip"><b id="hd-spots">36</b> 景點</div>
+      <div class="chip">~<b id="hd-km">1,700</b> km</div>
+    </div>
+  </div>
+
+  <div class="edit-bar">
+    <small>💡 點景點→跳地圖 · 先按✏️開啟編輯模式，再點價格文字修改</small>
+    <button class="ebtn" id="editBtn">✏️ 編輯價格</button>
+    <button class="ebtn" id="resetBtn">🔄 重設</button>
+  </div>
+
+  <div class="tab-bar">
+    <button class="all-btn on" id="allBtn">🗓 行程總覽 Overview</button>
+    <div class="dtabs" id="dtabs"></div>
+  </div>
+
+  <div id="panels">
+    <div class="panel on" id="panel-ov"></div>
+  </div>
+</div>
+
+<!-- ═══ MAP ════════════════════════════════════════ -->
+<div id="map"></div>
+
+<script>
+// ════════════════════════════════════════════════════
+//  DATA  (plain text only – no HTML in values)
+// ════════════════════════════════════════════════════
+const DAYS = [
+{day:0, date:'9/24(四)', color:'#607090', title:'出發日・台灣→冰島',
+ depart:'提前3H到桃園機場', sunrise:'', sunset:'', km:'―', drive:'―',
+ acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱', price:'NT$17,339', booking:''},
+ isD0:true,
+ flights:[
+   {who:'致黃', info:'TPE→AMS 23:59 → (+1)08:15 → AMS→KEF 17:05→18:20'},
+   {who:'Carol', info:'TPE→HKG 19:30→21:30 → HKG→AMS 23:15→(+1)06:55'},
+   {who:'桓哥',  info:'桓哥班機 15:15 → 23:20（KEF落地）'},
+   {who:'林豆',  info:'LHR→KEF 21:25→23:35（9/25落地）'},
+ ],
+ tips:[
+   '確認：護照、國際駕照、信用卡（需租車押金）、冰島保險',
+   '建議台灣先換 ISK 5,000–10,000 現金應急，冰島大多可刷卡',
+   '行李重點：防水外套（必備）、分層保暖衣、防水登山鞋',
+   '取車時加購砂石險 SAAP 約 ISK 1,500/天，可避免碎石賠償',
+ ],
+ restaurants:[],
+ spots:[
+   {zh:'桃園國際機場', en:'Taiwan Taoyuan International Airport',
+    lat:25.077, lon:121.232, wiki:'Taiwan_Taoyuan_International_Airport',
+    time:'', drv:'', dur:'提前3H辦理報到',
+    fee:'免費', feeKey:'tpe',
+    tags:['行李限重確認','手機上網SIM卡','出境換匯'],
+    desc:'建議提前3小時辦理報到。確認行李無違禁品（噴霧/液體需托運）。'},
+ ],
+},
+{day:1, date:'9/25(五)', color:'#E74C3C', title:'抵達冰島',
+ depart:'18:20 KEF 落地', sunrise:'07:25', sunset:'19:15', km:'約30 km', drive:'約20 min',
+ acc:{name:'Flyers Airport Hotel', sub:'機場附近，步行可達航廈（已確認）', price:'NT$10,558', booking:'Agoda'},
+ tips:[
+   'Flyers Airport Hotel 已確認，步行可達航廈',
+   '取行李→出海關→搭 Lotus Car Rental 接駁車取車',
+   '取車時確認保險，加買砂石險 SAAP（ISK 1,500/天）',
+   '今晚在機場附近吃熱狗，明天才是真正大行程',
+ ],
+ restaurants:[
+   {name:'Bæjarins Beztu Pylsur', type:'🌭 冰島最著名熱狗攤', note:'羊肉熱狗 ISK 650 (NT$140)，必吃體驗'},
+   {name:'Icelandic Street Food',  type:'🍲 傳統羊肉湯',     note:'無限續碗 ISK 2,500 (NT$540)，暖胃飽足'},
+ ],
+ spots:[
+   {zh:'凱夫拉維克國際機場', en:'Keflavik International Airport',
+    lat:63.985, lon:-22.606, wiki:'Keflavík_International_Airport',
+    time:'18:20落地', drv:'', dur:'取車辦理 ~1H',
+    fee:'免費', feeKey:'kef',
+    tags:['Lotus Car Rental接駁','護照+信用卡+國際駕照','加買砂石險SAAP'],
+    desc:'取行李→出海關→搭 Lotus Car Rental 接駁車。逐項確認保險，強烈建議加砂石險。'},
+ ],
+},
+{day:2, date:'9/26(六)', color:'#E67E22', title:'斯奈山半島',
+ depart:'建議 08:30 出發（拉車較長）', sunrise:'07:28', sunset:'19:11', km:'約220 km', drive:'約3.5 H',
+ acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda'},
+ tips:[
+   '⚠️ 原始行程表D2寫「藍湖溫泉」→ 實為「Sky Lagoon（天空之潟湖）」，完全不同地點！',
+   '08:30 準時出發，今日行程最滿，副駕不停跟司機聊天防瞌睡',
+   '海豹最佳觀賞：下午3-5點退潮，往沙灘左側礁石區走10分鐘',
+   '布迪爾黑教堂附近無廁所，先在海豹沙灘停車場解決',
+   '教會山夕陽（16:40）是全程最值得等待的黃金光線時刻',
+ ],
+ restaurants:[
+   {name:'Fjöruhúsið Café（Hellnar）', type:'🦞 龍蝦濃湯', note:'半島西端小港，龍蝦湯 ISK 2,800 (NT$600)，順路可去'},
+   {name:'Samkaup 超市（Grundarfjörður）', type:'🛒 自煮晚餐', note:'買冰島羊肉/義大利麵帶回住宿自煮'},
+ ],
+ spots:[
+   {zh:'哈爾格林教堂',  en:'Hallgrímskirkja',
+    lat:64.142, lon:-21.928, wiki:'Hallgrímskirkja',
+    time:'08:30–09:15', drv:'出發首站（市區）', dur:'45 min',
+    fee:'塔樓 ISK 1,800 (NT$390)', feeKey:'hallgrimskirkja',
+    tags:['09:00塔樓開放','避開人潮','補給咖啡帶路上'],
+    desc:'74公尺高塔樓可360度俯瞰彩色房屋。09:00是第一批入場，避開人潮。'},
+   {zh:'天空之潟湖',   en:'Sky Lagoon',
+    lat:64.097, lon:-21.993, wiki:'Sky_Lagoon',
+    time:'09:30–12:00', drv:'約15 min（從教堂）', dur:'2.5 H',
+    fee:'ISK 12,990 (NT$2,800) Pure Ritual', feeKey:'sky-lagoon',
+    tags:['⭐強烈推薦','需提前線上訂','七步療程'],
+    desc:'世界級地熱溫泉，無邊際池俯瞰大西洋。泡完吹乾頭髮再出發。'},
+   {zh:'海豹沙灘',     en:'Ytri Tunga',
+    lat:64.893, lon:-23.163, wiki:'Ytri_Tunga',
+    time:'14:15–15:15', drv:'約2H 15min（165km）', dur:'1 H',
+    fee:'免費', feeKey:'ytri-tunga',
+    tags:['下午3-5點退潮最佳','穿防水鞋','勿打擾海豹'],
+    desc:'冰島最容易看到野生海豹的金色沙灘。往左側礁石區走10分鐘。'},
+   {zh:'布迪爾黑教堂', en:'Búðakirkja',
+    lat:64.822, lon:-23.383, wiki:'Búðakirkja',
+    time:'15:30–16:00', drv:'約15 min', dur:'30 min',
+    fee:'免費', feeKey:'budakirkja',
+    tags:['孤獨熔岩地景','IG必打卡','任何天氣都好看'],
+    desc:'純黑木造教堂孤獨矗立在熔岩荒原，任何天氣都有絕佳氣氛。'},
+   {zh:'教會山（草帽山）', en:'Kirkjufell',
+    lat:64.942, lon:-23.308, wiki:'Kirkjufell',
+    time:'16:40–17:40', drv:'約40 min（翻越54號山路）', dur:'1 H',
+    fee:'免費', feeKey:'kirkjufell',
+    tags:['⭐全冰島最上鏡山峰','夕陽黃金光線','瀑布+山峰同框'],
+    desc:'走到對面的 Kirkjufellsfoss 瀑布步道，將三道細瀑與草帽山同框。'},
+ ],
+},
+{day:3, date:'9/27(日)', color:'#F39C12', title:'北上亞庫來利',
+ depart:'建議 08:30 出發', sunrise:'07:31', sunset:'19:07', km:'約380 km', drive:'約4H 40min（全程最長）',
+ acc:{name:'Steinaskjól Apartments', sub:'亞庫來利市區，有個人廚房。Agoda訂（雅致），9/4前免費取消', price:'NT$8,579', booking:'Agoda'},
+ tips:[
+   '全程最長拉車日，副駕持續與司機聊天防瞌睡！',
+   '翻越 Öxnadalsheiði 高地：9月底極易起霧/路面薄冰，保持低速',
+   '亞庫來利全市紅綠燈都是愛心形狀，路口停等一定要拍照！',
+   'Blönduós 的 Krónan 超市：務必補齊接下來兩天的零食與水',
+ ],
+ restaurants:[
+   {name:'N1 加油站（Blönduós）',   type:'🍜 羊肉湯＋熱狗', note:'午餐快速補給，羊肉湯 ISK 1,200 (NT$260)'},
+   {name:'Bautinn Restaurant',      type:'🥩 亞庫來利老字號', note:'羊排 ISK 4,500 (NT$970)'},
+   {name:'Akureyri Fish Compani',   type:'🐟 炸魚薯條',    note:'Fish & Chips ISK 2,800 (NT$600)'},
+ ],
+ spots:[
+   {zh:'巨人峽谷', en:'Kolugljúfur Canyon',
+    lat:65.453, lon:-20.565, wiki:'Kolugljúfur',
+    time:'11:25–12:05', drv:'約2H 55min（從斯奈山）', dur:'40 min',
+    fee:'免費', feeKey:'kolugljufur',
+    tags:['轉715號道路','鐵橋俯瞰','玄武岩峽谷'],
+    desc:'急流切穿玄武岩峽谷，從鐵橋俯瞰水流翻騰，沿谷側步道走到瀑布旁拍照。'},
+   {zh:'鯨魚教堂', en:'Blönduóskirkja',
+    lat:65.662, lon:-20.262, wiki:'Blönduóskirkja',
+    time:'12:41–13:30', drv:'約36 min', dur:'20 min拍照＋午餐',
+    fee:'免費', feeKey:'blonduos',
+    tags:['鯨魚鰭設計','N1午餐在旁邊','Krónan超市補給'],
+    desc:'形似鯨魚鰭的超現代教堂。拍完到對面 N1 加油站吃午餐，Krónan 補給零食。'},
+   {zh:'亞庫來利', en:'Akureyri',
+    lat:65.683, lon:-18.113, wiki:'Akureyri',
+    time:'15:40 抵達', drv:'約1H 40min（翻越高地山路）', dur:'傍晚自由活動',
+    fee:'免費', feeKey:'akureyri',
+    tags:['冰島第二大城','❤️愛心紅綠燈','極光觀測好地點'],
+    desc:'冰島北部最大城市。傍晚漫步廣場，爬上教堂階梯俯瞰港口。紅綠燈全是愛心！'},
+ ],
+},
+{day:4, date:'9/28', color:'#27AE60', title:'米湖火山地景',
+ depart:'建議 08:00 出發（米湖溫泉18:00關門）', sunrise:'07:34', sunset:'19:03', km:'約135 km', drive:'約2 H（景點集中）',
+ acc:{name:'Vogar Travel Service', sub:'米湖旁，公共廚房。Booking訂（秉翔訂）', price:'NT$9,116', booking:'Booking'},
+ tips:[
+   '今日景點全在米湖方圓20km，拉車最輕鬆的一天',
+   '惠爾偽火山：陡坡碎石消耗體力，預留1.5H，鞋帶一定要綁緊',
+   '地熱谷：硫磺味非常重，不要穿喜歡的衣服',
+   '⚠️ 米湖溫泉 18:00 關門！從 Hverir 直接過去不要耽擱',
+   '晚上極光指數≥2，米湖完全無光害，推開門就能看',
+ ],
+ restaurants:[
+   {name:'Kaffi Borgir（Dimmuborgir入口）', type:'🍔 午餐', note:'羊肉湯+漢堡 ISK 2,500-3,500 (NT$540-755)'},
+   {name:'Vogafjós Farm Restaurant',        type:'🥛 農場晚餐', note:'現擠牛奶起司 ISK 3,800 (NT$820)，極具特色'},
+ ],
+ spots:[
+   {zh:'眾神瀑布', en:'Goðafoss Waterfall',
+    lat:65.682, lon:-17.550, wiki:'Goðafoss',
+    time:'09:05–10:00', drv:'約35 min（從亞庫來利）', dur:'55 min',
+    fee:'免費（停車 ISK 500）', feeKey:'godafoss',
+    tags:['左右兩岸都有步道','遊客中心有廁所','冰島最美瀑布之一'],
+    desc:'「眾神瀑布」—公元1000年改信基督教時，信仰者將北歐神像扔入此瀑布。'},
+   {zh:'洞穴溫泉', en:'Grjótagjá Cave',
+    lat:65.603, lon:-16.883, wiki:'Grjótagjá',
+    time:'10:45–11:15', drv:'約45 min', dur:'30 min',
+    fee:'免費', feeKey:'grjotagja',
+    tags:['冰與火之歌拍攝地','禁止泡湯（水溫過高）','藍光地下泉水'],
+    desc:'《冰與火之歌》拍攝地！看神祕藍光地下泉水，因水溫過高禁止泡湯。'},
+   {zh:'惠爾偽火山', en:'Hverfell',
+    lat:65.612, lon:-16.873, wiki:'Hverfjall',
+    time:'11:25–13:00', drv:'約10 min', dur:'1.5 H',
+    fee:'免費', feeKey:'hverfell',
+    tags:['⚠️體力消耗大','直徑1km完美圓形火山口','外星科幻感'],
+    desc:'大魔王景點！爬上陡坡約30分鐘，登頂後俯瞰360度完美圓形火山口。'},
+   {zh:'黑色城堡', en:'Dimmuborgir',
+    lat:65.593, lon:-16.917, wiki:'Dimmuborgir',
+    time:'13:10–14:40', drv:'約10 min', dur:'1.5 H（含午餐）',
+    fee:'免費', feeKey:'dimmuborgir',
+    tags:['午餐：Kaffi Borgir','Kirkja教堂環線步道','熔岩迷宮'],
+    desc:'先在入口 Kaffi Borgir 吃午餐，再走「Kirkja 教堂環線」穿越拱形熔岩洞。'},
+   {zh:'地熱谷 Hverir', en:'Námafjall Hverir',
+    lat:65.638, lon:-16.832, wiki:'Námafjall',
+    time:'14:55–15:35', drv:'約15 min', dur:'40 min',
+    fee:'免費', feeKey:'hverir',
+    tags:['硫磺味極重','橘紅色火星地景','滾沸泥漿池'],
+    desc:'橘紅色大地冒泡的灰色泥漿，噴氣孔轟轟作響，像置身火星。'},
+   {zh:'米湖溫泉', en:'Mývatn Nature Baths',
+    lat:65.630, lon:-16.970, wiki:'Mývatn_Nature_Baths',
+    time:'15:40–18:00', drv:'約5 min', dur:'2.5 H',
+    fee:'ISK 5,800 (NT$1,250)', feeKey:'myvatn-baths',
+    tags:['⭐強烈推薦','18:00關門','乳藍色天然地熱溫泉'],
+    desc:'北部版藍湖，純天然地熱溫泉。18:00關門請準時入場，可敷免費礦物泥。'},
+ ],
+},
+{day:5, date:'9/29', color:'#16A085', title:'東進白日夢小鎮',
+ depart:'建議 08:00 出發', sunrise:'07:37', sunset:'18:58', km:'約250 km', drive:'約3.5–4 H',
+ acc:{name:'Hafaldan HI Hostel', sub:'Seyðisfjörður 彩虹小鎮，港口邊。Booking訂（卡羅訂）', price:'NT$9,565', booking:'Booking'},
+ tips:[
+   'Egilsstaðir Bónus 小豬超市：務必把後兩天食物補齊，峽灣物價高',
+   '翻越93號公路進 Seyðisfjörður：坡度極陡，9月底可能有初雪，低速慢行',
+   '黛提瀑布先在停車場上廁所，瀑布旁無設施',
+ ],
+ restaurants:[
+   {name:'Skálinn Diner（Egilsstaðir）', type:'🍔 午餐補給', note:'漢堡 ISK 2,200 (NT$475)'},
+   {name:'Kaffi Lára / El Grillo Bar',   type:'🥩 烤羊排',  note:'Seyðisfjörður彩虹路，羊排 ISK 5,500 (NT$1,190)'},
+ ],
+ spots:[
+   {zh:'克拉夫拉火山', en:'Krafla Volcano',
+    lat:65.717, lon:-16.770, wiki:'Krafla',
+    time:'08:20–09:05', drv:'約20 min（從米湖）', dur:'45 min',
+    fee:'免費', feeKey:'krafla',
+    tags:['清晨人最少','地熱發電廠','彩色地熱岩石'],
+    desc:'清晨人煙稀少，在地表冒蒸汽的火山地形中漫步，看地熱發電廠。'},
+   {zh:'維提火口湖', en:'Viti Crater Lake',
+    lat:65.720, lon:-16.760, wiki:'Viti_(Krafla)',
+    time:'08:20–09:05', drv:'步行', dur:'（含Krafla）',
+    fee:'免費', feeKey:'viti',
+    tags:['藍綠色火口湖','清晨如鏡倒影'],
+    desc:'「地獄」之意，眼前卻是平靜如鏡的藍綠色湖水，清晨倒影絕美。'},
+   {zh:'黛提瀑布', en:'Dettifoss (West Side)',
+    lat:65.815, lon:-16.385, wiki:'Dettifoss',
+    time:'09:50–11:00', drv:'約45 min（862號柏油路）', dur:'1 H',
+    fee:'停車 ISK 750', feeKey:'dettifoss',
+    tags:['⭐歐洲水量最大瀑布','灰色水霧震撼','可順遊Selfoss'],
+    desc:'歐洲水量最大的瀑布，灰色河水從懸崖傾瀉，巨大水霧撲面而來。'},
+   {zh:'Vök溫泉浴', en:'Vök Baths',
+    lat:65.268, lon:-14.407, wiki:'Vök_Baths',
+    time:'14:00–16:00', drv:'約1H 45min（穿越黑沙荒原）', dur:'2 H',
+    fee:'ISK 6,900 (NT$1,490)', feeKey:'vok-baths',
+    tags:['⭐湖中浮動溫泉池','地熱草本茶','洗去荒原塵土'],
+    desc:'湖中浮動溫泉池！泡在與湖面相連的地熱池中，無邊際延伸。'},
+   {zh:'白日夢冒險王小鎮', en:'Seyðisfjörður',
+    lat:65.258, lon:-13.990, wiki:'Seyðisfjörður',
+    time:'16:40 抵達', drv:'約35 min（93號公路九彎十八拐）', dur:'傍晚自由活動',
+    fee:'免費', feeKey:'seydisfjordur',
+    tags:['⚠️93號公路陡坡慢行','彩虹路步行5min','藍色木造教堂'],
+    desc:'《白日夢冒險王》長板下山的地點！彩虹路、藍色教堂、港口漁船倒影。'},
+ ],
+},
+{day:6, date:'9/30', color:'#2980B9', title:'峽灣南下赫本',
+ depart:'建議 08:30 出發', sunrise:'07:44', sunset:'18:49', km:'約330 km（⚠️行程表誤記220km）', drive:'約3.5–4 H',
+ acc:{name:'Höfn i Hornafirði', sub:'龍蝦之城，海邊小鎮', price:'待定', booking:''},
+ tips:[
+   '⚠️ 原始行程表D6里程誤記「約220km」，實際 Seyðisfjörður→Höfn 約330km',
+   '蒸氣瀑布在93號公路上，離小鎮僅5分鐘，順路必停',
+   'Djúpivogur 後到 Vestrahorn 有70km無加油站，記得加滿油',
+   'Pakkhús Restaurant 不接受預約，建議 18:00 前排隊',
+ ],
+ restaurants:[
+   {name:'Hafið Bistro（Djúpivogur）', type:'🐟 炸魚午餐',  note:'炸魚 ISK 2,200 (NT$475)'},
+   {name:'Pakkhús Restaurant ⭐',      type:'🦞 龍蝦慶功宴', note:'蒜味奶油龍蝦 ISK 6,500 (NT$1,400)，排隊制'},
+   {name:'Humarhöfnin',               type:'🦞 備選',       note:'ISK 6,800 (NT$1,470)'},
+ ],
+ spots:[
+   {zh:'蒸氣瀑布', en:'Gufufoss',
+    lat:65.264, lon:-13.972, wiki:'Gufufoss',
+    time:'08:35–08:55', drv:'約5 min', dur:'20 min',
+    fee:'免費', feeKey:'gufufoss',
+    tags:['白日夢長板下山場景','清晨無人'],
+    desc:'站在公路旁往回看，就是《白日夢冒險王》男主角長板下山的大斜坡視角。'},
+   {zh:'神秘巨蛋小鎮', en:'Djúpivogur',
+    lat:64.657, lon:-14.282, wiki:'Djúpivogur',
+    time:'10:45–12:00', drv:'約1H 50min', dur:'1H 15min',
+    fee:'免費', feeKey:'djupivogur',
+    tags:['34顆鳥蛋石雕','補給加滿油','Hafið午餐'],
+    desc:'港口邊藝術裝置「Eggin í Gleðivík」— 34顆大小各異的鳥蛋石雕。在此加滿油。'},
+   {zh:'西角山·天空之鏡', en:'Vestrahorn',
+    lat:64.253, lon:-14.870, wiki:'Vestrahorn',
+    time:'13:10–15:10', drv:'約1H 10min（注意側風！）', dur:'2 H',
+    fee:'ISK 1,500 (NT$325)', feeKey:'vestrahorn',
+    tags:['⭐天空之鏡絕景','下午斜射光最佳','Viking Village'],
+    desc:'黑沙灘倒映峭壁，潮間帶薄薄海水形成完美天空之鏡。'},
+   {zh:'赫本·龍蝦慶功宴', en:'Höfn',
+    lat:64.253, lon:-15.216, wiki:'Höfn',
+    time:'15:25 抵達', drv:'約15 min', dur:'入住＋晚餐',
+    fee:'Pakkhús龍蝦 ISK 6,500 (NT$1,400)', feeKey:'hofn-dinner',
+    tags:['⭐環島過半慶功','Netto超市補冰川糧食'],
+    desc:'冰島最著名龍蝦產地。晚餐前先去 Netto 超市補齊冰川健行的行動糧食。'},
+ ],
+},
+{day:7, date:'10/1', color:'#8E44AD', title:'冰河湖・冰川健行',
+ depart:'建議 09:00 出發', sunrise:'07:47', sunset:'18:45', km:'約270 km', drive:'約3.5 H',
+ acc:{name:'教堂城 Kirkjubæjarklaustur', sub:'小鎮民宿，自煮廚房', price:'待定', booking:''},
+ tips:[
+   '⭐ 冰川健行14:30集合是全程最值得的體驗，務必事先向業者預約',
+   '健行前午餐一定要吃飽！5小時極度消耗體力',
+   '14:20前在遊客中心上廁所，冰川上完全沒有廁所',
+   '夜間從冰川開回教堂城（55min），副駕不能睡著！',
+ ],
+ restaurants:[
+   {name:'Skaftafell 停車場餐車', type:'🍔 健行前大餐', note:'漢堡＋炸魚薯條，吃到最飽！'},
+   {name:'Skál! Bistro（教堂城）', type:'🍺 抵達後晚餐', note:'ISK 3,500 (NT$755)'},
+ ],
+ spots:[
+   {zh:'傑古沙龍冰河湖', en:'Jökulsárlón Glacier Lagoon',
+    lat:64.048, lon:-16.180, wiki:'Jökulsárlón',
+    time:'10:25–11:45', drv:'約55 min（從赫本）', dur:'1.5 H',
+    fee:'免費（水陸船 ISK 7,990）', feeKey:'jokulsarlon',
+    tags:['⭐冰島最必看景點','藍色千年冰塊','野生海豹游泳'],
+    desc:'巨大千年藍冰在湖面漂浮，光線下呈現深藍色。湖裡有野生海豹游泳玩耍。'},
+   {zh:'鑽石冰沙灘', en:'Diamond Beach',
+    lat:64.043, lon:-16.175, wiki:'Diamond_Beach_(Iceland)',
+    time:'11:45–12:45', drv:'步行（對面停車場2min）', dur:'1 H',
+    fee:'免費', feeKey:'diamond-beach',
+    tags:['⚠️危險巨浪勿背對海','純黑沙灘透明冰塊'],
+    desc:'冰塊被沖上純黑火山沙灘像一顆顆鑽石。此處巨浪無預警，勿背對大海！'},
+   {zh:'斯瓦蒂佛斯黑瀑布', en:'Svartifoss',
+    lat:64.030, lon:-16.976, wiki:'Svartifoss',
+    time:'13:30（整備空檔）', drv:'約45 min（從鑽石沙灘→Skaftafell）', dur:'約45 min（視體力）',
+    fee:'免費', feeKey:'svartifoss',
+    tags:['玄武岩六角柱瀑布','Skaftafell停車場同地','冰川健行前可快速健行'],
+    desc:'玄武岩六角柱圍繞的獨特黑色瀑布，步道單程約20分鐘可到。抵達Skaftafell後若體力允許，可在冰川健行整備前快速來回。'},
+   {zh:'冰川健行·斯卡夫塔', en:'Skaftafell Ice Cave Hike',
+    lat:64.018, lon:-16.975, wiki:'Skaftafell',
+    time:'13:30整備 / 14:30出發', drv:'（同停車場）', dur:'5小時健行',
+    fee:'約 ISK 22,990 (NT$4,990) ※各業者差異ISK 25,000-45,000', feeKey:'glacier-hike',
+    tags:['⭐⭐全程最值得體驗','需提前預訂','冰爪+冰斧+安全帶'],
+    desc:'5小時深度冰川探險！夕陽照在冰裂縫上呈現夢幻粉金色。黑夜戴頭燈走下冰舌，極酷炫。'},
+ ],
+},
+{day:8, date:'10/2', color:'#C0392B', title:'南岸瀑布群',
+ depart:'建議 08:30 出發', sunrise:'07:49', sunset:'18:41', km:'約208 km', drive:'約3 H（景點密集）',
+ acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking'},
+ tips:[
+   '今日景點最密集，沿1號公路一字排開，拉車最輕鬆',
+   '史可加瀑布右側有527階陡梯，登頂俯瞰值得爬',
+   '塞里亞蘭瀑布：穿全防水衣褲走後方水洞，相機記得防水',
+   'Hella小木屋360度無遮蔽，晚上推門就能追極光',
+ ],
+ restaurants:[
+   {name:'Black Beach Restaurant（黑沙灘旁）', type:'🍔 午餐',  note:'羊肉漢堡＋熱湯 ISK 3,200 (NT$690)'},
+   {name:'Eyjafjallajökull Distillery Café',  type:'☕ 下午茶', note:'農場麵包＋咖啡 ISK 1,500 (NT$325)'},
+ ],
+ spots:[
+   {zh:'羽毛河峽谷', en:'Fjaðrárgljúfur Canyon',
+    lat:63.773, lon:-18.172, wiki:'Fjaðrárgljúfur',
+    time:'08:42–10:15', drv:'約12 min（從教堂城）', dur:'1.5 H',
+    fee:'免費', feeKey:'fjadrargjufur',
+    tags:['賈斯汀比伯MV拍攝地','蛇行河流苔蘚崖壁'],
+    desc:'2公里長的S形峽谷，苔蘚覆蓋的岩壁中蛇行的河流。清晨陽光斜照進峽谷非常夢幻。'},
+   {zh:'黑沙灘', en:'Reynisfjara Black Sand Beach',
+    lat:63.405, lon:-19.038, wiki:'Reynisfjara',
+    time:'11:10–13:00', drv:'約55 min', dur:'1.5 H（含午餐）',
+    fee:'免費', feeKey:'reynisfjara',
+    tags:['⚠️危險巨浪每年奪命','玄武岩柱風琴壁','午餐：Black Beach'],
+    desc:'全黑玄武岩沙灘。警告：此處每年都有遊客被巨浪捲走，觀浪線以外絕對不能站！'},
+   {zh:'史可加瀑布', en:'Skógafoss',
+    lat:63.532, lon:-19.511, wiki:'Skógafoss',
+    time:'13:30–14:30', drv:'約30 min', dur:'1 H',
+    fee:'停車 ISK 700', feeKey:'skogafoss',
+    tags:['60公尺寬大瀑布','右側527階可登頂','晴天必出彩虹'],
+    desc:'寬60公尺的巨大瀑布，晴天水霧中必出現彩虹。右側陡梯登頂俯瞰河流。'},
+   {zh:'塞里亞蘭瀑布', en:'Seljalandsfoss',
+    lat:63.615, lon:-19.988, wiki:'Seljalandsfoss',
+    time:'14:55–16:00', drv:'約25 min', dur:'1 H',
+    fee:'停車 ISK 700', feeKey:'seljalandsfoss',
+    tags:['⭐可走瀑布後方','穿全防水裝備','下午斜射金色水幕'],
+    desc:'唯一可走到瀑布後方岩洞的瀑布！穿全防水裝備，從水幕內往外看宛如科幻電影。'},
+   {zh:'隱藏瀑布 Gljúfrabúi', en:'Gljúfrabúi',
+    lat:63.621, lon:-19.983, wiki:'Gljúfrabúi',
+    time:'16:00–16:30', drv:'步行（塞里亞蘭停車場200m）', dur:'30 min',
+    fee:'免費', feeKey:'gljufrabui',
+    tags:['峽縫隱藏瀑布','鑽進岩縫才能看到','同停車場順路必訪'],
+    desc:'位於塞里亞蘭停車場200公尺外的隱藏瀑布，需鑽進狹窄岩縫才能一窺全貌，非常獨特。與塞里亞蘭同一停車場，順路必看。'},
+ ],
+},
+{day:9, date:'10/3', color:'#D35400', title:'黃金圈→藍湖→深夜班機',
+ depart:'建議 08:30 出發（景點最多！）', sunrise:'07:52', sunset:'18:37', km:'約270 km', drive:'約4.5 H',
+ acc:{name:'Flyers Airport Hotel（待確認）', sub:'深夜班機前短暫休憩，21:30 KEF還車，22:00機場報到，01:00起飛。藍湖→Flyers僅20min', price:'NT$8,493', booking:'Agoda'},
+ tips:[
+   '09:00前一定出發！今日景點最多，時間非常緊湊',
+   'Geysir 遊客中心廁所免費，早點解決，後面廁所要付費',
+   '藍湖需提前預訂18:30入場，確保21:00能離開趕機場',
+   '還車前在 Grindavík Netto 超市衝刺買伴手禮（Omnom巧克力/岩鹽）',
+ ],
+ restaurants:[
+   {name:'Geysir Center 自助餐廳', type:'🍜 午餐', note:'自助湯品 ISK 1,800 (NT$390)，廁所免費'},
+   {name:'Friðheimar 溫室農場',    type:'🍅 番茄湯', note:'無限番茄湯 ISK 2,800 (NT$600)，黃金圈必訪'},
+ ],
+ spots:[
+   {zh:'火山湖 Kerið', en:'Kerið Crater',
+    lat:64.041, lon:-20.885, wiki:'Kerið',
+    time:'09:10–09:55', drv:'約40 min（從Hella）', dur:'45 min',
+    fee:'ISK 1,000 (NT$215)', feeKey:'kerid',
+    tags:['火紅火山口湖','環形步道15min'],
+    desc:'紅褐色的火山口湖，橢圓形環形步道約15分鐘。清晨光線顏色鮮豔。'},
+   {zh:'間歇噴泉', en:'Strokkur Geyser',
+    lat:64.313, lon:-20.303, wiki:'Geysir',
+    time:'10:35–11:50', drv:'約40 min', dur:'1 H（含午餐）',
+    fee:'免費', feeKey:'geysir',
+    tags:['每5-10min爆發','手機開慢動作錄影','Geysir Center午餐'],
+    desc:'每5-10分鐘爆發一次，藍色泡泡隆起後沖天高達30公尺！'},
+   {zh:'黃金瀑布', en:'Gullfoss',
+    lat:64.327, lon:-20.122, wiki:'Gullfoss',
+    time:'12:00–13:00', drv:'約10 min', dur:'1 H',
+    fee:'免費', feeKey:'gullfoss',
+    tags:['⭐冰島最壯觀瀑布','晴天彩虹橫跨峽谷'],
+    desc:'兩級瀑布轟然墜入深谷，水量驚人。出太陽時峽谷上方必有彩虹橫跨。'},
+   {zh:'藍色瀑布', en:'Brúarfoss',
+    lat:64.252, lon:-20.470, wiki:'Brúarfoss',
+    time:'13:25–14:10', drv:'約25 min', dur:'45 min',
+    fee:'免費', feeKey:'bruarfoss',
+    tags:['Tiffany藍冰川河水','停車場步行5min','人少靜謐'],
+    desc:'神祕的蒂芬妮藍瀑布，冰川融水在橋下呈現不可思議的純藍色。'},
+   {zh:'辛格韋德利國家公園', en:'Þingvellir National Park',
+    lat:64.255, lon:-21.130, wiki:'Þingvellir',
+    time:'14:50–16:20', drv:'約40 min', dur:'1.5 H',
+    fee:'停車 ISK 750', feeKey:'thingvellir',
+    tags:['歐美板塊交界裂縫','世界遺產','停P1停車場'],
+    desc:'走進 Almannagjá 板塊裂縫，左手邊美洲、右手邊歐亞板塊。'},
+   {zh:'藍湖溫泉', en:'Blue Lagoon',
+    lat:63.880, lon:-22.450, wiki:'Blue_Lagoon_(geothermal_spa)',
+    time:'18:30–21:00', drv:'約1H 15min（黃金圈→藍湖）', dur:'2.5 H',
+    fee:'ISK 74,990 (NT$16,200) Premium', feeKey:'blue-lagoon',
+    tags:['⭐⭐環島完美收尾','需提前預訂18:30場','更衣室吹頭髮換登機服'],
+    desc:'黑夜中的藍湖最夢幻！奶藍色矽泥溫泉，敷面膜喝水中吧免費飲料。換好登機服直奔KEF。'},
+ ],
+},
+];
+
+// ─── sequential numbering (skip D0) ───
+let _n=0;
+DAYS.forEach(d=>{
+  if(d.isD0){d.spots.forEach(s=>s._n='🛫');}
+  else d.spots.forEach(s=>{s._n=++_n;});
+});
+
+// ════════════════════════════════════════════════════
+//  PRICE EDITING
+// ════════════════════════════════════════════════════
+let editMode=false;
+const defaults={};
+
+function initPrices(){
+  document.querySelectorAll('.ep').forEach(el=>{
+    const k=el.dataset.k;
+    if(!k)return;
+    defaults[k]=el.textContent;
+    const saved=localStorage.getItem('pr_'+k);
+    if(saved)el.textContent=saved;
+  });
+}
+
+function toggleEdit(){
+  editMode=!editMode;
+  document.body.classList.toggle('editing',editMode);
+  const btn=document.getElementById('editBtn');
+  btn.textContent=editMode?'🔒 完成編輯':'✏️ 編輯價格';
+  btn.classList.toggle('on',editMode);
+}
+
+function resetPrices(){
+  if(!confirm('重設所有價格為預設值？'))return;
+  document.querySelectorAll('.ep').forEach(el=>{
+    const k=el.dataset.k;
+    if(k&&defaults[k]){el.textContent=defaults[k];localStorage.removeItem('pr_'+k);}
+  });
+}
+
+function clickPrice(el){
+  if(!editMode)return;
+  const k=el.dataset.k, orig=el.textContent;
+  const inp=document.createElement('input');
+  inp.className='ep-input'; inp.value=orig;
+  el.style.visibility='hidden';
+  el.after(inp); inp.focus(); inp.select();
+  let committed=false;  // Bug B2 fix: prevent double-run on Escape
+  const done=(saveVal)=>{
+    if(committed)return; committed=true;
+    const v=saveVal!==undefined?saveVal:inp.value;
+    el.textContent=v||defaults[k]||orig;
+    if(v)localStorage.setItem('pr_'+k,v);
+    inp.remove(); el.style.visibility='';
+  };
+  inp.addEventListener('blur',()=>done());
+  inp.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){e.preventDefault();done(inp.value);}
+    if(e.key==='Escape'){e.preventDefault();done(orig);}  // pass orig → no save
+  });
+}
+
+// ════════════════════════════════════════════════════
+//  DOM HELPERS
+// ════════════════════════════════════════════════════
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;};
+const div=(cls,txt)=>el('div',cls,txt);
+const span=(cls,txt)=>el('span',cls,txt);
+
+function makePrice(text,key){
+  const s=span('ep',text);
+  s.dataset.k=key;
+  s.addEventListener('click',()=>clickPrice(s));
+  return s;
+}
+
+// ════════════════════════════════════════════════════
+//  BUILD OVERVIEW
+// ════════════════════════════════════════════════════
+function buildOverview(){
+  const panel=document.getElementById('panel-ov');
+  // sticky header
+  const top=div('ov-top');
+  const h=el('h2','','🗓 行程總覽（9/24–10/3，2025）');
+  const p=el('p','','點任一天卡片 → 查看詳細行程');
+  const stats=div('stats-row');
+  const _km=DAYS.reduce((s,d)=>{const m=String(d.km||'').match(/\d+/);return s+(m?parseInt(m[0]):0);},0);
+  const _spots=DAYS.reduce((s,d)=>s+(d.isD0?0:d.spots.length),0);
+  document.getElementById('hd-km').textContent=_km.toLocaleString();
+  document.getElementById('hd-spots').textContent=_spots;
+  [{l:'住宿總計',v:'NT$'+(DAYS.reduce((s,d)=>{return s+(parseInt((d.acc.price||'').replace(/[^\d]/g,''))||0);},0)).toLocaleString()},
+   {l:'總里程',v:'約'+_km.toLocaleString()+' km'},{l:'冰島景點',v:_spots+'個'},{l:'行程天數',v:'10天'}
+  ].forEach(x=>{const s=div('stat');s.appendChild(span('',x.l+' '));s.appendChild(el('b','',x.v));stats.appendChild(s);});
+  top.appendChild(h);top.appendChild(p);top.appendChild(stats);
+  panel.appendChild(top);
+
+  // discrepancy box
+  const dw=div('diff-wrap');
+  const dtog=el('button','diff-toggle');
+  dtog.innerHTML='⚠️ 與原始行程表差異說明（8項）<span id="darr">▼</span>';
+  dtog.addEventListener('click',()=>{
+    const b=dw.querySelector('.diff-body');
+    b.classList.toggle('open');
+    document.getElementById('darr').textContent=b.classList.contains('open')?'▲':'▼';
+  });
+  dw.appendChild(dtog);
+  const db=div('diff-body');
+  const diffs=[
+    ['fix','[已修正] D2(9/26)行程表寫「藍湖溫泉」→ 實為「Sky Lagoon 天空之潟湖」，兩個完全不同地點！'],
+    ['fix','[已修正] 哈爾格林教堂移至正確的 Day 2(9/26) 08:30，不是Day 1'],
+    ['fix','[已修正] D6(9/30)里程改為約330km，原表誤記220km'],
+    ['fix','[已確認] Flyers Airport Hotel (D1) 住宿已更新為已確認狀態'],
+    ['wrn','[價格估算] Sky Lagoon Pure Ritual列 ISK 12,990，2025官網約 ISK 13,990-15,990'],
+    ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2025可能為 ISK 6,500-7,800'],
+    ['wrn','[價格估算] 冰川健行5H各業者差異大（ISK 25,000-45,000），需向業者確認'],
+    ['wrn','[價格估算] 藍湖溫泉票價依套餐浮動（ISK 59,990-99,990），建議至官網確認'],
+  ];
+  diffs.forEach(([cls,txt])=>{
+    const d=div('di');
+    const [tag,...rest]=txt.split(']');
+    const s=span(cls,tag+']');
+    d.appendChild(s);
+    d.appendChild(document.createTextNode(rest.join(']')));
+    db.appendChild(d);
+  });
+  dw.appendChild(db);
+  panel.appendChild(dw);
+
+  // day cards
+  const list=div('ov-list');
+  DAYS.forEach(day=>{
+    const card=div('ov-card');
+    card.addEventListener('click',()=>activateDay(day.day));
+    const stripe=div('ov-stripe');
+    stripe.style.background=day.color;
+    const body=div('ov-body');
+    // row1
+    const r1=div('ov-row1');
+    const num=div('ov-num','D'+day.day);
+    num.style.background=day.color;
+    r1.appendChild(num);
+    r1.appendChild(div('ov-title',day.title));
+    r1.appendChild(div('ov-date',day.date));
+    body.appendChild(r1);
+    // tags
+    const tags=div('ov-tags');
+    day.spots.forEach(s=>{tags.appendChild(span('ov-tag',s.zh));});
+    body.appendChild(tags);
+    // bottom
+    const bot=div('ov-bot');
+    const acc=div('ov-acc');acc.innerHTML='🏨 <b>'+day.acc.name.split('(')[0].trim()+'</b>';
+    bot.appendChild(acc);
+    bot.appendChild(div('ov-km',day.km));
+    const pr=makePrice(day.acc.price,'acc-d'+day.day);pr.classList.add('ov-price');pr.style.color=day.color;
+    bot.appendChild(pr);
+    body.appendChild(bot);
+    card.appendChild(stripe);card.appendChild(body);
+    list.appendChild(card);
+  });
+  panel.appendChild(list);
+}
+
+// ════════════════════════════════════════════════════
+//  BUILD DAY PANELS
+// ════════════════════════════════════════════════════
+function buildDayPanel(day){
+  const p=div('panel');p.id='panel-'+day.day;
+  const C=day.color;
+
+  // sticky header
+  const dh=div('d-head');dh.style.background=C;
+  const dht=div('d-head-top');
+  const dl=div('');
+  dl.appendChild(div('d-num','Day '+day.day));
+  dl.appendChild(div('d-name',day.title));
+  const dm=div('d-meta');
+  [['🚗',day.km],['🕐',day.drive]].forEach(([ic,v])=>{
+    if(v&&v!=='―'){const s=span('',ic+' '+v);dm.appendChild(s);}
+  });
+  if(day.sunrise){dm.appendChild(span('','🌅 '+day.sunrise));dm.appendChild(span('','🌇 '+day.sunset));}
+  dl.appendChild(dm);
+  dht.appendChild(dl);dht.appendChild(div('d-date-badge',day.date));
+  dh.appendChild(dht);p.appendChild(dh);
+
+  // info bar
+  const ib=div('d-infobar');
+  [{l:'出發時間',v:day.depart},{l:'總里程',v:day.km},{l:'景點數',v:day.spots.length+'個'}].forEach(({l,v})=>{
+    const d=div('dib');d.appendChild(div('dib-l',l));d.appendChild(div('dib-v',v));ib.appendChild(d);
+  });
+  p.appendChild(ib);
+
+  // flights (D0)
+  if(day.flights){
+    const fb=div('flight-box');
+    fb.appendChild(div('flight-title','✈ 班機資訊'));
+    day.flights.forEach(f=>{
+      const row=div('flight-row');
+      row.appendChild(div('flight-who',f.who));
+      row.appendChild(div('flight-info',f.info));
+      fb.appendChild(row);
+    });
+    p.appendChild(fb);
+  }
+
+  // tips
+  if(day.tips&&day.tips.length){
+    const tb=div('tips-box');
+    tb.appendChild(div('tips-title','⚡ 今日重點提醒'));
+    day.tips.forEach(t=>tb.appendChild(div('tip-item',t)));
+    p.appendChild(tb);
+  }
+
+  // timeline
+  const tl=div('timeline');
+  day.spots.forEach((sp,si)=>{
+    // drive connector
+    if(si>0&&sp.drv){
+      const g=div('tl-gap');
+      const gl=div('tl-gap-line');gl.style.background=C;
+      g.appendChild(gl);g.appendChild(span('','🚗 '+sp.drv));
+      tl.appendChild(g);
+    }
+    // spot row
+    const row=div('tl-row');
+    row.addEventListener('click',()=>flyToSpot(sp,day));
+
+    const left=div('tl-left');
+    const dot=div('tl-dot',sp._n);dot.style.background=C;
+    left.appendChild(dot);
+    if(si<day.spots.length-1){
+      const vl=div('tl-vline');vl.style.background=C;left.appendChild(vl);
+    }
+    row.appendChild(left);
+
+    const main=div('tl-main');
+    if(sp.time){const t=div('tl-time',sp.time);t.style.color=C;main.appendChild(t);}
+    main.appendChild(div('tl-zh',sp.zh));
+    main.appendChild(div('tl-en',sp.en));
+
+    // tags row
+    const tagsDiv=div('tl-tags');
+    // fee tag (editable)
+    if(sp.fee){
+      const ft=div('tt fee');
+      ft.appendChild(span('','💰 '));
+      const pr=makePrice(sp.fee,sp.feeKey);
+      ft.appendChild(pr);
+      tagsDiv.appendChild(ft);
+    }
+    if(sp.dur){const d=span('tt dur','⏱ '+sp.dur);tagsDiv.appendChild(d);}
+    (sp.tags||[]).forEach(t=>{
+      const cls='tt '+(t.startsWith('⚠️')?'warn':'tag');
+      tagsDiv.appendChild(span(cls,t));
+    });
+    main.appendChild(tagsDiv);
+    if(sp.desc)main.appendChild(div('tl-desc',sp.desc));
+    // Google Maps button
+    if(sp.lat){  // all spots with coordinates
+      const gm=el('a','gmap-btn','🗺 Google Maps 導航');
+      gm.href=`https://maps.google.com/?q=${sp.lat},${sp.lon}&z=15`;
+      gm.target='_blank';
+      gm.addEventListener('click',e=>e.stopPropagation()); // don't trigger flyToSpot
+      main.appendChild(gm);
+    }
+    row.appendChild(main);
+
+    // photo circle
+    const photo=div('tl-photo loading');
+    photo.style.borderColor=C;
+    photo.id='ph-'+sp._n;
+    row.appendChild(photo);
+    if(sp.wiki)getPhoto(sp.wiki,photo);
+
+    tl.appendChild(row);
+  });
+  p.appendChild(tl);
+
+  // restaurants
+  if(day.restaurants&&day.restaurants.length){
+    p.appendChild(div('section-head','🍴 今日餐廳推薦'));
+    day.restaurants.forEach(r=>{
+      const c=div('rest-card');
+      c.appendChild(div('rest-name',r.name));
+      const rt=div('rest-type',r.type);rt.style.color=C;c.appendChild(rt);
+      c.appendChild(div('rest-note',r.note));
+      p.appendChild(c);
+    });
+  }
+
+  // accommodation
+  const acc=div('acc-block');
+  acc.style.borderLeftColor=C;
+  acc.appendChild(div('acc-label','🏨 TODAY\'S ACCOMMODATION'));
+  acc.appendChild(div('acc-name',day.acc.name));
+  acc.appendChild(div('acc-sub',day.acc.sub+(day.acc.booking?' · '+day.acc.booking:'')));
+  const pr=div('acc-price-row');
+  const editable=day.acc.price!=='―'&&day.acc.price!=='無住宿費';
+  const badge=div('acc-price-badge'+(editable?' ep':''),day.acc.price);
+  badge.dataset.k='acc-d'+day.day;
+  badge.style.color=C;badge.style.borderColor=C+'44';badge.style.background=C+'15';
+  if(editable)badge.addEventListener('click',()=>clickPrice(badge));
+  pr.appendChild(badge);
+  if(editable)pr.appendChild(div('acc-edit-hint','← 點✏️後可修改'));
+  acc.appendChild(pr);
+  p.appendChild(acc);
+  return p;
+}
+
+// ════════════════════════════════════════════════════
+//  PHOTO LOADER  (Bug B3 fix: queue multiple targets)
+// ════════════════════════════════════════════════════
+const pc={};        // wiki → url (null=pending, false=failed)
+const pcQ={};       // wiki → [pending targetEls]
+function getPhoto(wiki,targetEl){
+  if(pc[wiki]){  // already resolved with a URL
+    if(targetEl){targetEl.style.backgroundImage='url('+pc[wiki]+')';targetEl.classList.remove('loading');}
+    return;
+  }
+  if(pc[wiki]===false){if(targetEl)targetEl.classList.remove('loading');return;}  // known failure
+  if(pc[wiki]===null){  // fetch in progress → queue target
+    if(targetEl)(pcQ[wiki]=pcQ[wiki]||[]).push(targetEl);
+    return;
+  }
+  // First request for this wiki
+  pc[wiki]=null;
+  if(targetEl)(pcQ[wiki]=[]).push(targetEl);
+  fetch('https://en.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(wiki))
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{
+      const url=d?.thumbnail?.source||null;
+      pc[wiki]=url||false;
+      (pcQ[wiki]||[]).forEach(el=>{
+        if(!el)return;
+        if(url)el.style.backgroundImage='url('+url+')';
+        el.classList.remove('loading');
+      });
+    }).catch(()=>{pc[wiki]=false;(pcQ[wiki]||[]).forEach(el=>{if(el)el.classList.remove('loading');});});
+}
+
+// ════════════════════════════════════════════════════
+//  ASSEMBLE DOM
+// ════════════════════════════════════════════════════
+buildOverview();
+const dtabs=document.getElementById('dtabs');
+const panels=document.getElementById('panels');
+const layers={};
+
+DAYS.forEach(day=>{
+  // tab button
+  const tb=el('button','dtab');
+  tb.style.setProperty('--dc',day.color);
+  tb.id='dtab-'+day.day;
+  const n=el('span','n','D'+day.day);
+  const d=el('span','d',day.date.replace(/\(.+\)/,''));
+  tb.appendChild(n);tb.appendChild(d);
+  tb.addEventListener('click',()=>activateDay(day.day));
+  dtabs.appendChild(tb);
+  // panel
+  const panel=buildDayPanel(day);
+  panels.appendChild(panel);
+});
+
+// ════════════════════════════════════════════════════
+//  LEAFLET MAP
+// ════════════════════════════════════════════════════
+const map=L.map('map',{center:[65.1,-18.5],zoom:6,zoomControl:false});
+L.control.zoom({position:'bottomright'}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+  attribution:'© OpenStreetMap contributors · © CartoDB · Photos: Wikipedia CC',
+  subdomains:'abcd',maxZoom:19,
+}).addTo(map);
+
+function mkIcon(num,col,dim){
+  return L.divIcon({className:'',
+    html:'<div style="width:30px;height:30px;background:'+col+';border:2.5px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:11px;font-family:Microsoft JhengHei,Arial,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.5);opacity:'+(dim?'.22':'1')+';cursor:pointer">'+num+'</div>',
+    iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-18]});
+}
+
+function popupHtml(sp,day){
+  const d=div('pw');
+  const img=div('pw-img loading');img.id='pi-'+sp._n;
+  img.appendChild(div('pw-img-grad'));
+  const badge=div('pw-badge',`Day ${day.day} · ${day.date}`);badge.style.background=day.color;
+  img.appendChild(badge);d.appendChild(img);
+  const body=div('pw-body');
+  body.appendChild(div('pw-zh',sp.zh));
+  const en=div('pw-en',sp.en);en.style.color=day.color;body.appendChild(en);
+  const tags=div('pw-tags');
+  if(sp.fee)tags.appendChild(span('pw-tag','💰 '+sp.fee));
+  if(sp.dur)tags.appendChild(span('pw-tag','⏱ '+sp.dur));
+  // drive to next spot
+  const si=day.spots.indexOf(sp);
+  const next=day.spots[si+1];
+  if(next&&next.drv)tags.appendChild(span('pw-tag','→ '+next.drv));
+  body.appendChild(tags);
+  const links=div('pw-links');
+  const wiki=el('a','pw-wiki','📖 Wikipedia');
+  wiki.href='https://en.wikipedia.org/wiki/'+encodeURIComponent(sp.wiki);
+  wiki.target='_blank';links.appendChild(wiki);
+  if(sp.lat&&sp.lat>50){
+    const gm=el('a','pw-wiki','🗺 導航');
+    gm.href=`https://maps.google.com/?q=${sp.lat},${sp.lon}&z=15`;
+    gm.target='_blank';links.appendChild(gm);
+  }
+  body.appendChild(links);
+  d.appendChild(body);
+  if(sp.wiki)getPhoto(sp.wiki,img);
+  return d;
+}
+
+DAYS.forEach(day=>{
+  if(day.isD0)return;
+  const lls=day.spots.map(s=>[s.lat,s.lon]);
+  const C=day.color;
+  const glow=L.polyline(lls,{color:C,weight:11,opacity:.14,lineJoin:'round'}).addTo(map);
+  const line=L.polyline(lls,{color:C,weight:4.5,opacity:.9,lineJoin:'round'}).addTo(map);
+  const marks=day.spots.map(sp=>{
+    const mk=L.marker([sp.lat,sp.lon],{icon:mkIcon(sp._n,C,false)});
+    mk.bindPopup(()=>popupHtml(sp,day),{maxWidth:270,minWidth:260,className:''});
+    mk.on('click',()=>activateDay(day.day,false));
+    mk.addTo(map);
+    return mk;
+  });
+  layers[day.day]={glow,line,marks,day};
+});
+
+// ════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════
+let current=null;
+
+function showAll(){
+  current=null;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('panel-ov').classList.add('on');
+  document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('allBtn').classList.add('on');
+  // restore all layers
+  DAYS.forEach(d=>{
+    if(!layers[d.day])return;
+    const{glow,line,marks}=layers[d.day];
+    line.setStyle({opacity:.85,weight:4});glow.setStyle({opacity:.14});
+    d.spots.forEach((sp,i)=>marks[i].setIcon(mkIcon(sp._n,d.color,false)));
+  });
+  map.flyTo([65.1,-18.5],6,{duration:.8});
+}
+
+function activateDay(dayNum,flyTo=true){
+  current=dayNum;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  const panel=document.getElementById('panel-'+dayNum);
+  if(panel){panel.classList.add('on');panel.scrollTop=0;}
+  document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('on'));
+  const tb=document.getElementById('dtab-'+dayNum);
+  if(tb)tb.classList.add('on');
+  document.getElementById('allBtn').classList.remove('on');
+  // map opacity  (Bug B1 fix: D0 has no Iceland layer → show all normally)
+  const hasLayer=!!layers[dayNum];
+  DAYS.forEach(d=>{
+    if(!layers[d.day])return;
+    const on=!hasLayer||d.day===dayNum;  // if no layer for selected day, show all
+    const{glow,line,marks}=layers[d.day];
+    line.setStyle({opacity:on?.9:.1,weight:on?5:2});
+    glow.setStyle({opacity:on?.18:.03});
+    d.spots.forEach((sp,i)=>marks[i].setIcon(mkIcon(sp._n,d.color,!on)));
+  });
+  if(flyTo&&layers[dayNum]){
+    const day=DAYS.find(d=>d.day===dayNum);
+    if(day){
+      const bounds=L.latLngBounds(day.spots.map(s=>[s.lat,s.lon]));
+      map.flyToBounds(bounds,{padding:[85,85],maxZoom:10,duration:.75});
+    }
+  }
+}
+
+let _flyTimeout=null;
+function flyToSpot(sp,day){
+  if(!sp.lat||sp.lat<50)return; // skip non-Iceland (Taiwan lat≈25, Iceland lat≈63-66)
+  if(_flyTimeout){clearTimeout(_flyTimeout);_flyTimeout=null;}
+  map.flyTo([sp.lat,sp.lon],11,{duration:.7});
+  _flyTimeout=setTimeout(()=>{
+    _flyTimeout=null;
+    if(!layers[day.day])return;
+    layers[day.day].marks.forEach((mk,i)=>{
+      if(day.spots[i]===sp)mk.openPopup();
+    });
+  },800);
+}
+
+// ════════════════════════════════════════════════════
+//  INIT  – wire up buttons here (more reliable than onclick attr)
+// ════════════════════════════════════════════════════
+document.getElementById('editBtn').addEventListener('click', toggleEdit);
+document.getElementById('resetBtn').addEventListener('click', resetPrices);
+document.getElementById('allBtn').addEventListener('click', showAll);
+
+initPrices();
+</script>
+</body>
+</html>
