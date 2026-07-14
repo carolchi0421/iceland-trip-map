@@ -155,5 +155,26 @@ Sheet 結構（Tab: gid=461091797）：
 
 ---
 
+## 線上部署（GitHub Pages）
+
+| 項目 | 內容 |
+|------|------|
+| 固定網址 | **https://carolchi0421.github.io/iceland-trip-map/** |
+| Repo | https://github.com/carolchi0421/iceland-trip-map （Public） |
+| GitHub 帳號 | carolchi0421 |
+| 線上版來源檔 | `C:\Users\CC\Downloads\iceland-trip-map\index.html`（= 本專案 HTML，重新命名為 index.html） |
+| gh CLI | `C:\Program Files\GitHub CLI\gh.exe`（v2.96，已登入 keyring） |
+
+**更新流程**（網址不變，內容自動更新）：
+1. 編輯 `iceland-trip-map\index.html`（這是線上版的**唯一來源**）
+2. `git -C C:\Users\CC\Downloads\iceland-trip-map add -A`
+3. `git -C ... commit -m "說明"`
+4. `git -C ... push`
+5. 約 30 秒–1 分鐘後線上版自動更新
+
+> ⚠️ 注意：原 `C:\Users\CC\Downloads\冰島旅遊地圖.html` 是部署前的初始複本，**已不是線上版來源**。之後所有修改請改在 `iceland-trip-map\index.html` 進行，避免兩份檔案不同步。
+
+---
+
 ## 最後一次 AI 作業日期
-2026-07-14
+2026-07-14（部署 GitHub Pages）
