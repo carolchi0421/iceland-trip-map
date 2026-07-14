@@ -162,17 +162,35 @@ Sheet 結構（Tab: gid=461091797）：
 | 固定網址 | **https://carolchi0421.github.io/iceland-trip-map/** |
 | Repo | https://github.com/carolchi0421/iceland-trip-map （Public） |
 | GitHub 帳號 | carolchi0421 |
-| 線上版來源檔 | `C:\Users\CC\Downloads\iceland-trip-map\index.html`（= 本專案 HTML，重新命名為 index.html） |
+| 線上版來源檔 | `C:\Users\CC\Downloads\iceland-trip-map\index.html`（= 本專案 HTML，唯一來源） |
 | gh CLI | `C:\Program Files\GitHub CLI\gh.exe`（v2.96，已登入 keyring） |
 
-**更新流程**（網址不變，內容自動更新）：
-1. 編輯 `iceland-trip-map\index.html`（這是線上版的**唯一來源**）
-2. `git -C C:\Users\CC\Downloads\iceland-trip-map add -A`
-3. `git -C ... commit -m "說明"`
-4. `git -C ... push`
-5. 約 30 秒–1 分鐘後線上版自動更新
+> ⚠️ 部署前的舊複本 `C:\Users\CC\Downloads\冰島旅遊地圖.html` **已刪除**。線上版只有一個來源檔：`iceland-trip-map\index.html`。
 
-> ⚠️ 注意：原 `C:\Users\CC\Downloads\冰島旅遊地圖.html` 是部署前的初始複本，**已不是線上版來源**。之後所有修改請改在 `iceland-trip-map\index.html` 進行，避免兩份檔案不同步。
+---
+
+### 🤖 給 AI：使用者說「幫我改 XXX」時的完整流程
+
+當使用者要求修改地圖內容（例如填住宿費、改景點、調樣式），要**一次做完以下所有步驟**，不要只改一半：
+
+1. **編輯** `C:\Users\CC\Downloads\iceland-trip-map\index.html`（線上版唯一來源）。
+2. **本機驗證**改動正確（檢查 HTML 結構、必要時開檔確認）。
+3. **同步 HANDOVER**：若改動涉及住宿費表、待辦、班機等本文件記錄的資訊，一併更新此 `HANDOVER.md`，並複製一份到 `iceland-trip-map\HANDOVER.md`。
+4. **暫存 + commit**（此時可以 commit，但先不要 push）：
+   ```
+   git -C C:\Users\CC\Downloads\iceland-trip-map add -A
+   git -C C:\Users\CC\Downloads\iceland-trip-map commit -m "說明"
+   ```
+5. **⛔ push 前一定要先問使用者**：commit 完成後，明確詢問「要現在 push 上線嗎？」等使用者同意才執行：
+   ```
+   git -C C:\Users\CC\Downloads\iceland-trip-map push
+   ```
+6. push 後告知：約 30 秒–1 分鐘線上版 https://carolchi0421.github.io/iceland-trip-map/ 會自動更新（網址不變）。
+
+**重點規則**：
+- ✅ 每次「改東西」都要把上面 1–4 步做完（改檔、驗證、同步文件、commit）。
+- ⛔ **不要每次都自動 push**。push 是「發布上線」的動作，**每次 push 前都必須先問使用者、得到同意才 push**。
+- 使用者可能一次改好幾項後才決定一起 push，別自作主張提早發布。
 
 ---
 
