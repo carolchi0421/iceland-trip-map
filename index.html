@@ -380,6 +380,17 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 .acc-alt-link:hover{color:#8fd6ff;border-color:#8fd6ff}
 .acc-alt-name{font-size:11px;color:var(--t2);line-height:1.4}
 .acc-alt-price{font-size:10px;color:var(--t3);white-space:nowrap}
+.acc-team-tag{
+  display:inline-block;font-size:9px;font-weight:800;letter-spacing:.4px;
+  padding:2px 8px;border-radius:5px;border:1px solid;background:rgba(255,255,255,.03);
+  margin-bottom:5px;
+}
+.acc-team-same{
+  font-size:11px;color:var(--t2);margin-top:9px;padding-top:8px;
+  border-top:1px dashed var(--bd2);
+}
+.acc-team-b{margin-top:10px;padding-top:10px;border-top:1px solid var(--bd2)}
+.acc-team-note{font-size:9px;color:var(--t3);margin-top:3px}
 
 /* ──────────── MAP ──────────── */
 #map{flex:1;height:100vh}
@@ -572,7 +583,7 @@ const DAYS = [
 },
 {day:1, date:'9/25(五)', color:'#E74C3C', title:'抵達冰島',
  depart:'18:20 KEF 落地', sunrise:'07:18', sunset:'19:21', km:'約30 km', drive:'約20 min',
- acc:{name:'Flyers Airport Hotel', sub:'機場附近，步行可達航廈（已確認）', price:'NT$10,558', booking:'Agoda'},
+ acc:{name:'Flyers Airport Hotel', sub:'機場附近，步行可達航廈（已確認）', price:'NT$10,558', booking:'Agoda', bSame:true},
  tips:[
    'Flyers Airport Hotel 已確認，步行可達航廈',
    '取行李→出海關→搭 Lotus Car Rental 接駁車取車',
@@ -595,7 +606,7 @@ const DAYS = [
 },
 {day:2, date:'9/26(六)', color:'#E67E22', title:'斯奈山半島',
  depart:'建議 08:30 出發（拉車較長）', sunrise:'07:21', sunset:'19:17', km:'約220 km', drive:'約3.5 H',
- acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda',
+ acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda', bSame:true,
    alts:[
      {name:'Hömluholt 度假屋（8人獨棟・近1號公路但離教會山較遠）', price:'約NT$25,314', url:'https://www.airbnb.com.tw/rooms/25182840?check_in=2026-09-26&check_out=2026-09-27&guests=1&adults=8&s=67&unique_share_id=db4ca5d4-797b-44ab-a35d-df09d9e526be'},
    ]},
@@ -646,6 +657,7 @@ const DAYS = [
 {day:3, date:'9/27(日)', color:'#F39C12', title:'北上亞庫來利',
  depart:'建議 08:30 出發', sunrise:'07:24', sunset:'19:14', km:'約380 km', drive:'約4H 40min（全程最長）',
  acc:{name:'Steinaskjól Apartments', sub:'亞庫來利市區，有個人廚房。Agoda訂（雅致），9/4前免費取消', price:'NT$8,579', booking:'Agoda',
+   b:{name:'Guesthouse AkurInn', sub:'亞庫來利，B團另住'},
    alts:[
      {name:'家庭公寓 4臥室（8人・附陽臺）', price:'約NT$17,584', url:'https://www.airbnb.com.tw/rooms/1044098317726008495?check_in=2026-09-27&check_out=2026-09-28&guests=1&adults=8&s=67&unique_share_id=99980c00-78eb-467d-bfdc-32f84ca160f9'},
      {name:'Colin 訂房詳情（9/22前可取消）', price:'—', url:'https://www.airbnb.com.tw/trips/v1/reservation-details/ro/RESERVATION2_CHECKIN/HM2Q9WAPW5/directions-modal'},
@@ -684,7 +696,7 @@ const DAYS = [
 },
 {day:4, date:'9/28', color:'#27AE60', title:'米湖火山地景',
  depart:'建議 08:00 出發（景點集中米湖周邊）', sunrise:'07:27', sunset:'19:10', km:'約135 km', drive:'約2 H（景點集中）',
- acc:{name:'Vogar Travel Service', sub:'米湖旁，公共廚房。Booking訂（秉翔訂）', price:'NT$9,116', booking:'Booking'},
+ acc:{name:'Vogar Travel Service', sub:'米湖旁，公共廚房。Booking訂（秉翔訂）', price:'NT$9,116', booking:'Booking', bSame:true},
  tips:[
    '今日景點全在米湖方圓20km，拉車最輕鬆的一天',
    '惠爾偽火山：陡坡碎石消耗體力，預留1.5H，鞋帶一定要綁緊',
@@ -737,7 +749,8 @@ const DAYS = [
 },
 {day:5, date:'9/29', color:'#16A085', title:'東進白日夢小鎮',
  depart:'建議 08:00 出發', sunrise:'07:30', sunset:'19:06', km:'約250 km', drive:'約3.5–4 H',
- acc:{name:'Hafaldan HI Hostel', sub:'Seyðisfjörður 彩虹小鎮，港口邊。Booking訂（卡羅訂）', price:'NT$9,565', booking:'Booking'},
+ acc:{name:'Hafaldan HI Hostel', sub:'Seyðisfjörður 彩虹小鎮，港口邊。Booking訂（卡羅訂）', price:'NT$9,565', booking:'Booking',
+   b:{name:'Greystone summerhouse', sub:'B團另住'}},
  tips:[
    'Egilsstaðir Bónus 小豬超市：務必把後兩天食物補齊，峽灣物價高',
    '翻越93號公路進 Seyðisfjörður：坡度極陡，9月底可能有初雪，低速慢行',
@@ -788,7 +801,8 @@ const DAYS = [
 },
 {day:6, date:'9/30', color:'#2980B9', title:'峽灣南下赫本',
  depart:'建議 08:30 出發', sunrise:'07:33', sunset:'19:03', km:'約270 km', drive:'約3.5–4 H',
- acc:{name:'Höfn i Hornafirði', sub:'龍蝦之城，海邊小鎮', price:'待定', booking:''},
+ acc:{name:'Höfn i Hornafirði', sub:'龍蝦之城，海邊小鎮（A團尚未訂房）', price:'待定', booking:'',
+   b:{name:'Guesthouse Skálafell', sub:'B團另住'}},
  tips:[
    '繞行峽灣線（經 Djúpivogur）實際約270km，比走 Öxi 山口捷徑長，體感時間會拉長',
    '蒸氣瀑布在93號公路上，離小鎮僅5分鐘，順路必停',
@@ -829,7 +843,7 @@ const DAYS = [
 },
 {day:7, date:'10/1', color:'#8E44AD', title:'冰河湖・冰川健行',
  depart:'建議 09:00 出發', sunrise:'07:35', sunset:'18:59', km:'約270 km', drive:'約3.5 H',
- acc:{name:'Stracta Apartments Orustustaðir', sub:'教堂城 Orustustaðir 一帶。雅致訂（Guide to Iceland），9/24前可免費取消', price:'NT$14,520', booking:'Guide to Iceland',
+ acc:{name:'Stracta Apartments Orustustaðir', sub:'教堂城 Orustustaðir 一帶。雅致訂（Guide to Iceland），9/24前可免費取消', price:'NT$14,520', booking:'Guide to Iceland', bSame:true,
    alts:[
      {name:'Midgard Base Camp（家庭房・私人衛浴）', price:'NT$9,826・Booking', url:''},
    ]},
@@ -873,7 +887,7 @@ const DAYS = [
 },
 {day:8, date:'10/2', color:'#C0392B', title:'南岸瀑布群',
  depart:'建議 08:30 出發', sunrise:'07:38', sunset:'18:56', km:'約208 km', drive:'約3 H（景點密集）',
- acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking',
+ acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking', bSame:true,
    alts:[
      {name:'8人整套房源（Hella）', price:'約NT$17,177', url:'https://www.airbnb.com.tw/rooms/15251515?check_in=2026-10-02&check_out=2026-10-03&guests=1&adults=8&s=67&unique_share_id=5f5cee24-6244-4b09-bddd-76bf325b6053'},
    ]},
@@ -925,6 +939,7 @@ const DAYS = [
 {day:9, date:'10/3', color:'#D35400', title:'黃金圈→藍湖→深夜班機',
  depart:'建議 08:30 出發（景點最多！）', sunrise:'07:41', sunset:'18:52', km:'約270 km', drive:'約4.5 H',
  acc:{name:'Flyers Airport Hotel（待確認）', sub:'深夜班機前短暫休憩，21:30 KEF還車，22:00機場報到，01:00起飛。藍湖→Flyers僅20min', price:'NT$8,493', booking:'Agoda',
+   b:{name:'Golden Circle Domes - Lake View', sub:'黃金圈玻璃屋，B團另住'},
    alts:[
      {name:'8人整套房源（塞爾福斯 Selfoss・豪華大房子）', price:'約NT$31,667', url:'https://www.airbnb.com.tw/rooms/1326887757600236278?check_in=2026-10-03&check_out=2026-10-04&guests=1&adults=8'},
    ]},
@@ -1203,7 +1218,14 @@ function buildOverview(){
     body.appendChild(tags);
     // bottom
     const bot=div('ov-bot');
-    const acc=div('ov-acc');acc.innerHTML='🏨 <b>'+day.acc.name.split('(')[0].trim()+'</b>';
+    const acc=div('ov-acc');
+    const aName=day.acc.name.split('(')[0].trim();
+    if(day.acc.b){
+      const bName=day.acc.b.name.split('(')[0].trim();
+      acc.innerHTML='🏨 A團 <b>'+aName+'</b>　B團 <b>'+bName+'</b>';
+    }else{
+      acc.innerHTML='🏨 <b>'+aName+'</b>'+(day.acc.bSame?'（A/B團同住）':'');
+    }
     bot.appendChild(acc);
     bot.appendChild(div('ov-km',day.km));
     const pr=makePrice(day.acc.price,'acc-d'+day.day);pr.classList.add('ov-price');pr.style.color=day.color;
@@ -1346,6 +1368,12 @@ function buildDayPanel(day){
   const acc=div('acc-block');
   acc.style.borderLeftColor=C;
   acc.appendChild(div('acc-label','🏨 TODAY\'S ACCOMMODATION'));
+  // Two travel groups: A團(卡致豆桓) / B團(豆林羅哈). Only tag teams when there is B-team info.
+  const hasTeams=!!(day.acc.b||day.acc.bSame);
+  if(hasTeams){
+    const ta=div('acc-team-tag','A團 · 卡致豆桓');
+    ta.style.color=C;ta.style.borderColor=C+'66';acc.appendChild(ta);
+  }
   acc.appendChild(div('acc-name',day.acc.name));
   acc.appendChild(div('acc-sub',day.acc.sub+(day.acc.booking?' · '+day.acc.booking:'')));
   const pr=div('acc-price-row');
@@ -1357,6 +1385,18 @@ function buildDayPanel(day){
   pr.appendChild(badge);
   if(editable)pr.appendChild(div('acc-edit-hint','← 點✏️後可修改'));
   acc.appendChild(pr);
+  // Team B (豆林羅哈)：同住或另訂
+  if(day.acc.bSame){
+    acc.appendChild(div('acc-team-same','🔗 B團（豆林羅哈）與 A團同住此處'));
+  }else if(day.acc.b){
+    const bWrap=div('acc-team-b');
+    const tb=div('acc-team-tag','B團 · 豆林羅哈');
+    tb.style.color=C;tb.style.borderColor=C+'66';bWrap.appendChild(tb);
+    bWrap.appendChild(div('acc-name',day.acc.b.name));
+    bWrap.appendChild(div('acc-sub',(day.acc.b.sub||'')+(day.acc.b.booking?' · '+day.acc.b.booking:'')));
+    bWrap.appendChild(div('acc-team-note','B團住宿費 Sheet 未列'));
+    acc.appendChild(bWrap);
+  }
   // alternative / candidate accommodations (Sheet「未確認」備選)
   if(day.acc.alts&&day.acc.alts.length){
     const altWrap=div('acc-alts');

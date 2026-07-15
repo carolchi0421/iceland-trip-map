@@ -51,20 +51,23 @@ Sheet 結構（Tab: gid=461091797）：
 > **重要**：住宿費 row 為 **column-aligned**（每欄的價格對應該欄的日期）。
 > 舊版 HTML 曾誤用「sequential pairing」導致 D1–D5 全部錯位。已修正。
 
-| Day | 日期 | 飯店 | 費用 | 訂房方 | 狀態 |
-|-----|------|------|------|--------|------|
-| D0 | 9/24(四) | 飯店未知 | NT$20,969 | — | 待確認飯店名稱（Sheet 9/24 欄 20,968.5） |
-| D1 | 9/25(五) | Flyers Airport Hotel | NT$10,558 | Carol / Agoda | 9/26前可免費取消 |
-| D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | 9/21前可免費取消 |
-| D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | 9/4前可免費取消 |
-| D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | — |
-| D5 | 9/29 | Hafaldan HI Hostel | NT$9,565 | 卡羅 / Booking | — |
-| D6 | 9/30 | Höfn i Hornafirði | 待定 | — | 尚未訂房 |
-| D7 | 10/1 | Stracta Apartments Orustustaðir | NT$14,520 | 雅致 / Guide to Iceland | 已訂，9/24前可免費取消 |
-| D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | 9/27前可免費取消 |
-| D9 | 10/3 | Flyers Airport Hotel（待確認） | NT$8,493 | Agoda | 深夜班機前短暫休憩，尚未定 |
+> **兩團分開**：A團（卡致豆桓）與 B團（豆林羅哈）在 Sheet 是兩列。部分夜晚同住、部分各自訂房。
+> 「住宿費」row 為 **A團**（已訂/計價）；B團費用 Sheet 未列。
 
-**住宿費加總**（已知費用）：NT$104,843（僅 D6 Höfn 待定中）
+| Day | 日期 | A團（卡致豆桓）飯店 | A團費用 | 訂房方 | B團（豆林羅哈）飯店 | 狀態 |
+|-----|------|------|------|--------|------|------|
+| D0 | 9/24(四) | 飯店未知 | NT$20,969 | — | — | 待確認飯店名稱（Sheet 9/24 欄 20,968.5） |
+| D1 | 9/25(五) | Flyers Airport Hotel | NT$10,558 | Carol / Agoda | **同 A團** | 9/26前可免費取消 |
+| D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | **同 A團** | 9/21前可免費取消 |
+| D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | Guesthouse AkurInn（另訂） | 9/4前可免費取消 |
+| D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | **同 A團** | — |
+| D5 | 9/29 | Hafaldan HI Hostel | NT$9,565 | 卡羅 / Booking | Greystone summerhouse（另訂） | — |
+| D6 | 9/30 | Höfn i Hornafirði | 待定 | — | Guesthouse Skálafell（另訂） | A團尚未訂房 |
+| D7 | 10/1 | Stracta Apartments Orustustaðir | NT$14,520 | 雅致 / Guide to Iceland | **同 A團** | 已訂，9/24前可免費取消 |
+| D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | **同 A團** | 9/27前可免費取消 |
+| D9 | 10/3 | Flyers Airport Hotel（待確認） | NT$8,493 | Agoda | Golden Circle Domes - Lake View（另訂） | 深夜班機前短暫休憩，A團尚未定 |
+
+**A團住宿費加總**（已知費用）：NT$104,843（僅 D6 Höfn 待定中）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
 
 ---
 
@@ -76,7 +79,8 @@ Sheet 結構（Tab: gid=461091797）：
 | ~~D7 住宿費~~ | ✅ 已訂：Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland） |
 | D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用 NT$20,969，確認後填入 |
 | D9 住宿確認 | Flyers Airport Hotel 待定（深夜班機前 hotel，Agoda 尚未訂） |
-| B 団住宿 | 豆林羅哈 4 人有另一套住宿安排，HTML 尚未收錄 |
+| ~~B 団住宿~~ | ✅ 已收錄：A/B 團住宿已在 HTML 每日住宿區分「A團／B團・同住或另訂」清楚標示 |
+| B 團費用 | 豆林羅哈另訂之夜（D3/D5/D6/D9）Sheet 未列費用，確認後可補 |
 
 ---
 
@@ -148,7 +152,7 @@ Sheet 結構（Tab: gid=461091797）：
 
 4. **D6 里程差異**：Sheet 寫「220km」，但實際 Seyðisfjörður→Höfn 約 330km，HTML 已標注此差異（原始 Sheet 誤記）。
 
-5. **B 団住宿**：豆林羅哈另有一套不同住宿（Greystone summerhouse、Guesthouse Skálafell、Stracta Apartments、Golden Circle Domes 等），HTML 目前只顯示 A 団（卡致豆桓）。
+5. **A/B 兩團住宿**：A團（卡致豆桓）與 B團（豆林羅哈）在 Sheet 是兩列。**HTML 每日住宿區塊已同時顯示兩團**：資料放在 `day.acc`（A團，含價格）與 `day.acc.b`（B團另訂）／`day.acc.bSame:true`（B團同住）。同住的夜晚（D1/D2/D4/D7/D8）顯示「B團與 A團同住此處」；各自訂房的夜晚（D3 Guesthouse AkurInn、D5 Greystone summerhouse、D6 Guesthouse Skálafell、D9 Golden Circle Domes）分開列出。B團費用 Sheet 未列。
 
 6. **圖片**：從 English Wikipedia API (`/api/rest_v1/page/summary/{wiki}`) 異步載入縮圖，有 in-memory cache，失效時顯示空白圓形。
 
