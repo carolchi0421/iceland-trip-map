@@ -369,6 +369,17 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
   border-width:1px;border-style:solid;letter-spacing:.3px;
 }
 .acc-edit-hint{font-size:9px;color:var(--t3)}
+.acc-alts{margin-top:10px;padding-top:9px;border-top:1px solid var(--bd1)}
+.acc-alts .acc-label{margin-bottom:6px}
+.acc-alt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+.acc-alt-row:last-child{margin-bottom:0}
+.acc-alt-link{
+  font-size:11px;color:var(--sky);text-decoration:none;line-height:1.4;
+  border-bottom:1px dashed rgba(72,184,232,.4);transition:color .14s,border-color .14s;
+}
+.acc-alt-link:hover{color:#8fd6ff;border-color:#8fd6ff}
+.acc-alt-name{font-size:11px;color:var(--t2);line-height:1.4}
+.acc-alt-price{font-size:10px;color:var(--t3);white-space:nowrap}
 
 /* ──────────── MAP ──────────── */
 #map{flex:1;height:100vh}
@@ -533,13 +544,15 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 const DAYS = [
 {day:0, date:'9/24(四)', color:'#607090', title:'出發日・台灣→冰島',
  depart:'提前3H到桃園機場', sunrise:'', sunset:'', km:'―', drive:'―',
- acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱', price:'NT$17,339', booking:''},
+ acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱', price:'NT$20,969', booking:''},
  isD0:true,
  flights:[
-   {who:'致黃', info:'TPE→AMS 23:59 → (+1)08:15 → AMS→KEF 17:05→18:20'},
-   {who:'Carol', info:'TPE→HKG 19:30→21:30 → HKG→AMS 23:15→(+1)06:55'},
-   {who:'桓哥',  info:'桓哥班機 15:15 → 23:20（KEF落地）'},
-   {who:'林豆',  info:'LHR→KEF 21:25→23:35（9/25落地）'},
+   {who:'致黃', info:'台灣→阿姆斯特丹　TPE→AMS　23:59 → (+1)08:15'},
+   {who:'Carol', info:'台灣→香港　TPE→HKG　19:30 → 21:30'},
+   {who:'Carol', info:'香港→阿姆斯特丹　HKG→AMS　23:15 → (+1)06:55'},
+   {who:'致黃+Carol', info:'阿姆斯特丹→冰島　AMS→KEF　17:05 → 18:20（AMS 會合後同班，9/25 落地）'},
+   {who:'桓哥',  info:'司徒加特→冰島　STR→KEF　15:15 → 23:20（9/25 落地）'},
+   {who:'林豆',  info:'倫敦→冰島　LHR→KEF　21:25 → 23:35（9/25 落地）'},
  ],
  tips:[
    '確認：護照、國際駕照、信用卡（需租車押金）、冰島保險',
@@ -569,6 +582,7 @@ const DAYS = [
  restaurants:[
    {name:'Bæjarins Beztu Pylsur', type:'🌭 冰島最著名熱狗攤', note:'羊肉熱狗 ISK 650 (NT$140)，必吃體驗'},
    {name:'Icelandic Street Food',  type:'🍲 傳統羊肉湯',     note:'無限續碗 ISK 2,500 (NT$540)，暖胃飽足'},
+   {name:'Víkinga Pylsur',         type:'🌭 熱狗店・備選',   note:'另一家好吃熱狗店，可當早午餐備選'},
  ],
  spots:[
    {zh:'凱夫拉維克國際機場', en:'Keflavik International Airport',
@@ -581,7 +595,10 @@ const DAYS = [
 },
 {day:2, date:'9/26(六)', color:'#E67E22', title:'斯奈山半島',
  depart:'建議 08:30 出發（拉車較長）', sunrise:'07:21', sunset:'19:17', km:'約220 km', drive:'約3.5 H',
- acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda'},
+ acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda',
+   alts:[
+     {name:'Hömluholt 度假屋（8人獨棟・近1號公路但離教會山較遠）', price:'約NT$25,314', url:'https://www.airbnb.com.tw/rooms/25182840?check_in=2026-09-26&check_out=2026-09-27&guests=1&adults=8&s=67&unique_share_id=db4ca5d4-797b-44ab-a35d-df09d9e526be'},
+   ]},
  tips:[
    '⚠️ 提醒 owner：D2 溫泉兩分頁不一致 — 主排程分頁寫「藍湖 Blue Lagoon」，Daily detail／景點簡表寫「Sky Lagoon」；目前依 detail 分頁顯示 Sky Lagoon，請確認要去哪一個',
    '08:30 準時出發，今日行程最滿，副駕不停跟司機聊天防瞌睡',
@@ -628,7 +645,11 @@ const DAYS = [
 },
 {day:3, date:'9/27(日)', color:'#F39C12', title:'北上亞庫來利',
  depart:'建議 08:30 出發', sunrise:'07:24', sunset:'19:14', km:'約380 km', drive:'約4H 40min（全程最長）',
- acc:{name:'Steinaskjól Apartments', sub:'亞庫來利市區，有個人廚房。Agoda訂（雅致），9/4前免費取消', price:'NT$8,579', booking:'Agoda'},
+ acc:{name:'Steinaskjól Apartments', sub:'亞庫來利市區，有個人廚房。Agoda訂（雅致），9/4前免費取消', price:'NT$8,579', booking:'Agoda',
+   alts:[
+     {name:'家庭公寓 4臥室（8人・附陽臺）', price:'約NT$17,584', url:'https://www.airbnb.com.tw/rooms/1044098317726008495?check_in=2026-09-27&check_out=2026-09-28&guests=1&adults=8&s=67&unique_share_id=99980c00-78eb-467d-bfdc-32f84ca160f9'},
+     {name:'Colin 訂房詳情（9/22前可取消）', price:'—', url:'https://www.airbnb.com.tw/trips/v1/reservation-details/ro/RESERVATION2_CHECKIN/HM2Q9WAPW5/directions-modal'},
+   ]},
  tips:[
    '全程最長拉車日，副駕持續與司機聊天防瞌睡！',
    '翻越 Öxnadalsheiði 高地：9月底極易起霧/路面薄冰，保持低速',
@@ -745,6 +766,12 @@ const DAYS = [
     fee:'停車 ISK 750', feeKey:'dettifoss',
     tags:['⭐歐洲水量最大瀑布','灰色水霧震撼','可順遊Selfoss'],
     desc:'歐洲水量最大的瀑布，灰色河水從懸崖傾瀉，巨大水霧撲面而來。'},
+   {zh:'玄武岩峽谷 Stuðlagil（選配）', en:'Stuðlagil Canyon',
+    lat:65.109, lon:-15.357, wiki:'Stuðlagil',
+    time:'選配繞路', drv:'約145 min 來回小繞路', dur:'體力足才去',
+    fee:'免費', feeKey:'studlagil',
+    tags:['⚠️選配・可省略','六角柱玄武岩峽谷','累的話跳過直奔白日夢'],
+    desc:'整齊六角玄武岩柱環抱藍綠色冰川河的絕美峽谷。屬可省略的小繞路（來回約145分鐘），體力或時間不足時可跳過，黛提瀑布後直接前往白日夢小鎮。'},
    {zh:'Vök溫泉浴', en:'Vök Baths',
     lat:65.268, lon:-14.407, wiki:'Vök_Baths',
     time:'14:00–16:00', drv:'約1H 45min（穿越黑沙荒原）', dur:'2 H',
@@ -802,7 +829,10 @@ const DAYS = [
 },
 {day:7, date:'10/1', color:'#8E44AD', title:'冰河湖・冰川健行',
  depart:'建議 09:00 出發', sunrise:'07:35', sunset:'18:59', km:'約270 km', drive:'約3.5 H',
- acc:{name:'教堂城 Kirkjubæjarklaustur', sub:'小鎮民宿，自煮廚房', price:'待定', booking:''},
+ acc:{name:'Stracta Apartments Orustustaðir', sub:'教堂城 Orustustaðir 一帶。雅致訂（Guide to Iceland），9/24前可免費取消', price:'NT$14,520', booking:'Guide to Iceland',
+   alts:[
+     {name:'Midgard Base Camp（家庭房・私人衛浴）', price:'NT$9,826・Booking', url:''},
+   ]},
  tips:[
    '⭐ 冰川健行14:30集合是全程最值得的體驗，務必事先向業者預約',
    '健行前午餐一定要吃飽！5小時極度消耗體力',
@@ -843,7 +873,10 @@ const DAYS = [
 },
 {day:8, date:'10/2', color:'#C0392B', title:'南岸瀑布群',
  depart:'建議 08:30 出發', sunrise:'07:38', sunset:'18:56', km:'約208 km', drive:'約3 H（景點密集）',
- acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking'},
+ acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking',
+   alts:[
+     {name:'8人整套房源（Hella）', price:'約NT$17,177', url:'https://www.airbnb.com.tw/rooms/15251515?check_in=2026-10-02&check_out=2026-10-03&guests=1&adults=8&s=67&unique_share_id=5f5cee24-6244-4b09-bddd-76bf325b6053'},
+   ]},
  tips:[
    '今日景點最密集，沿1號公路一字排開，拉車最輕鬆',
    '史可加瀑布右側有527階陡梯，登頂俯瞰值得爬',
@@ -853,6 +886,7 @@ const DAYS = [
  ],
  restaurants:[
    {name:'Black Beach Restaurant（黑沙灘旁）', type:'🍔 午餐',  note:'羊肉漢堡＋熱湯 ISK 3,200 (NT$690)'},
+   {name:'Black Crust Pizzeria（維克鎮）',      type:'🍕 午餐',  note:'維克鎮上披薩店，黑沙灘附近的午餐選擇'},
    {name:'Eyjafjallajökull Distillery Café',  type:'☕ 下午茶', note:'農場麵包＋咖啡 ISK 1,500 (NT$325)'},
  ],
  spots:[
@@ -890,7 +924,10 @@ const DAYS = [
 },
 {day:9, date:'10/3', color:'#D35400', title:'黃金圈→藍湖→深夜班機',
  depart:'建議 08:30 出發（景點最多！）', sunrise:'07:41', sunset:'18:52', km:'約270 km', drive:'約4.5 H',
- acc:{name:'Flyers Airport Hotel（待確認）', sub:'深夜班機前短暫休憩，21:30 KEF還車，22:00機場報到，01:00起飛。藍湖→Flyers僅20min', price:'NT$8,493', booking:'Agoda'},
+ acc:{name:'Flyers Airport Hotel（待確認）', sub:'深夜班機前短暫休憩，21:30 KEF還車，22:00機場報到，01:00起飛。藍湖→Flyers僅20min', price:'NT$8,493', booking:'Agoda',
+   alts:[
+     {name:'8人整套房源（塞爾福斯 Selfoss・豪華大房子）', price:'約NT$31,667', url:'https://www.airbnb.com.tw/rooms/1326887757600236278?check_in=2026-10-03&check_out=2026-10-04&guests=1&adults=8'},
+   ]},
  tips:[
    '09:00前一定出發！今日景點最多，時間非常緊湊',
    'Geysir 遊客中心廁所免費，早點解決，後面廁所要付費',
@@ -1116,7 +1153,7 @@ function buildOverview(){
   // discrepancy box
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
-  dtog.innerHTML='⚠️ 與原始行程表差異說明（6項）<span id="darr">▼</span>';
+  dtog.innerHTML='⚠️ 與原始行程表差異說明（7項）<span id="darr">▼</span>';
   dtog.addEventListener('click',()=>{
     const b=dw.querySelector('.diff-body');
     b.classList.toggle('open');
@@ -1129,6 +1166,7 @@ function buildOverview(){
     ['fix','[已修正] D6(9/30)繞峽灣線里程約270km（經Djúpivogur）'],
     ['fix','[已修正] 日出日落改為 2026 準確值；4處座標偏移修正（Ytri Tunga/Sky Lagoon/Vestrahorn/Brúarfoss）'],
     ['fix','[已確認] Flyers Airport Hotel (D1) 住宿已更新為已確認狀態'],
+    ['fix','[已確認] D7(10/1) 住宿已訂 Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland，9/24前免費取消）'],
     ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
     ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
   ];
@@ -1319,6 +1357,24 @@ function buildDayPanel(day){
   pr.appendChild(badge);
   if(editable)pr.appendChild(div('acc-edit-hint','← 點✏️後可修改'));
   acc.appendChild(pr);
+  // alternative / candidate accommodations (Sheet「未確認」備選)
+  if(day.acc.alts&&day.acc.alts.length){
+    const altWrap=div('acc-alts');
+    altWrap.appendChild(div('acc-label','🔸 其他備選住宿'));
+    day.acc.alts.forEach(a=>{
+      const row=div('acc-alt-row');
+      if(a.url){
+        const link=el('a','acc-alt-link',a.name);
+        link.href=a.url;link.target='_blank';link.rel='noopener';
+        row.appendChild(link);
+      }else{
+        row.appendChild(span('acc-alt-name',a.name));
+      }
+      if(a.price&&a.price!=='—')row.appendChild(span('acc-alt-price',a.price));
+      altWrap.appendChild(row);
+    });
+    acc.appendChild(altWrap);
+  }
   p.appendChild(acc);
   return p;
 }

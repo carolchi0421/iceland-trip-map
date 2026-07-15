@@ -53,18 +53,18 @@ Sheet 結構（Tab: gid=461091797）：
 
 | Day | 日期 | 飯店 | 費用 | 訂房方 | 狀態 |
 |-----|------|------|------|--------|------|
-| D0 | 9/24(四) | 飯店未知 | NT$17,339 | — | 待確認飯店名稱 |
+| D0 | 9/24(四) | 飯店未知 | NT$20,969 | — | 待確認飯店名稱（Sheet 9/24 欄 20,968.5） |
 | D1 | 9/25(五) | Flyers Airport Hotel | NT$10,558 | Carol / Agoda | 9/26前可免費取消 |
 | D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | 9/21前可免費取消 |
 | D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | 9/4前可免費取消 |
 | D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | — |
 | D5 | 9/29 | Hafaldan HI Hostel | NT$9,565 | 卡羅 / Booking | — |
 | D6 | 9/30 | Höfn i Hornafirði | 待定 | — | 尚未訂房 |
-| D7 | 10/1 | 教堂城 Kirkjubæjarklaustur | 待定 | — | 尚未訂房 |
+| D7 | 10/1 | Stracta Apartments Orustustaðir | NT$14,520 | 雅致 / Guide to Iceland | 已訂，9/24前可免費取消 |
 | D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | 9/27前可免費取消 |
 | D9 | 10/3 | Flyers Airport Hotel（待確認） | NT$8,493 | Agoda | 深夜班機前短暫休憩，尚未定 |
 
-**住宿費加總**（已知費用）：NT$86,693（D6/D7 待定中）
+**住宿費加總**（已知費用）：NT$104,843（僅 D6 Höfn 待定中）
 
 ---
 
@@ -73,8 +73,8 @@ Sheet 結構（Tab: gid=461091797）：
 | 項目 | 說明 |
 |------|------|
 | D6 住宿費 | Höfn 尚未訂房，費用空白，確認後用 ✏️ 編輯模式填入 |
-| D7 住宿費 | 教堂城尚未訂房，同上 |
-| D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用 NT$17,339，確認後填入 |
+| ~~D7 住宿費~~ | ✅ 已訂：Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland） |
+| D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用 NT$20,969，確認後填入 |
 | D9 住宿確認 | Flyers Airport Hotel 待定（深夜班機前 hotel，Agoda 尚未訂） |
 | B 団住宿 | 豆林羅哈 4 人有另一套住宿安排，HTML 尚未收錄 |
 
@@ -84,10 +84,11 @@ Sheet 結構（Tab: gid=461091797）：
 
 | 人 | 航班 |
 |----|------|
-| 致黃（卡一起） | TPE→AMS 23:59→(+1)08:15 → AMS→KEF 17:05→18:20（9/25落地） |
-| Carol | TPE→HKG 19:30→21:30 → HKG→AMS 23:15→(+1)06:55（9/25落地） |
-| 桓哥 | 班機 15:15→23:20（KEF落地，9/25） |
-| 林豆 | LHR→KEF 21:25→23:35（9/25落地） |
+| 致黃 | 台灣→阿姆斯特丹 TPE→AMS 23:59→(+1)08:15 |
+| Carol | 台灣→香港 TPE→HKG 19:30→21:30；香港→阿姆斯特丹 HKG→AMS 23:15→(+1)06:55 |
+| 致黃+Carol | 阿姆斯特丹→冰島 AMS→KEF 17:05→18:20（AMS 會合後同班，9/25落地） |
+| 桓哥 | 司徒加特→冰島 STR→KEF 15:15→23:20（9/25落地） |
+| 林豆 | 倫敦→冰島 LHR→KEF 21:25→23:35（9/25落地） |
 | 回程（卡致黃） | KEF→AMS 07:40→13:00 → 12:20→(+1)10:00 |
 | 回程（桓） | 01:10→08:50 |
 | 回程（AMS→TPE） | 11:00→06:15(+1) |
@@ -195,4 +196,4 @@ Sheet 結構（Tab: gid=461091797）：
 ---
 
 ## 最後一次 AI 作業日期
-2026-07-14（部署 GitHub Pages）
+2026-07-15（同步 Sheet：D7 住宿已訂、D0 費用/班機更新、Stuðlagil 選配景點、餐廳與備選住宿）
