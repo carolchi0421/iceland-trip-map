@@ -56,18 +56,18 @@ Sheet 結構（Tab: gid=461091797）：
 
 | Day | 日期 | A團（卡致豆桓）飯店 | A團費用 | 訂房方 | B團（豆林羅哈）飯店 | 狀態 |
 |-----|------|------|------|--------|------|------|
-| D0 | 9/24(四) | 飯店未知 | NT$20,969 | — | — | 待確認飯店名稱（Sheet 9/24 欄 20,968.5） |
+| D0 | 9/24(四) | 飯店未知 | NT$25,329 | — | — | 待確認飯店名稱（Sheet 9/24 欄，2026-07-17 更新） |
 | D1 | 9/25(五) | Flyers Airport Hotel | NT$10,558 | Carol / Agoda | **同 A團** | 9/26前可免費取消 |
 | D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | **同 A團** | 9/21前可免費取消 |
 | D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | Guesthouse AkurInn（另訂） | 9/4前可免費取消 |
 | D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | **同 A團** | — |
 | D5 | 9/29 | Hafaldan HI Hostel | NT$9,565 | 卡羅 / Booking | Greystone summerhouse（另訂） | — |
-| D6 | 9/30 | Höfn i Hornafirði | 待定 | — | Guesthouse Skálafell（另訂） | A團尚未訂房 |
+| D6 | 9/30 | Guesthouse Stekkatun | NT$17,442 | 雅致 / Trip.com | Guesthouse Skálafell（另訂） | 雙人房×2間含早餐，不可取消（2026-07-17 已訂） |
 | D7 | 10/1 | Stracta Apartments Orustustaðir | NT$14,520 | 雅致 / Guide to Iceland | **同 A團** | 已訂，9/24前可免費取消 |
 | D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | **同 A團** | 9/27前可免費取消 |
 | D9 | 10/3 | Flyers Airport Hotel（待確認） | NT$8,493 | Agoda | Golden Circle Domes - Lake View（另訂） | 深夜班機前短暫休憩，A團尚未定 |
 
-**A團住宿費加總**（已知費用）：NT$104,843（僅 D6 Höfn 待定中）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
+**A團住宿費加總**：NT$126,645（全部 D0–D9 已有金額）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
 
 ---
 
@@ -75,9 +75,9 @@ Sheet 結構（Tab: gid=461091797）：
 
 | 項目 | 說明 |
 |------|------|
-| D6 住宿費 | Höfn 尚未訂房，費用空白，確認後用 ✏️ 編輯模式填入 |
+| ~~D6 住宿費~~ | ✅ 已訂：Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消） |
 | ~~D7 住宿費~~ | ✅ 已訂：Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland） |
-| D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用 NT$20,969，確認後填入 |
+| D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用已更新為 NT$25,329，飯店名稱確認後填入 |
 | D9 住宿確認 | Flyers Airport Hotel 待定（深夜班機前 hotel，Agoda 尚未訂） |
 | ~~B 団住宿~~ | ✅ 已收錄：A/B 團住宿已在 HTML 每日住宿區分「A團／B團・同住或另訂」清楚標示 |
 | B 團費用 | 豆林羅哈另訂之夜（D3/D5/D6/D9）Sheet 未列費用，確認後可補 |
@@ -200,4 +200,4 @@ Sheet 結構（Tab: gid=461091797）：
 ---
 
 ## 最後一次 AI 作業日期
-2026-07-15（同步 Sheet：D7 住宿已訂、D0 費用/班機更新、Stuðlagil 選配景點、餐廳與備選住宿）
+2026-07-17（同步 Sheet：D0 住宿費 20,969→25,329、D6 住宿已訂 Guesthouse Stekkatun NT$17,442（原 Höfn i Hornafirði 待定），住宿總計連動更新為 NT$126,645，差異說明區塊新增 2 項）

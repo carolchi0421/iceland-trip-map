@@ -555,7 +555,7 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 const DAYS = [
 {day:0, date:'9/24(四)', color:'#607090', title:'出發日・台灣→冰島',
  depart:'提前3H到桃園機場', sunrise:'', sunset:'', km:'―', drive:'―',
- acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱', price:'NT$20,969', booking:''},
+ acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱', price:'NT$25,329', booking:''},
  isD0:true,
  flights:[
    {who:'致黃', info:'台灣→阿姆斯特丹　TPE→AMS　23:59 → (+1)08:15'},
@@ -801,7 +801,7 @@ const DAYS = [
 },
 {day:6, date:'9/30', color:'#2980B9', title:'峽灣南下赫本',
  depart:'建議 08:30 出發', sunrise:'07:33', sunset:'19:03', km:'約270 km', drive:'約3.5–4 H',
- acc:{name:'Höfn i Hornafirði', sub:'龍蝦之城，海邊小鎮（A團尚未訂房）', price:'待定', booking:'',
+ acc:{name:'Guesthouse Stekkatun', sub:'雙人房×2間，含早餐。Trip.com訂（雅致），不可取消', price:'NT$17,442', booking:'Trip.com',
    b:{name:'Guesthouse Skálafell', sub:'B團另住'}},
  tips:[
    '繞行峽灣線（經 Djúpivogur）實際約270km，比走 Öxi 山口捷徑長，體感時間會拉長',
@@ -1168,7 +1168,7 @@ function buildOverview(){
   // discrepancy box
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
-  dtog.innerHTML='⚠️ 與原始行程表差異說明（7項）<span id="darr">▼</span>';
+  dtog.innerHTML='⚠️ 與原始行程表差異說明（9項）<span id="darr">▼</span>';
   dtog.addEventListener('click',()=>{
     const b=dw.querySelector('.diff-body');
     b.classList.toggle('open');
@@ -1182,6 +1182,8 @@ function buildOverview(){
     ['fix','[已修正] 日出日落改為 2026 準確值；4處座標偏移修正（Ytri Tunga/Sky Lagoon/Vestrahorn/Brúarfoss）'],
     ['fix','[已確認] Flyers Airport Hotel (D1) 住宿已更新為已確認狀態'],
     ['fix','[已確認] D7(10/1) 住宿已訂 Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland，9/24前免費取消）'],
+    ['fix','[已確認] D0(9/24) 住宿費更新為 NT$25,329（同步自 Google Sheet 最新資料）'],
+    ['fix','[已確認] D6(9/30) 住宿已訂 Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消）'],
     ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
     ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
   ];
