@@ -81,6 +81,8 @@ Sheet 結構（Tab: gid=461091797）：
 | D9 住宿確認 | Flyers Airport Hotel 待定（深夜班機前 hotel，Agoda 尚未訂） |
 | ~~B 団住宿~~ | ✅ 已收錄：A/B 團住宿已在 HTML 每日住宿區分「A團／B團・同住或另訂」清楚標示 |
 | B 團費用 | 豆林羅哈另訂之夜（D3/D5/D6/D9）Sheet 未列費用，確認後可補 |
+| **D2(9/26) 溫泉地點** | **Sheet 本身兩分頁矛盾**：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。HTML 目前採用 Sky Lagoon（座標/介紹/費用皆為 Sky Lagoon），已在景點標籤與差異說明區塊加註警示（2026-07-17）。**owner 需自行確認實際要去哪一個，AI 不擅自決定** |
+| D7 Svartifoss / D8 Gljúfrabúi 無行程細節 | 這兩個景點未列在 Daily detail 分頁，popup 只有基本資訊沒有「行程細節」段落，HTML 已有 tips 註記 |
 
 ---
 
@@ -200,4 +202,4 @@ Sheet 結構（Tab: gid=461091797）：
 ---
 
 ## 最後一次 AI 作業日期
-2026-07-17（同步 Sheet：D0 住宿費 20,969→25,329、D6 住宿已訂 Guesthouse Stekkatun NT$17,442（原 Höfn i Hornafirði 待定），住宿總計連動更新為 NT$126,645，差異說明區塊新增 2 項）
+2026-07-17（同步 Sheet：D0 住宿費 20,969→25,329、D6 住宿已訂 Guesthouse Stekkatun NT$17,442（原 Höfn i Hornafirði 待定），住宿總計連動更新為 NT$126,645，差異說明區塊新增 2 項；另外把 D2 溫泉 Sheet 兩分頁矛盾（藍湖 vs Sky Lagoon）的警示同步標到景點標籤與差異說明區塊，共新增第 3 項，差異說明變為 10 項——此項未自行判斷，等 owner 確認）

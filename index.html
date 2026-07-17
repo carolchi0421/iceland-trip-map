@@ -632,7 +632,7 @@ const DAYS = [
     lat:64.121, lon:-21.953, wiki:'Sky_Lagoon',
     time:'09:30–12:00', drv:'約15 min（從教堂）', dur:'2.5 H',
     fee:'ISK 12,990 (NT$2,800) Pure Ritual', feeKey:'sky-lagoon',
-    tags:['⭐強烈推薦','需提前線上訂','七步療程'],
+    tags:['⭐強烈推薦','需提前線上訂','七步療程','⚠️Sheet分頁不一致：主排程寫藍湖，此處顯示Sky Lagoon，請確認'],
     desc:'世界級地熱溫泉，無邊際池俯瞰大西洋。泡完吹乾頭髮再出發。'},
    {zh:'海豹沙灘',     en:'Ytri Tunga',
     lat:64.803, lon:-23.081, wiki:'Ytri_Tunga',
@@ -1168,7 +1168,7 @@ function buildOverview(){
   // discrepancy box
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
-  dtog.innerHTML='⚠️ 與原始行程表差異說明（9項）<span id="darr">▼</span>';
+  dtog.innerHTML='⚠️ 與原始行程表差異說明（10項）<span id="darr">▼</span>';
   dtog.addEventListener('click',()=>{
     const b=dw.querySelector('.diff-body');
     b.classList.toggle('open');
@@ -1186,6 +1186,7 @@ function buildOverview(){
     ['fix','[已確認] D6(9/30) 住宿已訂 Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消）'],
     ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
     ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
+    ['wrn','[待確認] D2(9/26) 溫泉地點 Sheet 兩分頁不一致：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。網站目前採用 Sky Lagoon，請確認實際要去哪一個'],
   ];
   diffs.forEach(([cls,txt])=>{
     const d=div('di');
