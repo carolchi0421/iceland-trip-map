@@ -90,7 +90,7 @@ Sheet 結構（Tab: gid=461091797）：
 | **D2(9/26) 溫泉地點** | **Sheet 本身兩分頁矛盾**：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。HTML 目前採用 Sky Lagoon（座標/介紹/費用皆為 Sky Lagoon），已在景點標籤與差異說明區塊加註警示（2026-07-17）。**owner 需自行確認實際要去哪一個，AI 不擅自決定** |
 | D7 Svartifoss / D8 Gljúfrabúi 無行程細節 | 這兩個景點未列在 Daily detail 分頁，popup 只有基本資訊沒有「行程細節」段落，HTML 已有 tips 註記 |
 | ~~冰川健行預約~~ | ✅ 已訂（Sheet「體驗行程」分頁 預約=TRUE）：Troll Expeditions／GetYourGuide，10/1，NT$41,755/8人。已入 HTML 景點＋行前預約表 |
-| **D7 冰川集合點在 Hof（非 Skaftafell）** | Troll.is 集合點為 **Hof**（Hofgarður 以西1km、Falljökull 以東9km、距 Jökulsárlón 約30min），在 Skaftafell 遊客中心**東方約 25km**。座標已由 64.018,-16.975 改為 **63.992,-16.705**。⚠️ 這代表看完 Svartifoss（Skaftafell）需東返約25分才到集合點，14:30 前要到；**owner 請確認當日時間軸**（或先集合再回頭／省略 Svartifoss） |
+| **D7 冰川集合點在 Hof（非 Skaftafell）＋14:00 抵達** | Troll.is 集合點為 **Hof**（Hofgarður 以西1km、Falljökull 以東9km、距 Jökulsárlón 約30min），路邊有免費私人停車場，結束回同地點。在 Skaftafell 遊客中心**東方約 25km**，座標已由 64.018,-16.975 改為 **63.992,-16.705**。時間：**tour 14:30 出發，須 14:00（提早30分）抵達**否則喪失名額。⚠️ 看完 Svartifoss（Skaftafell）需東返約25分，14:00 前很難趕到；**owner 請確認當日時間軸**（建議先到 Hof 集合／省略 Svartifoss）。（Owner 已於 2026-07-28 提供 GYG 集合原文確認） |
 | 未預約項目（行前表追蹤） | Sky Lagoon、藍湖、米糊/Earth Lagoon、梵谷博物館、e-SIM 皆 **待訂**（見 🧳 行前準備 tab 預約狀態總表） |
 
 ---
