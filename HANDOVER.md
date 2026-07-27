@@ -19,6 +19,7 @@
 | 🧳 行前準備 tab | 新增分頁：預約狀態總表（BOOKINGS）＋可勾選打包清單（PACKING，存 localStorage `pack_<cat>_<i>`）＋冰島即時資訊連結（vedur 天氣/極光、umferdin 路況、safetravel）。函式 `buildPrep()` |
 | 住宿地圖標記 | 每日住宿以 🛏 床 icon 上圖（`ACC_GEO` 城鎮級座標＋`mkBedIcon`／`showBeds`，僅當天顯示）；panel 與 popup 皆有「Google Maps 找飯店」連結 |
 | 餐廳導航 | 每個餐廳卡片加 Google Maps 依名稱搜尋連結（不落精確 pin） |
+| 停車場標示 | 自然景點的編號 pin 本身即停車場座標（來自 Sheet 的「XXX Parking」）→ 導航鈕標「🅿️ 停車場導航」；城鎮/機場（`TOWN_SPOTS`：tpe/kef/akureyri/hofn-dinner/djupivogur/seydisfjordur）維持「🗺 導航」。少數停車場與地標不同者用 `sp.parkAt:[lat,lon]`＋`parkLabel` 另放藍色 **P** 標記（`mkParkIcon`/`showParks`，active-day 顯示），目前：西角山→Viking Café 售票點。要加更多只需在該景點補 `parkAt` 座標 |
 | 景點搜尋 | 側欄搜尋框，輸入 zh/en 即時過濾 → `activateDay`＋`flyToSpot`（↑↓/Enter/Esc） |
 | 列印/PDF | 🖨 列印按鈕 + `@media print`：攤平全日程、隱藏地圖/chrome，供紙本備援 |
 | PWA 離線 | `manifest.webmanifest`＋`sw.js`（app shell 網路優先、地圖圖磚/Wikipedia 照片 cache-first）＋`icon.svg`。冰島訊號差也能看行程 |

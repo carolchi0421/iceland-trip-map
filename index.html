@@ -924,10 +924,11 @@ const DAYS = [
     desc:'港口邊藝術裝置「Eggin í Gleðivík」— 34顆大小各異的鳥蛋石雕。在此加滿油。'},
    {zh:'西角山·天空之鏡', en:'Vestrahorn',
     lat:64.246, lon:-14.957, wiki:'Vestrahorn',
+    parkAt:[64.255,-14.9933], parkLabel:'Viking Café — 先在此買票 ISK 1,000（含停車），再開約 2km 到海灘停車場',
     time:'13:10–15:10', drv:'約1H 10min（注意側風！）', dur:'2 H',
     fee:'ISK 1,500 (NT$325)', feeKey:'vestrahorn',
-    tags:['⭐天空之鏡絕景','下午斜射光最佳','Viking Village'],
-    desc:'黑沙灘倒映峭壁，潮間帶薄薄海水形成完美天空之鏡。'},
+    tags:['⭐天空之鏡絕景','下午斜射光最佳','Viking Village','🅿️先到Viking Café買票'],
+    desc:'黑沙灘倒映峭壁，潮間帶薄薄海水形成完美天空之鏡。⚠️ 須先在 Viking Café 買票（ISK 1,000，含停車），再往海灘停車場。'},
    {zh:'赫本·龍蝦慶功宴', en:'Höfn',
     lat:64.253, lon:-15.216, wiki:'Höfn',
     time:'15:25 抵達', drv:'約15 min', dur:'入住＋晚餐',
@@ -1174,6 +1175,10 @@ const ACC_GEO={
   9:[63.985,-22.605],  // Keflavík（Flyers）
 };
 DAYS.forEach(d=>{ if(ACC_GEO[d.day]&&d.acc) d.acc.geo=ACC_GEO[d.day]; });
+
+// 城鎮/機場類景點：不是單一停車場，導航維持「🗺」而非「🅿️」
+const TOWN_SPOTS=new Set(['tpe','kef','akureyri','hofn-dinner','djupivogur','seydisfjordur']);
+DAYS.forEach(d=>d.spots.forEach(sp=>{ if(TOWN_SPOTS.has(sp.feeKey)) sp.town=true; }));
 
 // ─── 段間地形/路況注意事項 (source: Daily detail 轉場區塊)，keyed by 目的地 feeKey ───
 const SEG_CAUTION={
@@ -1445,13 +1450,21 @@ function buildDayPanel(day){
     });
     main.appendChild(tagsDiv);
     if(sp.desc)main.appendChild(div('tl-desc',sp.desc));
-    // Google Maps button
+    // Google Maps button — for nature spots the pin IS the parking/access point
     if(sp.lat){  // all spots with coordinates
-      const gm=el('a','gmap-btn','🗺 Google Maps 導航');
+      const gm=el('a','gmap-btn',sp.town?'🗺 Google Maps 導航':'🅿️ 停車場導航');
       gm.href=`https://maps.google.com/?q=${sp.lat},${sp.lon}&z=15`;
       gm.target='_blank';
       gm.addEventListener('click',e=>e.stopPropagation()); // don't trigger flyToSpot
       main.appendChild(gm);
+    }
+    // separate parking point (少數景點停車場與地標不同)
+    if(sp.parkAt){
+      const pk=el('a','gmap-btn','🅿️ 停車場（另點）');
+      pk.href=`https://maps.google.com/?q=${sp.parkAt[0]},${sp.parkAt[1]}&z=16`;
+      pk.target='_blank';pk.rel='noopener';
+      pk.addEventListener('click',e=>e.stopPropagation());
+      main.appendChild(pk);
     }
     // booking button (confirmed experiences, e.g. glacier hike)
     if(sp.book&&sp.book.url){
@@ -1797,9 +1810,14 @@ function popupHtml(sp,day){
   wiki.href='https://en.wikipedia.org/wiki/'+encodeURIComponent(sp.wiki);
   wiki.target='_blank';links.appendChild(wiki);
   if(sp.lat&&sp.lat>50){
-    const gm=el('a','pw-wiki','🗺 導航');
+    const gm=el('a','pw-wiki',sp.town?'🗺 導航':'🅿️ 停車場');
     gm.href=`https://maps.google.com/?q=${sp.lat},${sp.lon}&z=15`;
     gm.target='_blank';links.appendChild(gm);
+  }
+  if(sp.parkAt){
+    const pk=el('a','pw-wiki','🅿️ 停車場(另點)');
+    pk.href=`https://maps.google.com/?q=${sp.parkAt[0]},${sp.parkAt[1]}&z=16`;
+    pk.target='_blank';links.appendChild(pk);
   }
   body.appendChild(links);
   // 行程細節 (from Daily detail sheet)
@@ -1819,6 +1837,11 @@ function mkBedIcon(col){
   return L.divIcon({className:'',
     html:'<div style="width:26px;height:26px;background:#0d1f33;border:2.5px solid '+col+';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.55);cursor:pointer">🛏</div>',
     iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+}
+function mkParkIcon(){
+  return L.divIcon({className:'',
+    html:'<div style="width:20px;height:20px;background:#1c6dd0;border:2px solid #fff;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:12px;font-family:Arial;box-shadow:0 2px 6px rgba(0,0,0,.5);cursor:pointer">P</div>',
+    iconSize:[20,20],iconAnchor:[10,10],popupAnchor:[0,-11]});
 }
 function accPopupHtml(day){
   const a=day.acc;
@@ -1872,7 +1895,15 @@ DAYS.forEach(day=>{
     bed=L.marker(day.acc.geo,{icon:mkBedIcon(C),zIndexOffset:1000});
     bed.bindPopup(()=>accPopupHtml(day),{maxWidth:270,minWidth:240,className:''});
   }
-  layers[day.day]={glow,line,marks,arrows,segLabels,bed,day};
+  // separate parking markers (少數景點 parkAt；active-day only — see showParks)
+  const parks=[];
+  day.spots.forEach(sp=>{
+    if(!sp.parkAt)return;
+    const pm=L.marker(sp.parkAt,{icon:mkParkIcon(),zIndexOffset:900});
+    pm.bindPopup('<div style="font:12px/1.6 Microsoft JhengHei,Arial;color:#dfe">🅿️ '+(sp.parkLabel||sp.zh+' 停車場')+'</div>',{className:''});
+    parks.push(pm);
+  });
+  layers[day.day]={glow,line,marks,arrows,segLabels,bed,parks,day};
 });
 
 // ════════════════════════════════════════════════════
@@ -1897,6 +1928,16 @@ function showBeds(dayNum){
     if(!ly||!ly.bed)return;
     map.removeLayer(ly.bed);
     if(d.day===dayNum)ly.bed.addTo(map);
+  });
+}
+
+// show separate parking (P) markers only for the given day (null = hide all)
+function showParks(dayNum){
+  DAYS.forEach(d=>{
+    const ly=layers[d.day];
+    if(!ly||!ly.parks)return;
+    ly.parks.forEach(m=>map.removeLayer(m));
+    if(d.day===dayNum)ly.parks.forEach(m=>m.addTo(map));
   });
 }
 
@@ -1926,6 +1967,7 @@ function showAll(){
   });
   showSegLabels(null);
   showBeds(null);
+  showParks(null);
   map.flyTo([65.1,-18.5],6,{duration:.8});
 }
 
@@ -1952,6 +1994,7 @@ function activateDay(dayNum,flyTo=true){
   });
   showSegLabels(hasLayer?dayNum:null);
   showBeds(hasLayer?dayNum:null);
+  showParks(hasLayer?dayNum:null);
   if(flyTo&&layers[dayNum]){
     const day=DAYS.find(d=>d.day===dayNum);
     if(day){
