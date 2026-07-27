@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#071427"/>
+      <stop offset="1" stop-color="#0d1f33"/>
+    </linearGradient>
+    <linearGradient id="aur" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3fe0a0"/>
+      <stop offset="0.55" stop-color="#48b8e8"/>
+      <stop offset="1" stop-color="#7a6bf2"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#sky)"/>
+  <g fill="none" stroke="url(#aur)" stroke-linecap="round" opacity="0.92">
+    <path d="M96 150 C 190 60, 320 60, 416 150" stroke-width="26"/>
+    <path d="M110 210 C 200 130, 312 130, 402 210" stroke-width="18" opacity="0.7"/>
+    <path d="M128 268 C 210 200, 302 200, 384 268" stroke-width="12" opacity="0.5"/>
+  </g>
+  <circle cx="392" cy="120" r="20" fill="#f2c53d"/>
+  <path d="M40 430 L 180 300 L 268 372 L 350 288 L 472 430 Z" fill="#0a3050"/>
+  <path d="M40 430 L 180 300 L 240 356 L 150 430 Z" fill="#e8f4ff" opacity="0.85"/>
+  <path d="M350 288 L 472 430 L 372 430 L 318 344 Z" fill="#e8f4ff" opacity="0.7"/>
+  <rect x="0" y="430" width="512" height="82" fill="#061225"/>
+</svg>

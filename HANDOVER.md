@@ -16,6 +16,12 @@
 | Wikipedia 照片 | 自動抓取景點封面照（非同步，有快取） |
 | Google Maps 導航 | 每個景點均有導航連結 |
 | 差異說明 | 與原始 Excel 行程表差異的可收合說明區塊 |
+| 🧳 行前準備 tab | 新增分頁：預約狀態總表（BOOKINGS）＋可勾選打包清單（PACKING，存 localStorage `pack_<cat>_<i>`）＋冰島即時資訊連結（vedur 天氣/極光、umferdin 路況、safetravel）。函式 `buildPrep()` |
+| 住宿地圖標記 | 每日住宿以 🛏 床 icon 上圖（`ACC_GEO` 城鎮級座標＋`mkBedIcon`／`showBeds`，僅當天顯示）；panel 與 popup 皆有「Google Maps 找飯店」連結 |
+| 餐廳導航 | 每個餐廳卡片加 Google Maps 依名稱搜尋連結（不落精確 pin） |
+| 景點搜尋 | 側欄搜尋框，輸入 zh/en 即時過濾 → `activateDay`＋`flyToSpot`（↑↓/Enter/Esc） |
+| 列印/PDF | 🖨 列印按鈕 + `@media print`：攤平全日程、隱藏地圖/chrome，供紙本備援 |
+| PWA 離線 | `manifest.webmanifest`＋`sw.js`（app shell 網路優先、地圖圖磚/Wikipedia 照片 cache-first）＋`icon.svg`。冰島訊號差也能看行程 |
 
 ---
 
@@ -83,6 +89,9 @@ Sheet 結構（Tab: gid=461091797）：
 | B 團費用 | 豆林羅哈另訂之夜（D3/D5/D6/D9）Sheet 未列費用，確認後可補 |
 | **D2(9/26) 溫泉地點** | **Sheet 本身兩分頁矛盾**：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。HTML 目前採用 Sky Lagoon（座標/介紹/費用皆為 Sky Lagoon），已在景點標籤與差異說明區塊加註警示（2026-07-17）。**owner 需自行確認實際要去哪一個，AI 不擅自決定** |
 | D7 Svartifoss / D8 Gljúfrabúi 無行程細節 | 這兩個景點未列在 Daily detail 分頁，popup 只有基本資訊沒有「行程細節」段落，HTML 已有 tips 註記 |
+| ~~冰川健行預約~~ | ✅ 已訂（Sheet「體驗行程」分頁 預約=TRUE）：Troll Expeditions／GetYourGuide，10/1，NT$41,755/8人。已入 HTML 景點＋行前預約表 |
+| **D7 冰川集合點在 Hof（非 Skaftafell）** | Troll.is 集合點為 **Hof**（Hofgarður 以西1km、Falljökull 以東9km、距 Jökulsárlón 約30min），在 Skaftafell 遊客中心**東方約 25km**。座標已由 64.018,-16.975 改為 **63.992,-16.705**。⚠️ 這代表看完 Svartifoss（Skaftafell）需東返約25分才到集合點，14:30 前要到；**owner 請確認當日時間軸**（或先集合再回頭／省略 Svartifoss） |
+| 未預約項目（行前表追蹤） | Sky Lagoon、藍湖、米糊/Earth Lagoon、梵谷博物館、e-SIM 皆 **待訂**（見 🧳 行前準備 tab 預約狀態總表） |
 
 ---
 
@@ -120,26 +129,32 @@ Sheet 結構（Tab: gid=461091797）：
 
 ## 技術架構
 
+> 專案目錄現在有 4 個檔：`index.html`（主體）＋ PWA 三件套 `manifest.webmanifest`、`sw.js`、`icon.svg`。
+
 ```
-冰島旅遊地圖.html  （單一自包含檔，無 build 工具）
-├── <style>         設計系統 + 所有元件 CSS
+index.html  （單一自包含檔，無 build 工具）
+├── <head>          manifest / theme-color / icon 連結
+├── <style>         設計系統 + 所有元件 CSS（含 @media print 列印樣式）
 ├── <body>
-│   ├── #sidebar    左側面板（490px fixed）
-│   │   ├── .sb-head     標題 + 統計 chip
-│   │   ├── .fx-bar      匯率計算器
-│   │   ├── .edit-bar    價格編輯按鈕
-│   │   ├── .tab-bar     D0–D9 tab
-│   │   └── #panels      行程面板（overview + 10 個 day panel）
-│   └── #map        Leaflet 地圖（flex: 1, 佔滿剩餘寬度）
+│   ├── #sidebar    左側面板
+│   │   ├── .sb-head     標題 + 統計 chip + 🔍 景點搜尋框
+│   │   ├── .edit-bar    🖨列印 / ✏️價格編輯 / 🔄重設
+│   │   ├── .tab-bar     Overview / 🧳行前 + D0–D9 tab
+│   │   └── #panels      overview + prep + 10 個 day panel
+│   └── #map        Leaflet 地圖（flex: 1）
 └── <script>
     ├── DAYS[]      所有資料（景點/住宿/餐廳/提醒/班機）
-    ├── buildOverview()   建立總覽面板
-    ├── buildDayPanel()   建立各天面板
-    ├── getPhoto()        Wikipedia API 抓照片（有快取）
-    ├── mkIcon()          Leaflet 自訂 marker
-    ├── popupHtml()       地圖 popup 內容
-    ├── activateDay()     切換天數（tab + map + panel）
+    ├── BOOKINGS[] PACKING[] INFO_LINKS[] ACC_GEO{}   行前/住宿資料
+    ├── buildOverview() / buildDayPanel() / buildPrep()  面板
+    ├── mkIcon() / mkBedIcon() / popupHtml() / accPopupHtml()  地圖圖標與 popup
+    ├── activateDay() / showAll() / showPrep()  分頁切換
+    ├── showSegLabels() / showBeds()   當天里程 pill／住宿床標記
+    ├── 景點搜尋 IIFE + printBtn + serviceWorker.register('sw.js')
     └── flyToSpot()       地圖飛行 + 自動開 popup
+
+manifest.webmanifest  PWA 設定（start_url/scope=./，standalone）
+sw.js                 service worker：app shell 網路優先、圖磚/照片 cache-first；改版時 bump VERSION
+icon.svg              app icon（極光主題）
 ```
 
 ---
@@ -202,4 +217,6 @@ Sheet 結構（Tab: gid=461091797）：
 ---
 
 ## 最後一次 AI 作業日期
+2026-07-28（三大功能包：① 新增 🧳 行前準備 tab＝預約狀態總表＋可勾選打包清單（localStorage）＋冰島即時資訊連結；② POI 上地圖＝住宿 🛏 床標記＋餐廳/住宿 Google Maps 搜尋連結；③ PWA 離線（新增 sw.js/manifest.webmanifest/icon.svg）＋景點搜尋框＋列印樣式＋冰川集合點座標校正到 Hof 63.992,-16.705 並標註 owner 需確認當日時間軸。另補 10/4 回程航班、冰川健行已預訂資訊。以 `node --check` 與 DOM stub 冒煙測試通過）
+
 2026-07-17（同步 Sheet：D0 住宿費 20,969→25,329、D6 住宿已訂 Guesthouse Stekkatun NT$17,442（原 Höfn i Hornafirði 待定），住宿總計連動更新為 NT$126,645，差異說明區塊新增 2 項；另外把 D2 溫泉 Sheet 兩分頁矛盾（藍湖 vs Sky Lagoon）的警示同步標到景點標籤與差異說明區塊，共新增第 3 項，差異說明變為 10 項——此項未自行判斷，等 owner 確認）

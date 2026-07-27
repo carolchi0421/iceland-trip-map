@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Iceland Plan 2026</title>
+<meta name="theme-color" content="#0d1f33">
+<meta name="description" content="冰島自駕環島互動行程地圖 9/24–10/3 2026">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -83,6 +88,30 @@ body{
 }
 .sb-en{font-size:9px;color:var(--t3);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
 .sb-chips{display:flex;gap:5px;flex-wrap:wrap}
+/* spot search */
+.sb-search{position:relative;margin-top:9px}
+#spotSearch{
+  width:100%;box-sizing:border-box;padding:7px 11px;border-radius:7px;
+  background:var(--bg0);border:1px solid var(--bd2);color:var(--t1);
+  font-size:12px;font-family:inherit;outline:none;transition:border-color .15s;
+}
+#spotSearch:focus{border-color:var(--sky)}
+#spotSearch::placeholder{color:var(--t3)}
+.search-results{
+  position:absolute;top:100%;left:0;right:0;z-index:200;margin-top:4px;
+  background:var(--bg2);border:1px solid var(--bd3);border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);overflow:hidden;display:none;
+}
+.search-results.on{display:block}
+.search-item{display:flex;align-items:center;gap:8px;padding:8px 11px;cursor:pointer;
+  border-bottom:1px solid var(--bd1);transition:background .12s}
+.search-item:last-child{border-bottom:none}
+.search-item:hover,.search-item.sel{background:var(--bg3)}
+.search-item .si-dot{width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:9px;font-weight:900}
+.search-item .si-zh{font-size:12px;color:var(--t1)}
+.search-item .si-en{font-size:9px;color:var(--t3)}
+.search-empty{padding:9px 11px;font-size:11px;color:var(--t3)}
 .chip{
   padding:3px 9px;border-radius:10px;font-size:10px;
   background:rgba(255,255,255,.04);border:1px solid var(--bd2);color:var(--t3);
@@ -148,6 +177,38 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
   content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
   background:var(--dc);box-shadow:0 0 8px var(--dc);
 }
+.top-btns{display:flex}
+.top-btns .all-btn{flex:1;width:auto;border-right:1px solid var(--bd2);justify-content:center}
+.top-btns .all-btn:last-child{border-right:none}
+
+/* ──────────── PREP PANEL (行前準備) ──────────── */
+.prep-wrap{padding:14px 14px 40px}
+.prep-sec{margin-bottom:22px}
+.prep-h{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;
+  color:var(--gold);margin:0 0 4px}
+.prep-sub{font-size:10px;color:var(--t3);margin:0 0 10px}
+/* booking dashboard */
+.book-item{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;margin-bottom:7px;
+  background:var(--bg2);border:1px solid var(--bd2);border-radius:8px}
+.book-item.done{border-color:rgba(39,174,96,.35);background:rgba(39,174,96,.06)}
+.book-badge{flex-shrink:0;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-top:1px}
+.book-badge.yes{background:rgba(39,174,96,.16);color:#4fd07f}
+.book-badge.no{background:rgba(242,197,61,.14);color:var(--gold)}
+.book-body{flex:1;min-width:0}
+.book-name{font-size:12.5px;color:var(--t1);font-weight:600}
+.book-meta{font-size:10px;color:var(--t2);margin-top:2px}
+/* packing checklist */
+.pack-prog{font-size:11px;color:var(--sky);font-weight:700}
+.pack-cat{margin-bottom:12px}
+.pack-cat-h{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;
+  letter-spacing:.05em;margin:0 0 5px;border-left:3px solid var(--sky);padding-left:7px}
+.pack-item{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:5px;cursor:pointer;
+  font-size:12px;color:var(--t1);transition:background .12s}
+.pack-item:hover{background:var(--bg2)}
+.pack-item input{width:15px;height:15px;accent-color:var(--sky);cursor:pointer;flex-shrink:0}
+.pack-item.checked span{color:var(--t3);text-decoration:line-through}
+.info-links{display:flex;flex-wrap:wrap;gap:8px}
+.info-links .gmap-btn{margin-top:0;font-size:11px;padding:6px 11px}
 
 /* ──────────── PANELS ──────────── */
 #panels{flex:1;overflow:hidden;position:relative}
@@ -516,6 +577,24 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
   .dtab{padding:6px 1px 5px}
 }
 
+/* ──────────── PRINT / PDF 備份（線性攤平全行程）──────────── */
+@media print{
+  @page{margin:12mm}
+  html,body{height:auto!important;overflow:visible!important;background:#fff!important;color:#000!important}
+  body{display:block!important;flex-direction:column}
+  #map,#resizer,.edit-bar,.tab-bar,.sb-search,.map-reset-btn,.leaflet-control,
+  .gmap-btn,.book-btn,.acc-edit-hint,.tl-photo,.pw{display:none!important}
+  #sidebar{width:100%!important;height:auto!important;display:block!important;border:none!important;box-shadow:none!important}
+  #panels{position:static!important;height:auto!important;overflow:visible!important;display:block!important}
+  .panel{position:static!important;inset:auto!important;display:block!important;height:auto!important;overflow:visible!important;
+    page-break-after:always;border-bottom:2px solid #999;padding:0 0 8px;margin-bottom:8px}
+  #panel-prep{display:none!important}          /* 打包/預約不需印 */
+  .sb-head{background:#fff!important;border-bottom:2px solid #000}
+  .sb-title,.prep-h,.d-title{color:#000!important;text-shadow:none!important}
+  .tl-zh,.tl-en,.tl-desc,.tl-time,.acc-name,.acc-sub,.rest-name,.rest-note,.ov-day-title,.tip-item,.d-head *{color:#000!important}
+  .ov-top,.d-head{background:#fff!important;position:static!important;color:#000!important}
+  *{box-shadow:none!important;text-shadow:none!important}
+}
 </style>
 </head>
 <body>
@@ -531,21 +610,30 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
       <div class="chip"><b id="hd-spots">40</b> 景點</div>
       <div class="chip">~<b id="hd-km">1,700</b> km</div>
     </div>
+    <div class="sb-search">
+      <input type="text" id="spotSearch" placeholder="🔍 搜尋景點 / Search spot…" autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
   </div>
 
   <div class="edit-bar">
     <small>💡 點景點→跳地圖 · 先按✏️開啟編輯模式，再點價格文字修改</small>
+    <button class="ebtn" id="printBtn">🖨 列印</button>
     <button class="ebtn" id="editBtn">✏️ 編輯價格</button>
     <button class="ebtn" id="resetBtn">🔄 重設</button>
   </div>
 
   <div class="tab-bar">
-    <button class="all-btn on" id="allBtn">🗓 行程總覽 Overview</button>
+    <div class="top-btns">
+      <button class="all-btn on" id="allBtn">🗓 行程總覽 Overview</button>
+      <button class="all-btn" id="prepBtn">🧳 行前準備 Prep</button>
+    </div>
     <div class="dtabs" id="dtabs"></div>
   </div>
 
   <div id="panels">
     <div class="panel on" id="panel-ov"></div>
+    <div class="panel" id="panel-prep"></div>
   </div>
 </div>
 
@@ -855,9 +943,10 @@ const DAYS = [
      {name:'Midgard Base Camp（家庭房・私人衛浴）', price:'NT$9,826・Booking', url:''},
    ]},
  tips:[
-   '✅ 冰川健行已預訂：Troll Expeditions（GetYourGuide），10/1・14:30 集合，NT$41,755/8人。務必準時抵達 Troll.is Skaftafell 集合點（Hofgarður 以西1km）',
+   '✅ 冰川健行已預訂：Troll Expeditions（GetYourGuide），10/1・14:30 集合，NT$41,755/8人',
+   '⚠️ 集合點在 Hof（Troll.is 基地）非 Skaftafell 遊客中心，在其東方約 25km！看完 Svartifoss 後要東返約 25 分才到 Hof，請抓好 14:30 前抵達（可考慮先集合再回頭，或省略 Svartifoss）',
    '健行前午餐一定要吃飽！5小時極度消耗體力',
-   '14:20前在遊客中心上廁所，冰川上完全沒有廁所',
+   '14:20前在集合點上廁所，冰川上完全沒有廁所',
    '夜間從冰川開回教堂城（55min），副駕不能睡著！',
    '⚠️ 提醒 owner：斯瓦蒂佛斯 Svartifoss 未列在 Daily detail 分頁，故 popup 無行程細節',
  ],
@@ -884,13 +973,13 @@ const DAYS = [
     fee:'免費', feeKey:'svartifoss',
     tags:['玄武岩六角柱瀑布','Skaftafell停車場同地','冰川健行前可快速健行'],
     desc:'玄武岩六角柱圍繞的獨特黑色瀑布，步道單程約20分鐘可到。抵達Skaftafell後若體力允許，可在冰川健行整備前快速來回。'},
-   {zh:'冰川健行·斯卡夫塔', en:'Falljökull Glacier Hike · Troll Expeditions',
-    lat:64.018, lon:-16.975, wiki:'Skaftafell',
-    time:'13:30整備 / 14:30集合', drv:'（同停車場）', dur:'5小時健行',
+   {zh:'冰川健行·Hof集合', en:'Falljökull Glacier Hike · Troll Expeditions',
+    lat:63.992, lon:-16.705, wiki:'Skaftafell',
+    time:'13:30整備 / 14:30集合', drv:'約25 min（Skaftafell 東返 Hof 集合點 ~25km）', dur:'5小時健行',
     fee:'NT$41,755／8人（約NT$5,219/人）· Troll.is', feeKey:'glacier-hike',
-    tags:['⭐⭐全程最值得體驗','✅已預訂(Troll Expeditions)','冰爪+冰斧+安全帶','GetYourGuide訂單'],
+    tags:['⭐⭐全程最值得體驗','✅已預訂(Troll Expeditions)','⚠️集合在Hof非Skaftafell','GetYourGuide訂單'],
     book:{label:'已預訂・查看 GetYourGuide 訂單', url:'https://www.getyourguide.com/booking/EXV8KH4M5XTNE855WJBL8G3LB34W3W3G'},
-    desc:'✅ 已透過 GetYourGuide 向 Troll Expeditions 預訂（10/1，Falljökull 冰川進階健行）。集合點：Troll.is Skaftafell meeting point（Hofgarður 以西 1km、Falljökull 冰川以東 9km）。5小時深度冰川探險，夕陽照在冰裂縫上呈現夢幻粉金色，黑夜戴頭燈走下冰舌，極酷炫。'},
+    desc:'✅ 已透過 GetYourGuide 向 Troll Expeditions 預訂（10/1，Falljökull 冰川進階健行）。⚠️ 集合點在 Hof（Troll.is 基地，Hofgarður 以西 1km、Falljökull 以東 9km），非 Skaftafell 遊客中心（在其東方約 25km，距 Jökulsárlón 約 30 分）。5小時深度冰川探險，夕陽照在冰裂縫上呈現夢幻粉金色，黑夜戴頭燈走下冰舌，極酷炫。'},
  ],
 },
 {day:8, date:'10/2', color:'#C0392B', title:'南岸瀑布群',
@@ -1058,7 +1147,7 @@ const SPOT_DETAIL={
  'hofn-dinner':'行程：前往鎮上極有名的 Pakkhús Restaurant（不接受預約，須提早現場排隊）享用蒜香奶油烤冰島小龍蝦，或改去 Humarhöfnin 餐廳。',
  'jokulsarlon':'行程：漫步湖畔高地。這個時間點陽光角度剛好，照在漂浮的巨大千年藍冰上色彩極其透亮。記得找尋在冰塊間游泳探頭的野生海豹！',
  'diamond-beach':'行程：開車 2 分鐘到對面停車場，漫步純黑沙灘，近距離拍攝被大浪沖刷得像水晶般剔透的冰塊。\n安全叮嚀：此處海浪極大，拍照千萬不要背對大海！',
- 'glacier-hike':'✅ 已預訂（Troll Expeditions・GetYourGuide）：日期 10/1，NT$41,755／8人。\n集合點：Troll.is - Skaftafell meeting point（Hofgarður 以西 1km、Falljökull 冰川以東 9km）。\n行程：準時 14:30 到預訂的冰川公司小木屋報到，領取並匹配專用冰爪、冰斧與安全吊帶。\n夕陽亮點：17:30–18:49（日落前一小時）是整趟環島的視覺最高峰，秋季粉金逆光會把冰川與冰裂縫染成夢幻色彩。\n黑夜收尾：19:00 後天色全黑，在嚮導帶領下戴頭燈走下冰舌，體驗黑夜冰川的寂靜，極其酷炫！',
+ 'glacier-hike':'✅ 已預訂（Troll Expeditions・GetYourGuide）：日期 10/1，NT$41,755／8人。\n⚠️ 集合點在 Hof（Troll.is 基地，Hofgarður 以西 1km、Falljökull 以東 9km），不是 Skaftafell 遊客中心——在其東方約 25km。看完 Svartifoss（Skaftafell）需東返約 25 分才到 Hof 集合，14:30 前務必抵達。\n行程：準時 14:30 到預訂的冰川公司小木屋報到，領取並匹配專用冰爪、冰斧與安全吊帶。\n夕陽亮點：17:30–18:49（日落前一小時）是整趟環島的視覺最高峰，秋季粉金逆光會把冰川與冰裂縫染成夢幻色彩。\n黑夜收尾：19:00 後天色全黑，在嚮導帶領下戴頭燈走下冰舌，體驗黑夜冰川的寂靜，極其酷炫！',
  'fjadrargjufur':'行程：清晨抵達，光線剛好照進深谷。順著鋪好的景觀步道上行，沿途有 3 個平台可俯瞰蛇行河流切穿苔蘚崖壁。爬到頂端觀景台拍完後，返回下停車場上廁所。',
  'reynisfjara':'健行：走下純黑沙灘，拍攝壯觀的玄武岩風琴壁。此處風浪極大，千萬不要靠海太近。\n午餐：拍完後直接在海灘旁 Black Beach Restaurant 吃午餐（漢堡和羊肉熱湯很出名），順便上廁所。',
  'skogafoss':'行程：一下車就看到巨大瀑布，穿上防水外套走到最前面感受水霧。接著挑戰右側陡峭階梯步道，登頂俯瞰河流奔入平原。',
@@ -1076,6 +1165,21 @@ DAYS.forEach(d=>d.spots.forEach(sp=>{
   if(SPOT_DETAIL[sp.feeKey]) sp.detail=SPOT_DETAIL[sp.feeKey];
   if(SPOT_IMG[sp.feeKey]) sp.img=SPOT_IMG[sp.feeKey];
 }));
+
+// accommodation coordinates（住宿「所在城鎮」層級；精確位置以 popup 內 Google Maps 依飯店名搜尋為準）
+// 必須在 buildDayPanel／地圖 marker 使用 acc.geo 之前先掛上
+const ACC_GEO={
+  1:[63.985,-22.605],  // Keflavík（機場附近）
+  2:[64.921,-23.256],  // Grundarfjörður（教會山）
+  3:[65.683,-18.089],  // Akureyri
+  4:[65.644,-16.913],  // Reykjahlíð / Mývatn
+  5:[65.263,-14.006],  // Seyðisfjörður
+  6:[64.253,-15.216],  // Höfn 一帶
+  7:[63.790,-18.061],  // Kirkjubæjarklaustur（教堂城）
+  8:[63.833,-20.389],  // Hella
+  9:[63.985,-22.605],  // Keflavík（Flyers）
+};
+DAYS.forEach(d=>{ if(ACC_GEO[d.day]&&d.acc) d.acc.geo=ACC_GEO[d.day]; });
 
 // ─── 段間地形/路況注意事項 (source: Daily detail 轉場區塊)，keyed by 目的地 feeKey ───
 const SEG_CAUTION={
@@ -1384,6 +1488,11 @@ function buildDayPanel(day){
       c.appendChild(div('rest-name',r.name));
       const rt=div('rest-type',r.type);rt.style.color=C;c.appendChild(rt);
       c.appendChild(div('rest-note',r.note));
+      const rq=r.name.split(/[（(]/)[0].trim();
+      const rgm=el('a','gmap-btn','🔍 Google Maps 找');
+      rgm.href='https://maps.google.com/?q='+encodeURIComponent(rq+' Iceland');
+      rgm.target='_blank';rgm.rel='noopener';
+      c.appendChild(rgm);
       p.appendChild(c);
     });
   }
@@ -1400,6 +1509,11 @@ function buildDayPanel(day){
   }
   acc.appendChild(div('acc-name',day.acc.name));
   acc.appendChild(div('acc-sub',day.acc.sub+(day.acc.booking?' · '+day.acc.booking:'')));
+  if(day.acc.geo){
+    const agm=el('a','gmap-btn','🗺 Google Maps 找飯店');
+    agm.href='https://maps.google.com/?q='+encodeURIComponent(day.acc.name.split(/[（(]/)[0].trim()+' Iceland');
+    agm.target='_blank';agm.rel='noopener';acc.appendChild(agm);
+  }
   const pr=div('acc-price-row');
   const editable=day.acc.price!=='―'&&day.acc.price!=='無住宿費';
   const badge=div('acc-price-badge'+(editable?' ep':''),day.acc.price);
@@ -1483,6 +1597,106 @@ function setPhoto(sp,el){
 }
 
 // ════════════════════════════════════════════════════
+//  PREP PANEL (行前準備：預約狀態 / 打包清單 / 即時資訊)
+//  source: Google Sheet「體驗行程」＋「需要預約」
+// ════════════════════════════════════════════════════
+const BOOKINGS=[
+  {name:'冰川健行 · Skaftafell (Falljökull)', done:true,  meta:'10/1 · NT$41,755/8人 · Troll Expeditions（GetYourGuide）', url:'https://www.getyourguide.com/booking/EXV8KH4M5XTNE855WJBL8G3LB34W3W3G'},
+  {name:'藍湖溫泉 Blue Lagoon',               done:false, meta:'D9 10/3 · 需訂 18:30 場（可取消票）', url:''},
+  {name:'Sky Lagoon 天空之潟湖',              done:false, meta:'D2 9/26 · Pure Ritual 七步療程', url:''},
+  {name:'米湖溫泉 Mývatn / Earth Lagoon',     done:false, meta:'D4 9/28 · 可取消', url:''},
+  {name:'梵谷博物館 Van Gogh Museum',         done:false, meta:'荷蘭段 · 須提前數週官網預約', url:''},
+  {name:'e-SIM 上網卡',                       done:false, meta:'出發前開通', url:''},
+];
+const PACKING=[
+  ['必備',    ['OVpay','國際駕照','台灣駕照','信用卡（開通 PIN）']],
+  ['車上用',  ['車充','抽取式衛生紙','濕紙巾（擦手）','小垃圾袋','雨衣','牙膏牙刷','個人小毛巾']],
+  ['衣物',    ['發熱衣','防風防雨外衣','帽子（防風）','太陽眼鏡','中高筒登山鞋','拖鞋','長襪（冰川健行需高筒）','手套']],
+  ['料理用',  ['泡麵','康寶濃湯包','筷子','零食','茶包','即時濃湯包','保冷袋（肉品）','夾鏈袋（三明治）']],
+  ['需要預約',['冰川健行','藍湖溫泉門票（可取消）','米糊溫泉門票（可取消）','梵谷博物館門票','e-sim']],
+];
+const INFO_LINKS=[
+  {icon:'🌡',label:'天氣預報 vedur.is',url:'https://en.vedur.is/weather/forecasts/areas/'},
+  {icon:'🌌',label:'極光預報 Aurora',url:'https://en.vedur.is/weather/forecasts/aurora/'},
+  {icon:'🚧',label:'路況 umferdin.is',url:'https://umferdin.is/en/'},
+  {icon:'⚠️',label:'安全 safetravel.is',url:'https://safetravel.is/'},
+];
+
+function packProgress(){
+  let total=0,done=0;
+  PACKING.forEach((c,ci)=>c[1].forEach((it,ii)=>{total++;if(localStorage.getItem('pack_'+ci+'_'+ii)==='1')done++;}));
+  return {total,done};
+}
+
+function buildPrep(){
+  const panel=document.getElementById('panel-prep');
+  const wrap=div('prep-wrap');
+
+  // ── 預約狀態總表 ──
+  const s1=div('prep-sec');
+  s1.appendChild(el('h2','prep-h','✅ 預約狀態總表'));
+  s1.appendChild(el('p','prep-sub','資料來源：Google Sheet「體驗行程」＋「需要預約」'));
+  BOOKINGS.forEach(b=>{
+    const it=div('book-item'+(b.done?' done':''));
+    it.appendChild(span('book-badge '+(b.done?'yes':'no'),b.done?'✅ 已訂':'⬜ 待訂'));
+    const body=div('book-body');
+    body.appendChild(div('book-name',b.name));
+    body.appendChild(div('book-meta',b.meta));
+    if(b.url){const a=el('a','book-btn','✅ 查看訂單');a.href=b.url;a.target='_blank';body.appendChild(a);}
+    it.appendChild(body);
+    s1.appendChild(it);
+  });
+  wrap.appendChild(s1);
+
+  // ── 打包清單（可勾選，存 localStorage）──
+  const s2=div('prep-sec');
+  const h2row=div('prep-h');
+  h2row.appendChild(span('','🎒 打包清單'));
+  const prog=span('pack-prog','');h2row.appendChild(prog);
+  s2.appendChild(h2row);
+  const sub2=div('prep-sub');
+  sub2.appendChild(span('','勾選狀態自動保存 · '));
+  const rst=el('a','','全部重設');rst.href='#';rst.style.color='var(--sky)';
+  rst.addEventListener('click',e=>{e.preventDefault();
+    if(confirm('清除所有打包勾選？')){PACKING.forEach((c,ci)=>c[1].forEach((it,ii)=>localStorage.removeItem('pack_'+ci+'_'+ii)));buildPrep();}});
+  sub2.appendChild(rst);
+  s2.appendChild(sub2);
+  const updProg=()=>{const{total,done}=packProgress();prog.textContent='已打包 '+done+' / '+total;};
+  PACKING.forEach((cat,ci)=>{
+    const cd=div('pack-cat');
+    cd.appendChild(el('div','pack-cat-h',cat[0]));
+    cat[1].forEach((item,ii)=>{
+      const key='pack_'+ci+'_'+ii;
+      const lab=el('label','pack-item');
+      const cb=document.createElement('input');cb.type='checkbox';
+      cb.checked=localStorage.getItem(key)==='1';
+      if(cb.checked)lab.classList.add('checked');
+      cb.addEventListener('change',()=>{
+        if(cb.checked)localStorage.setItem(key,'1');else localStorage.removeItem(key);
+        lab.classList.toggle('checked',cb.checked);updProg();
+      });
+      lab.appendChild(cb);lab.appendChild(span('',item));
+      cd.appendChild(lab);
+    });
+    s2.appendChild(cd);
+  });
+  updProg();
+  wrap.appendChild(s2);
+
+  // ── 即時資訊連結 ──
+  const s3=div('prep-sec');
+  s3.appendChild(el('h2','prep-h','🔗 冰島即時資訊'));
+  s3.appendChild(el('p','prep-sub','出發後每天早上查一次：天氣、極光、路況、安全'));
+  const links=div('info-links');
+  INFO_LINKS.forEach(l=>{const a=el('a','gmap-btn',l.icon+' '+l.label);a.href=l.url;a.target='_blank';links.appendChild(a);});
+  s3.appendChild(links);
+  wrap.appendChild(s3);
+
+  panel.innerHTML='';
+  panel.appendChild(wrap);
+}
+
+// ════════════════════════════════════════════════════
 //  ASSEMBLE DOM
 // ════════════════════════════════════════════════════
 buildOverview();
@@ -1504,6 +1718,9 @@ DAYS.forEach(day=>{
   const panel=buildDayPanel(day);
   panels.appendChild(panel);
 });
+
+buildPrep();
+document.getElementById('prepBtn').addEventListener('click',showPrep);
 
 // ════════════════════════════════════════════════════
 //  LEAFLET MAP
@@ -1604,6 +1821,28 @@ function popupHtml(sp,day){
   return d;
 }
 
+function mkBedIcon(col){
+  return L.divIcon({className:'',
+    html:'<div style="width:26px;height:26px;background:#0d1f33;border:2.5px solid '+col+';border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,.55);cursor:pointer">🛏</div>',
+    iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+}
+function accPopupHtml(day){
+  const a=day.acc;
+  const d=div('pw');
+  const body=div('pw-body');
+  body.appendChild(div('pw-zh','🛏 '+a.name));
+  const meta=div('pw-en','Day '+day.day+' · '+day.date+(a.booking?' · '+a.booking:''));
+  meta.style.color=day.color;body.appendChild(meta);
+  if(a.sub){const s=div('pw-detail-body',a.sub);s.style.margin='7px 0 4px';body.appendChild(s);}
+  const links=div('pw-links');
+  const gm=el('a','pw-wiki','🗺 Google Maps 找飯店');
+  gm.href='https://maps.google.com/?q='+encodeURIComponent(a.name.split(/[（(]/)[0].trim()+' Iceland');
+  gm.target='_blank';links.appendChild(gm);
+  body.appendChild(links);
+  d.appendChild(body);
+  return d;
+}
+
 DAYS.forEach(day=>{
   if(day.isD0)return;
   const lls=day.spots.map(s=>[s.lat,s.lon]);
@@ -1633,7 +1872,13 @@ DAYS.forEach(day=>{
     if(caution)pill.bindPopup('<div style="font:12px/1.6 Microsoft JhengHei,Arial;color:#f2c53d;max-width:220px">⚠️ '+caution+'</div>',{className:''});
     segLabels.push(pill);                                // NOT added to map yet
   }
-  layers[day.day]={glow,line,marks,arrows,segLabels,day};
+  // accommodation bed marker (added to map only when its day is active — see showBeds)
+  let bed=null;
+  if(day.acc&&day.acc.geo){
+    bed=L.marker(day.acc.geo,{icon:mkBedIcon(C),zIndexOffset:1000});
+    bed.bindPopup(()=>accPopupHtml(day),{maxWidth:270,minWidth:240,className:''});
+  }
+  layers[day.day]={glow,line,marks,arrows,segLabels,bed,day};
 });
 
 // ════════════════════════════════════════════════════
@@ -1651,12 +1896,32 @@ function showSegLabels(dayNum){
   });
 }
 
+// show accommodation bed marker only for the given day (null = hide all)
+function showBeds(dayNum){
+  DAYS.forEach(d=>{
+    const ly=layers[d.day];
+    if(!ly||!ly.bed)return;
+    map.removeLayer(ly.bed);
+    if(d.day===dayNum)ly.bed.addTo(map);
+  });
+}
+
+function showPrep(){
+  current=null;
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('panel-prep').classList.add('on');
+  document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('allBtn').classList.remove('on');
+  document.getElementById('prepBtn').classList.add('on');
+}
+
 function showAll(){
   current=null;
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.getElementById('panel-ov').classList.add('on');
   document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('on'));
   document.getElementById('allBtn').classList.add('on');
+  document.getElementById('prepBtn').classList.remove('on');
   // restore all layers
   DAYS.forEach(d=>{
     if(!layers[d.day])return;
@@ -1666,6 +1931,7 @@ function showAll(){
     arrows.forEach(ar=>ar.setIcon(mkArrow(ar._ang,d.color,false)));
   });
   showSegLabels(null);
+  showBeds(null);
   map.flyTo([65.1,-18.5],6,{duration:.8});
 }
 
@@ -1678,6 +1944,7 @@ function activateDay(dayNum,flyTo=true){
   const tb=document.getElementById('dtab-'+dayNum);
   if(tb)tb.classList.add('on');
   document.getElementById('allBtn').classList.remove('on');
+  document.getElementById('prepBtn').classList.remove('on');
   // map opacity  (Bug B1 fix: D0 has no Iceland layer → show all normally)
   const hasLayer=!!layers[dayNum];
   DAYS.forEach(d=>{
@@ -1690,6 +1957,7 @@ function activateDay(dayNum,flyTo=true){
     arrows.forEach(ar=>ar.setIcon(mkArrow(ar._ang,d.color,!on)));
   });
   showSegLabels(hasLayer?dayNum:null);
+  showBeds(hasLayer?dayNum:null);
   if(flyTo&&layers[dayNum]){
     const day=DAYS.find(d=>d.day===dayNum);
     if(day){
@@ -1727,8 +1995,52 @@ function flyToSpot(sp,day){
 document.getElementById('editBtn').addEventListener('click', toggleEdit);
 document.getElementById('resetBtn').addEventListener('click', resetPrices);
 document.getElementById('allBtn').addEventListener('click', showAll);
+document.getElementById('printBtn').addEventListener('click', ()=>window.print());
 
 initPrices();
+
+// ── spot search (jump + fly) ──
+(function(){
+  const inp=document.getElementById('spotSearch');
+  const box=document.getElementById('searchResults');
+  if(!inp||!box)return;
+  const INDEX=[];
+  DAYS.forEach(day=>day.spots.forEach(sp=>{ if(sp.lat&&sp.lat>50) INDEX.push({sp,day}); }));
+  let sel=-1, cur=[];
+  const hide=()=>{box.classList.remove('on');box.innerHTML='';sel=-1;cur=[];};
+  const paint=()=>{[...box.children].forEach((c,i)=>c.classList.toggle('sel',i===sel));};
+  const go=(i)=>{const item=cur[i];if(!item)return;inp.value='';hide();activateDay(item.day.day,false);flyToSpot(item.sp,item.day);};
+  const render=()=>{
+    const q=inp.value.trim().toLowerCase();
+    if(!q){hide();return;}
+    cur=INDEX.filter(({sp})=>(sp.zh+' '+sp.en).toLowerCase().includes(q)).slice(0,8);
+    box.innerHTML='';
+    if(!cur.length){box.appendChild(el('div','search-empty','找不到景點 No match'));box.classList.add('on');return;}
+    cur.forEach(({sp,day},i)=>{
+      const it=div('search-item');
+      const dot=div('si-dot',String(sp._n));dot.style.background=day.color;
+      const t=div('');t.appendChild(div('si-zh',sp.zh));t.appendChild(div('si-en','D'+day.day+' · '+sp.en));
+      it.appendChild(dot);it.appendChild(t);
+      it.addEventListener('mousedown',e=>{e.preventDefault();go(i);});
+      box.appendChild(it);
+    });
+    box.classList.add('on');sel=-1;
+  };
+  inp.addEventListener('input',render);
+  inp.addEventListener('keydown',e=>{
+    if(!cur.length)return;
+    if(e.key==='ArrowDown'){e.preventDefault();sel=Math.min(sel+1,cur.length-1);paint();}
+    else if(e.key==='ArrowUp'){e.preventDefault();sel=Math.max(sel-1,0);paint();}
+    else if(e.key==='Enter'){e.preventDefault();go(sel<0?0:sel);}
+    else if(e.key==='Escape'){hide();inp.blur();}
+  });
+  document.addEventListener('click',e=>{ if(!e.target.closest('.sb-search'))hide(); });
+})();
+
+// ── PWA service worker (offline) ──
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 
 // ════════════════════════════════════════════════════
 //  SIDEBAR RESIZE  (desktop drag handle)
