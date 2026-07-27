@@ -607,7 +607,7 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
     <div class="sb-chips">
       <div class="chip">📅 9/24–10/3</div>
       <div class="chip"><b>10</b> 天</div>
-      <div class="chip"><b id="hd-spots">40</b> 景點</div>
+      <div class="chip"><b id="hd-spots">39</b> 景點</div>
       <div class="chip">~<b id="hd-km">1,700</b> km</div>
     </div>
     <div class="sb-search">
@@ -944,14 +944,14 @@ const DAYS = [
    ]},
  tips:[
    '✅ 冰川健行已預訂：Troll Expeditions（GetYourGuide），10/1，NT$41,755/8人。tour 14:30 出發，須 14:00（提早30分）抵達否則喪失名額；路邊可見免費私人停車場，結束回同一地點',
-   '⚠️ 集合點在 Hof（Troll.is 基地）非 Skaftafell 遊客中心，在其東方約 25km！看完 Svartifoss 後要東返約 25 分才到 Hof，14:00 前很難趕到——強烈建議先到 Hof 集合，或省略 Svartifoss',
-   '健行前午餐一定要吃飽！5小時極度消耗體力',
+   '⚠️ 行程緊湊：14:00 前務必抵達 Hof 集合點（鑽石沙灘往西約 26km／30 分）。鑽石沙灘後直接前往 Hof，中途用餐與整裝，抓好時間別遲到',
+   '⚠️ 斯瓦蒂佛斯 Svartifoss 不在 Google Sheet 行程內：它在 Skaftafell（Hof 西方約 25km），硬要繞去會趕不上 14:00 集合——建議略過或改到其他天',
+   '健行前午餐一定要吃飽！5小時極度消耗體力（Hof 集合點沒有餐廳，請在赫本/沿途先吃或自備行動糧）',
    '13:50前在集合點上廁所，冰川上完全沒有廁所',
    '夜間從冰川開回教堂城（55min），副駕不能睡著！',
-   '⚠️ 提醒 owner：斯瓦蒂佛斯 Svartifoss 未列在 Daily detail 分頁，故 popup 無行程細節',
  ],
  restaurants:[
-   {name:'Skaftafell 停車場餐車', type:'🍔 健行前大餐', note:'漢堡＋炸魚薯條，吃到最飽！'},
+   {name:'赫本 Höfn 或沿途補給', type:'🍔 健行前正餐', note:'Hof 集合點無餐廳，建議在赫本或途中先吃飽，並自備能量棒/巧克力上冰川'},
    {name:'Skál! Bistro（教堂城）', type:'🍺 抵達後晚餐', note:'ISK 3,500 (NT$755)'},
  ],
  spots:[
@@ -967,15 +967,9 @@ const DAYS = [
     fee:'免費', feeKey:'diamond-beach',
     tags:['⚠️危險巨浪勿背對海','純黑沙灘透明冰塊'],
     desc:'冰塊被沖上純黑火山沙灘像一顆顆鑽石。此處巨浪無預警，勿背對大海！'},
-   {zh:'斯瓦蒂佛斯黑瀑布', en:'Svartifoss',
-    lat:64.030, lon:-16.976, wiki:'Svartifoss',
-    time:'13:30（整備空檔）', drv:'約45 min（從鑽石沙灘→Skaftafell）', dur:'約45 min（視體力）',
-    fee:'免費', feeKey:'svartifoss',
-    tags:['玄武岩六角柱瀑布','Skaftafell停車場同地','冰川健行前可快速健行'],
-    desc:'玄武岩六角柱圍繞的獨特黑色瀑布，步道單程約20分鐘可到。抵達Skaftafell後若體力允許，可在冰川健行整備前快速來回。'},
    {zh:'冰川健行·Hof集合', en:'Falljökull Glacier Hike · Troll Expeditions',
     lat:63.992, lon:-16.705, wiki:'Skaftafell',
-    time:'14:00 抵達集合 / 14:30 出發', drv:'約25 min（Skaftafell 東返 Hof 集合點 ~25km）', dur:'5小時健行',
+    time:'14:00 抵達集合 / 14:30 出發', drv:'約30 min（鑽石沙灘 → Hof 集合點 ~26km）', dur:'5小時健行',
     fee:'NT$41,755／8人（約NT$5,219/人）· Troll.is', feeKey:'glacier-hike',
     tags:['⭐⭐全程最值得體驗','✅已預訂(Troll Expeditions)','⚠️14:00抵達(早tour 30分)','⚠️集合在Hof非Skaftafell','免費私人停車'],
     book:{label:'已預訂・查看 GetYourGuide 訂單', url:'https://www.getyourguide.com/booking/EXV8KH4M5XTNE855WJBL8G3LB34W3W3G'},
@@ -1147,7 +1141,7 @@ const SPOT_DETAIL={
  'hofn-dinner':'行程：前往鎮上極有名的 Pakkhús Restaurant（不接受預約，須提早現場排隊）享用蒜香奶油烤冰島小龍蝦，或改去 Humarhöfnin 餐廳。',
  'jokulsarlon':'行程：漫步湖畔高地。這個時間點陽光角度剛好，照在漂浮的巨大千年藍冰上色彩極其透亮。記得找尋在冰塊間游泳探頭的野生海豹！',
  'diamond-beach':'行程：開車 2 分鐘到對面停車場，漫步純黑沙灘，近距離拍攝被大浪沖刷得像水晶般剔透的冰塊。\n安全叮嚀：此處海浪極大，拍照千萬不要背對大海！',
- 'glacier-hike':'✅ 已預訂（Troll Expeditions・GetYourGuide）：日期 10/1，NT$41,755／8人。\n原文集合說明：Meet us at Troll.is - Skaftafell meeting point, 1km west of Hofgarður & 9km east of Falljökull Glacier；路邊可見免費私人停車場，嚮導在此迎接，行程結束回同一地點。\n⚠️ 時間：tour 14:30 出發，請 14:00（提早 30 分）抵達，否則喪失名額。此集合點在 Hof，不是 Skaftafell 遊客中心（在其東方約 25km）——看完 Svartifoss（Skaftafell）需東返約 25 分，時間很緊，建議先到 Hof 集合或省略 Svartifoss。\n行程：抵達後在小木屋報到，領取並匹配專用冰爪、冰斧與安全吊帶。\n夕陽亮點：17:30–18:49（日落前一小時）是整趟環島的視覺最高峰，秋季粉金逆光會把冰川與冰裂縫染成夢幻色彩。\n黑夜收尾：19:00 後天色全黑，在嚮導帶領下戴頭燈走下冰舌，體驗黑夜冰川的寂靜，極其酷炫！',
+ 'glacier-hike':'✅ 已預訂（Troll Expeditions・GetYourGuide）：日期 10/1，NT$41,755／8人。\n原文集合說明：Meet us at Troll.is - Skaftafell meeting point, 1km west of Hofgarður & 9km east of Falljökull Glacier；路邊可見免費私人停車場，嚮導在此迎接，行程結束回同一地點。\n⚠️ 時間：tour 14:30 出發，請 14:00（提早 30 分）抵達，否則喪失名額。此集合點在 Hof，不是 Skaftafell 遊客中心（在其東方約 25km）；從鑽石沙灘往西約 26km／30 分即達，今日行程緊湊，鑽石沙灘後直接前往 Hof、中途用餐整裝。\n行程：抵達後在小木屋報到，領取並匹配專用冰爪、冰斧與安全吊帶。\n夕陽亮點：17:30–18:49（日落前一小時）是整趟環島的視覺最高峰，秋季粉金逆光會把冰川與冰裂縫染成夢幻色彩。\n黑夜收尾：19:00 後天色全黑，在嚮導帶領下戴頭燈走下冰舌，體驗黑夜冰川的寂靜，極其酷炫！',
  'fjadrargjufur':'行程：清晨抵達，光線剛好照進深谷。順著鋪好的景觀步道上行，沿途有 3 個平台可俯瞰蛇行河流切穿苔蘚崖壁。爬到頂端觀景台拍完後，返回下停車場上廁所。',
  'reynisfjara':'健行：走下純黑沙灘，拍攝壯觀的玄武岩風琴壁。此處風浪極大，千萬不要靠海太近。\n午餐：拍完後直接在海灘旁 Black Beach Restaurant 吃午餐（漢堡和羊肉熱湯很出名），順便上廁所。',
  'skogafoss':'行程：一下車就看到巨大瀑布，穿上防水外套走到最前面感受水霧。接著挑戰右側陡峭階梯步道，登頂俯瞰河流奔入平原。',
