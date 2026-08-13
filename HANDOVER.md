@@ -63,7 +63,7 @@ Sheet 結構（Tab: gid=461091797）：
 
 | Day | 日期 | A團（卡致豆桓）飯店 | A團費用 | 訂房方 | B團（豆林羅哈）飯店 | 狀態 |
 |-----|------|------|------|--------|------|------|
-| D0 | 9/24(四) | 飯店未知 | NT$25,329 | — | — | 待確認飯店名稱（Sheet 9/24 欄，2026-07-17 更新） |
+| D0 | 9/24(四) | 飯店未知 | NT$25,429 | — | — | 待確認飯店名稱（Sheet 9/24 欄原值 25,428.5，2026-08-13 同步） |
 | D1 | 9/25(五) | Flyers Airport Hotel | NT$10,558 | Carol / Agoda | **同 A團** | 9/26前可免費取消 |
 | D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | **同 A團** | 9/21前可免費取消 |
 | D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | Guesthouse AkurInn（另訂） | 9/4前可免費取消 |
@@ -72,9 +72,9 @@ Sheet 結構（Tab: gid=461091797）：
 | D6 | 9/30 | Guesthouse Stekkatun | NT$17,442 | 雅致 / Trip.com | Guesthouse Skálafell（另訂） | 雙人房×2間含早餐，不可取消（2026-07-17 已訂） |
 | D7 | 10/1 | Stracta Apartments Orustustaðir | NT$14,520 | 雅致 / Guide to Iceland | **同 A團** | 已訂，9/24前可免費取消 |
 | D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | **同 A團** | 9/27前可免費取消 |
-| D9 | 10/3 | Flyers Airport Hotel（待確認） | NT$8,493 | Agoda | Golden Circle Domes - Lake View（另訂） | 深夜班機前短暫休憩，A團尚未定 |
+| D9 | 10/3 | **Nupan Deluxe**（凱夫拉維克市區 Aðalgata 10） | NT$8,891 | 雅致 / Booking | Golden Circle Domes - Lake View（另訂） | 已訂，2026/9/27前（不含當日）可免費取消（2026-08-13 同步 Sheet） |
 
-**A團住宿費加總**：NT$126,645（全部 D0–D9 已有金額）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
+**A團住宿費加總**：NT$127,143（全部 D0–D9 已有金額；Sheet 精確總和 127,142.5）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
 
 ---
 
@@ -84,12 +84,13 @@ Sheet 結構（Tab: gid=461091797）：
 |------|------|
 | ~~D6 住宿費~~ | ✅ 已訂：Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消） |
 | ~~D7 住宿費~~ | ✅ 已訂：Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland） |
-| D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用已更新為 NT$25,329，飯店名稱確認後填入 |
-| D9 住宿確認 | Flyers Airport Hotel 待定（深夜班機前 hotel，Agoda 尚未訂） |
+| D0 飯店名稱 | Google Sheet 無列出 9/24 飯店名稱，費用已更新為 NT$25,429，飯店名稱確認後填入 |
+| ~~D9 住宿確認~~ | ✅ 已訂：Nupan Deluxe NT$8,891（雅致/Booking，凱夫拉維克市區 Aðalgata 10，距 KEF 約 5 分鐘，2026/9/27前不含當日可免費取消）。取代原「Flyers Airport Hotel（待確認）NT$8,493」 |
+| **取車時間 Sheet 自相矛盾** | Sheet 9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，但 9/25 欄景點列 Lotus Car Rental。HTML 目前維持 D1(9/25) 落地後取車，已在 D2 提醒與差異說明加註警示。**owner 需確認實際取車時間與租車公司** |
 | ~~B 団住宿~~ | ✅ 已收錄：A/B 團住宿已在 HTML 每日住宿區分「A團／B團・同住或另訂」清楚標示 |
 | B 團費用 | 豆林羅哈另訂之夜（D3/D5/D6/D9）Sheet 未列費用，確認後可補 |
 | **D2(9/26) 溫泉地點** | **Sheet 本身兩分頁矛盾**：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。HTML 目前採用 Sky Lagoon（座標/介紹/費用皆為 Sky Lagoon），已在景點標籤與差異說明區塊加註警示（2026-07-17）。**owner 需自行確認實際要去哪一個，AI 不擅自決定** |
-| ~~D7 Svartifoss~~ 已移除 | 2026-07-28：依 owner 指示「Day 7 依 Google Sheet 顯示」，Svartifoss 不在 Sheet D7 行程 → 已從 D7 景點移除（行程緊湊、與 Hof 集合點相反方向）。改於「今日重點提醒」註記為可略選項。D7 景點回到 Sheet 的 3 站：傑古沙龍→鑽石沙灘→冰川健行 |
+| ~~D7 Svartifoss~~ 已移除（**註：Sheet 主排程分頁其實有列**） | 2026-08-13 覆查：Sheet **主排程分頁** D7 欄確實列有「斯瓦蒂佛斯／黑瀑布 Svartifoss（同個停車點）」，但 **Daily detail 分頁沒有**。因 Svartifoss 在 Skaftafell、與 14:00 Hof 集合方向相反且會遲到，維持 owner 2026-07-28 決定不排入，改在提醒與差異說明加註。原記錄「不在 Sheet」有誤，已更正。<br>2026-07-28：依 owner 指示「Day 7 依 Google Sheet 顯示」 → 已從 D7 景點移除（行程緊湊、與 Hof 集合點相反方向）。改於「今日重點提醒」註記為可略選項。D7 景點回到 Sheet 的 3 站：傑古沙龍→鑽石沙灘→冰川健行 |
 | D8 Gljúfrabúi 無行程細節 | 未列在 Daily detail 分頁，popup 無「行程細節」段落，HTML 已有 tips 註記 |
 | ~~冰川健行預約~~ | ✅ 已訂（Sheet「體驗行程」分頁 預約=TRUE）：Troll Expeditions／GetYourGuide，10/1，NT$41,755/8人。已入 HTML 景點＋行前預約表 |
 | **D7 冰川集合點在 Hof（非 Skaftafell）＋14:00 抵達** | Troll.is 集合點為 **Hof**（Hofgarður 以西1km、Falljökull 以東9km、距 Jökulsárlón 約30min），路邊有免費私人停車場，結束回同地點。在 Skaftafell 遊客中心**東方約 25km**，座標已由 64.018,-16.975 改為 **63.992,-16.705**。時間：**tour 14:30 出發，須 14:00（提早30分）抵達**否則喪失名額。D7 已依 Sheet 顯示（無 Svartifoss），行程緊湊提醒放在「今日重點提醒」：鑽石沙灘後直接往 Hof（約26km/30分），Hof 無餐廳需先吃或自備。（Owner 已於 2026-07-28 提供 GYG 集合原文確認） |
@@ -219,6 +220,15 @@ icon.svg              app icon（極光主題）
 ---
 
 ## 最後一次 AI 作業日期
+2026-08-13（**以 Google Sheet 為 source 做全面比對同步**）：
+- ✅ D9(10/3) 住宿 `Flyers Airport Hotel（待確認）NT$8,493` → **`Nupan Deluxe` NT$8,891**（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）；`ACC_GEO[9]` 座標由機場 63.985,-22.605 → 市區 **64.0043,-22.5644**
+- ✅ D0(9/24) 住宿費 NT$25,329 → **NT$25,429**（Sheet 原值 25,428.5）
+- ✅ 住宿總計連動 NT$126,645 → **NT$127,143**
+- ✅ 塞爾福斯 Selfoss 8人整套房源（約NT$31,667）依 Sheet 欄位由 D9 移到 **D8(10/2)** 備選住宿，並還原 Sheet 原始連結（check_in 2026-10-02）
+- ⚠️ 新增 2 項待確認：**取車時間**（Sheet 9/26 欄寫 08:00 機場取車/桓哥訂 Booking vs 9/25 欄 Lotus Car Rental）、**D7 Svartifoss**（Sheet 主排程分頁有列、Daily detail 分頁無）
+- 差異說明區塊 10 項 → **13 項**；`sw.js` VERSION bump `iceland-v1` → `iceland-v2`
+- 比對結果：D1–D9 景點清單、車程/里程、A團與B團住宿、班機、冰川健行預約（10/1 NT$41,755/8人）皆與 Sheet 一致，無其他落差
+
 2026-07-28（三大功能包：① 新增 🧳 行前準備 tab＝預約狀態總表＋可勾選打包清單（localStorage）＋冰島即時資訊連結；② POI 上地圖＝住宿 🛏 床標記＋餐廳/住宿 Google Maps 搜尋連結；③ PWA 離線（新增 sw.js/manifest.webmanifest/icon.svg）＋景點搜尋框＋列印樣式＋冰川集合點座標校正到 Hof 63.992,-16.705 並標註 owner 需確認當日時間軸。另補 10/4 回程航班、冰川健行已預訂資訊。以 `node --check` 與 DOM stub 冒煙測試通過）
 
 2026-07-17（同步 Sheet：D0 住宿費 20,969→25,329、D6 住宿已訂 Guesthouse Stekkatun NT$17,442（原 Höfn i Hornafirði 待定），住宿總計連動更新為 NT$126,645，差異說明區塊新增 2 項；另外把 D2 溫泉 Sheet 兩分頁矛盾（藍湖 vs Sky Lagoon）的警示同步標到景點標籤與差異說明區塊，共新增第 3 項，差異說明變為 10 項——此項未自行判斷，等 owner 確認）

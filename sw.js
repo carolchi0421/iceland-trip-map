@@ -3,7 +3,7 @@
    - navigation / app shell : network-first, fallback to cache (updates propagate, offline still works)
    - map tiles / Wikipedia photos / Leaflet CDN : cache-first (stale-while-revalidate)
    Bump VERSION to force clients onto a fresh cache. */
-const VERSION = 'iceland-v1';
+const VERSION = 'iceland-v2';
 const SHELL   = VERSION + '-shell';
 const RUNTIME = VERSION + '-runtime';
 

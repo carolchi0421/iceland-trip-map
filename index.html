@@ -650,7 +650,7 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 const DAYS = [
 {day:0, date:'9/24(四)', color:'#607090', title:'出發日・台灣→冰島',
  depart:'提前3H到桃園機場', sunrise:'', sunset:'', km:'―', drive:'―',
- acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱', price:'NT$25,329', booking:''},
+ acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱（Sheet 原值 25,428.5）', price:'NT$25,429', booking:''},
  isD0:true,
  flights:[
    {who:'致黃', info:'台灣→阿姆斯特丹　TPE→AMS　23:59 → (+1)08:15'},
@@ -707,6 +707,7 @@ const DAYS = [
    ]},
  tips:[
    '⚠️ 提醒 owner：D2 溫泉兩分頁不一致 — 主排程分頁寫「藍湖 Blue Lagoon」，Daily detail／景點簡表寫「Sky Lagoon」；目前依 detail 分頁顯示 Sky Lagoon，請確認要去哪一個',
+   '⚠️ 提醒 owner：Sheet 在 9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，與本站 D1 落地後即取車（Lotus 接駁）不一致，請確認實際取車時間與租車公司',
    '08:30 準時出發，今日行程最滿，副駕不停跟司機聊天防瞌睡',
    '海豹最佳觀賞：下午3-5點退潮，往沙灘左側礁石區走10分鐘',
    '布迪爾黑教堂附近無廁所，先在海豹沙灘停車場解決',
@@ -946,7 +947,7 @@ const DAYS = [
  tips:[
    '✅ 冰川健行已預訂：Troll Expeditions（GetYourGuide），10/1，NT$41,755/8人。tour 14:30 出發，須 14:00（提早30分）抵達否則喪失名額；路邊可見免費私人停車場，結束回同一地點',
    '⚠️ 行程緊湊：14:00 前務必抵達 Hof 集合點（鑽石沙灘往西約 26km／30 分）。鑽石沙灘後直接前往 Hof，中途用餐與整裝，抓好時間別遲到',
-   '⚠️ 斯瓦蒂佛斯 Svartifoss 不在 Google Sheet 行程內：它在 Skaftafell（Hof 西方約 25km），硬要繞去會趕不上 14:00 集合——建議略過或改到其他天',
+   '⚠️ 斯瓦蒂佛斯 Svartifoss：Sheet 主排程分頁 D7 有列（標「同個停車點」），但 Daily detail 分頁沒有；它其實在 Skaftafell（Hof 西方約 25km），繞去會趕不上 14:00 集合。依 owner 2026-07-28 決定暫不排入，若要去請改到其他天',
    '健行前午餐一定要吃飽！5小時極度消耗體力（Hof 集合點沒有餐廳，請在赫本/沿途先吃或自備行動糧）',
    '13:50前在集合點上廁所，冰川上完全沒有廁所',
    '夜間從冰川開回教堂城（55min），副駕不能睡著！',
@@ -982,6 +983,7 @@ const DAYS = [
  acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking', bSame:true,
    alts:[
      {name:'8人整套房源（Hella）', price:'約NT$17,177', url:'https://www.airbnb.com.tw/rooms/15251515?check_in=2026-10-02&check_out=2026-10-03&guests=1&adults=8&s=67&unique_share_id=5f5cee24-6244-4b09-bddd-76bf325b6053'},
+     {name:'8人整套房源（塞爾福斯 Selfoss・豪華大房子）', price:'約NT$31,667', url:'https://www.airbnb.com.tw/rooms/1326887757600236278?check_in=2026-10-02&check_out=2026-10-03&guests=1&adults=8&s=67&unique_share_id=7c8720c9-e8a0-463a-b99f-7820247055cc'},
    ]},
  tips:[
    '今日景點最密集，沿1號公路一字排開，拉車最輕鬆',
@@ -1030,11 +1032,8 @@ const DAYS = [
 },
 {day:9, date:'10/3', color:'#D35400', title:'黃金圈→藍湖→深夜班機',
  depart:'建議 08:30 出發（景點最多！）', sunrise:'07:41', sunset:'18:52', km:'約270 km', drive:'約4.5 H',
- acc:{name:'Flyers Airport Hotel（待確認）', sub:'藍湖→Flyers 僅 20min。Carol+致黃 住此休憩後搭 10/4 07:40 KEF→AMS（約 04:40 完成還車與報到）；桓哥搭 10/4 01:10 凌晨班機先離境，不入住', price:'NT$8,493', booking:'Agoda',
-   b:{name:'Golden Circle Domes - Lake View', sub:'黃金圈玻璃屋，B團另住'},
-   alts:[
-     {name:'8人整套房源（塞爾福斯 Selfoss・豪華大房子）', price:'約NT$31,667', url:'https://www.airbnb.com.tw/rooms/1326887757600236278?check_in=2026-10-03&check_out=2026-10-04&guests=1&adults=8'},
-   ]},
+ acc:{name:'Nupan Deluxe', sub:'凱夫拉維克市區 Aðalgata 10，距 KEF 機場約 5 分鐘車程（藍湖→約 20min）。雅致訂（Booking），2026/9/27前（不含當日）可免費取消。Carol+致黃 住此休憩後搭 10/4 07:40 KEF→AMS（約 04:40 完成還車與報到）；桓哥搭 10/4 01:10 凌晨班機先離境，不入住', price:'NT$8,891', booking:'Booking',
+   b:{name:'Golden Circle Domes - Lake View', sub:'黃金圈玻璃屋，B團另住'}},
  flights:[
    {who:'Carol+致黃', info:'冰島→阿姆斯特丹　KEF→AMS　07:40 → 13:00（10/4 回程首段）'},
    {who:'桓哥',       info:'冰島離境　KEF 出發　01:10 → 08:50（10/4 凌晨，先行離開）'},
@@ -1172,7 +1171,7 @@ const ACC_GEO={
   6:[64.253,-15.216],  // Höfn 一帶
   7:[63.790,-18.061],  // Kirkjubæjarklaustur（教堂城）
   8:[63.833,-20.389],  // Hella
-  9:[63.985,-22.605],  // Keflavík（Flyers）
+  9:[64.0043,-22.5644],// Keflavík 市區 Aðalgata 10（Nupan Deluxe）
 };
 DAYS.forEach(d=>{ if(ACC_GEO[d.day]&&d.acc) d.acc.geo=ACC_GEO[d.day]; });
 
@@ -1284,7 +1283,7 @@ function buildOverview(){
   // discrepancy box
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
-  dtog.innerHTML='⚠️ 與原始行程表差異說明（10項）<span id="darr">▼</span>';
+  dtog.innerHTML='⚠️ 與原始行程表差異說明（13項）<span id="darr">▼</span>';
   dtog.addEventListener('click',()=>{
     const b=dw.querySelector('.diff-body');
     b.classList.toggle('open');
@@ -1298,11 +1297,15 @@ function buildOverview(){
     ['fix','[已修正] 日出日落改為 2026 準確值；4處座標偏移修正（Ytri Tunga/Sky Lagoon/Vestrahorn/Brúarfoss）'],
     ['fix','[已確認] Flyers Airport Hotel (D1) 住宿已更新為已確認狀態'],
     ['fix','[已確認] D7(10/1) 住宿已訂 Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland，9/24前免費取消）'],
-    ['fix','[已確認] D0(9/24) 住宿費更新為 NT$25,329（同步自 Google Sheet 最新資料）'],
+    ['fix','[已確認] D0(9/24) 住宿費同步 Google Sheet 為 NT$25,429（Sheet 原值 25,428.5）'],
+    ['fix','[已確認] D9(10/3) 住宿已訂 Nupan Deluxe NT$8,891（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）— 原標示的 Flyers Airport Hotel（待確認）NT$8,493 已由 Sheet 取代'],
+    ['fix','[已同步] 塞爾福斯 Selfoss 8人整套房源（約NT$31,667）依 Sheet 欄位移到 D8(10/2) 備選住宿'],
     ['fix','[已確認] D6(9/30) 住宿已訂 Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消）'],
     ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
     ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
     ['wrn','[待確認] D2(9/26) 溫泉地點 Sheet 兩分頁不一致：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。網站目前採用 Sky Lagoon，請確認實際要去哪一個'],
+    ['wrn','[待確認] 取車時間 Sheet 自身不一致：9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，但 9/25 欄景點列 Lotus Car Rental。網站目前依 D1(9/25) 落地後取車'],
+    ['wrn','[待確認] D7(10/1) 斯瓦蒂佛斯 Svartifoss：Sheet 主排程分頁有列、Daily detail 分頁沒有。因與 14:00 Hof 集合時間衝突，依 owner 2026-07-28 決定未排入'],
   ];
   diffs.forEach(([cls,txt])=>{
     const d=div('di');
