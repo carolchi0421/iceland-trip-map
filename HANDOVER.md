@@ -38,7 +38,8 @@ Sheet 結構（Tab: gid=461091797）：
 | 行 1-2 | D0–D16 欄位標題，對應日期 9/24–10/10 |
 | 行「A団住宿」| 卡致豆桓 4 人住宿安排 |
 | 行「住宿費」| 住宿費用（NT$），**column-aligned（欄位對應日期）** |
-| 行「B団住宿」| 豆林羅哈 4 人住宿（HTML 未收錄，另一組不同住宿） |
+| 行「B団住宿」| 豆林羅哈 4 人住宿（HTML 已收錄，同住或另訂皆標示） |
+| 行「C団住宿 (屁孩來囉！)」| 2026-08-24 發現新增的第三團，僅 D2/D3/D4/D5/D8 有 Booking.com 連結，其餘天數空白，Sheet 未列費用 |
 | 行「景點」| 每天景點列表（多列） |
 | 行「車程時間/行車里程」| 每天總車程與里程 |
 | 行「未確認」| 備選住宿與尚未確定項目 |
@@ -75,6 +76,18 @@ Sheet 結構（Tab: gid=461091797）：
 | D9 | 10/3 | **Nupan Deluxe**（凱夫拉維克市區 Aðalgata 10） | NT$8,891 | 雅致 / Booking | Golden Circle Domes - Lake View（另訂） | 已訂，2026/9/27前（不含當日）可免費取消（2026-08-13 同步 Sheet） |
 
 **A團住宿費加總**：NT$127,143（全部 D0–D9 已有金額；Sheet 精確總和 127,142.5）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
+
+### C團（屁孩來囉！）住宿對照表（2026-08-24 新發現）
+
+> Sheet 新增「C團住宿 (屁孩來囉！)」列，僅 D2/D3/D4/D5/D8 有 Booking.com 連結，其餘天數空白，皆未列費用。名稱由連結網址／WebSearch 反查確認。
+
+| Day | 日期 | C團飯店 | 備註 |
+|-----|------|--------|------|
+| D2 | 9/26(六) | Hotel Framnes | Grundarfjörður，近教會山。Sheet 為 Share 短連結，已反查出實際飯店 |
+| D3 | 9/27(日) | Hotel Norðurland | 亞庫來利市區 |
+| D4 | 9/28 | Vogahraun Guesthouse | 米湖旁 Vogar 一帶，與 A/B團住宿（Vogar Travel Service）同一區域 |
+| D5 | 9/29 | Media Luna Guesthouse | Seyðisfjörður 市區 |
+| D8 | 10/2 | Hestheimar（另訂房） | 與 A/B團同一地點，2人1房另訂 |
 
 ---
 
@@ -220,6 +233,12 @@ icon.svg              app icon（極光主題）
 ---
 
 ## 最後一次 AI 作業日期
+2026-08-24（**再次以 Google Sheet 為 source 全面比對同步**，owner 要求「不match的馬上補進html」）：
+- ✅ Sheet 主排程分頁新增第三團「**C團住宿 (屁孩來囉！)**」列（HANDOVER 先前未記錄，Sheet modifiedTime 2026-08-24，晚於 2026-08-13 上次同步），於 D2/D3/D4/D5/D8 有 Booking.com 連結、其餘天數空白、Sheet 未列費用
+- ✅ 已補進 HTML：D2 Hotel Framnes（Sheet 為 Share 短連結，已反查出實際飯店）、D3 Hotel Norðurland、D4 Vogahraun Guesthouse、D5 Media Luna Guesthouse、D8 Hestheimar（另訂房）— 每日住宿區塊新增「C團」標籤與連結，總覽卡片與差異說明區塊（13→14項）同步更新
+- 比對結果：A團/B團住宿費、景點清單、班機、冰川健行預約等其餘欄位與 2026-08-13 同步版本一致，無其他落差
+- ⚠️ **尚未 push**：依本文件流程，commit 已完成，push 上線前需先詢問 owner
+
 2026-08-13（**以 Google Sheet 為 source 做全面比對同步**）：
 - ✅ D9(10/3) 住宿 `Flyers Airport Hotel（待確認）NT$8,493` → **`Nupan Deluxe` NT$8,891**（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）；`ACC_GEO[9]` 座標由機場 63.985,-22.605 → 市區 **64.0043,-22.5644**
 - ✅ D0(9/24) 住宿費 NT$25,329 → **NT$25,429**（Sheet 原值 25,428.5）
