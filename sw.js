@@ -3,7 +3,7 @@
    - navigation / app shell : network-first, fallback to cache (updates propagate, offline still works)
    - map tiles / Wikipedia photos / Leaflet CDN : cache-first (stale-while-revalidate)
    Bump VERSION to force clients onto a fresh cache. */
-const VERSION = 'iceland-v2';
+const VERSION = 'iceland-v3';
 const SHELL   = VERSION + '-shell';
 const RUNTIME = VERSION + '-runtime';
 
@@ -31,7 +31,7 @@ self.addEventListener('activate', e => {
 });
 
 function isRuntimeAsset(url) {
-  return /basemaps\.cartocdn\.com|upload\.wikimedia\.org|\/api\/rest_v1\/|unpkg\.com/.test(url);
+  return /tile\.openstreetmap\.org|upload\.wikimedia\.org|\/api\/rest_v1\/|unpkg\.com/.test(url);
 }
 
 self.addEventListener('fetch', e => {
