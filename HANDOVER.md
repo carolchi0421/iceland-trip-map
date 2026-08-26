@@ -277,6 +277,12 @@ icon.svg              app icon（極光主題）
 ---
 
 ## 最後一次 AI 作業日期
+2026-08-26（第五輪：**地圖底圖 CartoDB Voyager 需要 API key 的問題**）：
+- ⚠️ CartoDB 把 `basemaps.cartocdn.com` 這組匿名免費 raster 圖磚鎖起來了，沒有 key 會回傳畫有「API KEY REQUIRED」浮水印的圖磚（不是前端能移除的文字，是伺服器端畫進圖片本身）。官方文件也說這組 raster 圖磚正在走向淘汰
+- 一度改成免key的 OpenStreetMap 標準圖磚，但 owner 覺得樣式跟原本 Voyager 差太多，**要求改回 CartoDB Voyager 網址**，即使目前會顯示浮水印
+- **現狀**：`index.html`/`sw.js` 的圖磚設定已改回 `basemaps.cartocdn.com`（帶浮水印）。若之後 owner 想要真正修好，**必須去 https://carto.com/basemaps/apikey 申請免費 API key**（不用信用卡），把 key 加進 tile URL（`?api_key=YOUR_KEY`）即可完全恢復原本 Voyager 樣式且無浮水印——這是唯一能拿回「一模一樣」畫面的方法，其他免key圖層樣式都會不同
+- sw.js VERSION bump v2→v3(OSM)→v4(改回cartocdn)
+
 2026-08-26（第四輪：**差異說明區塊瘦身＋合住住宿顯示簡化**，owner 看到線上版後要求把「已確認/已過時」項目全部去掉、只留待確認+新資訊，並把 D1(9/25) A/B/C三團合住的重複區塊改成一則）：
 - ✅ 差異說明區塊從 18 項砍到 **9 項**：全部移除「已修正/已確認/已同步/已過時」類的歷史 changelog 項目，只留 6 個「待確認」＋2 個「價格估算」＋1 個荷蘭資料缺漏提醒
 - ✅ D1(9/25) 住宿改成單一區塊：`8人住宿（Airbnb）`，`sub` 直接寫「A團＋B團＋C團（卡致豆桓、豆林羅哈、屁孩來囉！）全部同住此處」，拿掉原本 `bSame`/`c` 三段式重複渲染
