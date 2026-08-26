@@ -2,7 +2,9 @@
 
 ## 這個專案是什麼
 
-`冰島旅遊地圖.html` 是一個**單頁互動式冰島自駕旅遊規劃地圖**，整合側邊欄行程與 Leaflet.js 地圖，讓使用者點景點就能在地圖上飛行定位、查看 popup 與 Wikipedia 照片。
+`index.html` 是一個**單頁互動式旅遊規劃地圖**，整合側邊欄行程與 Leaflet.js 地圖，讓使用者點景點就能在地圖上飛行定位、查看 popup 與 Wikipedia 照片。
+
+**2026-08-26 起改為雙行程網站**：最上方新增「🇮🇸 冰島／🇳🇱 荷蘭」分頁切換（`.trip-switch` + `switchTrip(id)`），同一網址、同一介面骨架，切換時整個側欄與地圖重新渲染成另一趟行程的資料。冰島（原本功能）維持不變；荷蘭是簡化版（見下方「雙行程架構」章節）。
 
 ### 功能清單
 
@@ -64,8 +66,8 @@ Sheet 結構（Tab: gid=461091797）：
 
 | Day | 日期 | A團（卡致豆桓）飯店 | A團費用 | 訂房方 | B團（豆林羅哈）飯店 | 狀態 |
 |-----|------|------|------|--------|------|------|
-| D0 | 9/24(四) | 飯店未知 | NT$25,429 | — | — | 待確認飯店名稱（Sheet 9/24 欄原值 25,428.5，2026-08-13 同步） |
-| D1 | 9/25(五) | ~~Flyers Airport Hotel~~ → 8人住宿 Airbnb（與B/C團合住） | NT$10,558 | Carol / Agoda（**已取消，記得退掉**） | **同 A團（合住 Airbnb）** | ⚠️ 2026-08-25 Sheet更新：原 Flyers 訂房取消，改與 B/C團合住同一 Airbnb（連結見下）；費用仍列 Flyers 原金額，新費用未列 |
+| D0 | 9/24(四) | 飯店未知 | NT$28,289 | — | — | 待確認飯店名稱（2026-08-26 Sheet 再更新為 NT$28,289，先前為 25,429／25,329） |
+| D1 | 9/25(五) | ~~Flyers Airport Hotel~~ → 8人住宿 Airbnb（與B/C團合住） | NT$22,000 | Carol / Agoda（**已取消，記得退掉**） | **同 A團（合住 Airbnb）** | 2026-08-25 Sheet更新：原 Flyers 訂房取消，改與 B/C團合住同一 Airbnb（連結見下）；2026-08-26 Sheet 補上新 Airbnb 實際費用 NT$22,000 |
 | D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | **同 A團** | 9/21前可免費取消 |
 | D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | ~~Guesthouse AkurInn~~ → Colin 的 Airbnb 訂房（另訂） | ⚠️ 2026-08-25 Sheet更新：B團住宿由 AkurInn 改為 Colin 已訂的 Airbnb（原在備選清單） |
 | D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | **同 A團** | — |
@@ -75,7 +77,7 @@ Sheet 結構（Tab: gid=461091797）：
 | D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | **同 A團** | 9/27前可免費取消 |
 | D9 | 10/3 | **Nupan Deluxe**（凱夫拉維克市區 Aðalgata 10） | NT$8,891 | 雅致 / Booking | Golden Circle Domes - Lake View（另訂） | 已訂，2026/9/27前（不含當日）可免費取消（2026-08-13 同步 Sheet） |
 
-**A團住宿費加總**：NT$127,143（全部 D0–D9 已有金額；Sheet 精確總和 127,142.5）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
+**A團住宿費加總**：NT$141,445（2026-08-26 Sheet 更新後：D0 28,289 + D1 22,000 + D2 13,228 + D3 8,579 + D4 9,116 + D5 9,565 + D6 17,442 + D7 14,520 + D8 9,815 + D9 8,891）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
 
 ### C團（屁孩來囉！）住宿對照表（2026-08-24 新發現，2026-08-25 擴充）
 
@@ -144,6 +146,35 @@ Sheet 結構（Tab: gid=461091797）：
 ```
 
 每天有獨立 `--dc`（day color）變數，由 JS 在 `.dtab` 上設定 `style.setProperty('--dc', day.color)`。
+
+---
+
+## 雙行程架構（冰島／荷蘭，2026-08-26 新增）
+
+### 資料來源與範圍
+- **冰島**：D0–D9（9/24–10/3），資料同前，完整功能（住宿A/B/C團、價格編輯、行前準備、差異說明）。
+- **荷蘭**：D10–D15（10/4–10/9，冰島行程結束後的阿姆斯特丹延伸假期）。來源是 Google Sheet 一張**與冰島同格式的結構化表格**（列標籤：班機/住宿/住宿費/景點/Road Map/交通/景點），**不是**分頁裡另外三處重複出現的長段文字草稿（那三處是複製貼上的舊草稿殘影，內容一字不差，已確認忽略）。
+- ⚠️ **荷蘭資料不完整**：Sheet 該表格部分儲存格內容過長，read_file_content 工具固定在同一位置截斷，重新查詢多次結果一致（非隨機截斷，是硬性長度上限）。已如實收錄讀到的部分，缺漏處已在對應日期的 `tips` 註明並標記 ⚠️，包括：
+  - ~~D12(10/6) NDSM 段落句子被截斷~~ → 2026-08-26 重新查詢已補齊：免費渡輪F4號線約14分鐘，晚餐在水岸貨櫃餐廳
+  - D13(10/7) 可能還有第3個候選景點未讀到
+  - D14(10/8) 可能還有第2、3個候選景點未讀到
+  - D10(10/4) 阿姆斯特丹運河遊船已補上場次時間（18:30，1小時，可免費改期），Sheet 附的 Fareharbor 訂票連結本身也被截斷不完整（`https://fareharbor.com/embeds/book/flagship`後面沒了），未收錄該連結
+  - 若要補完，建議直接開 Sheet 該表格用滑鼠展開儲存格查看，或請 owner 截圖
+- 荷蘭景點座標**非 Sheet 提供**（該表格 Road Map/交通列全空）：改用知名地標的公開座標（Anne Frank House、Rijksmuseum、Zaanse Schans 等），來源為一般地理常識／公開資料，不是行程決策內容，風險低。
+
+### 簡化範圍（依 owner 2026-08-26 指示）
+荷蘭分頁刻意**不**包含：住宿A/B/C團分組、價格編輯（✏️/🔄按鈕隱藏）、🧳行前準備 tab（按鈕隱藏）、差異說明區塊。**保留**：總覽卡片、地圖互動（點景點飛地圖／點marker開popup）、每日景點時間軸、Wikipedia縮圖、Google Maps導航連結、🖨列印。
+
+### 程式架構（`index.html` 內）
+- `ICELAND_DAYS[]` / `NL_DAYS[]`：兩份行程資料，取代原本單一的 `DAYS`。
+- `let DAYS`：目前作用中的行程，`switchTrip()` 時重新賦值（`ICELAND_DAYS` 或 `NL_DAYS`）。
+- `TRIPS{iceland,netherlands}`：每個行程的設定物件——標題文字、日期/天數chip、地圖初始中心與zoom（`home:[lat,lon,zoom]`）、`showAcc`（是否顯示住宿區塊）、`showPrep`（是否顯示行前準備按鈕）、`editable`（是否顯示價格編輯按鈕）。
+- `switchTrip(id)`：切換行程的總開關——重設 `DAYS`、更新側欄標題/chip文字、依 `cfg` 顯示/隱藏行前準備與編輯按鈕、重新呼叫 `buildOverview()` + `renderTabsAndPanels()` + `renderMapLayers()` + `rebuildSearchIndex()`，最後 `showAll()` 回到總覽並飛到該行程的地圖中心。
+- `buildOverview()`：改為可重複呼叫（開頭 `panel.innerHTML=''`），依 `cfg.showAcc` 決定要不要顯示差異說明區塊與住宿總計；日曆卡片邏輯抽成共用函式 `buildOverviewCards(panel)`。
+- `buildDayPanel()`：住宿區塊整段包在 `if(TRIPS[ACTIVE_TRIP].showAcc&&day.acc){...}` 內，其餘（景點時間軸、餐廳、班機、tips）維持共用不動。
+- `renderTabsAndPanels()` / `renderMapLayers()`：原本寫死在頁面載入時執行一次的組裝流程，抽成可重複呼叫的函式，切換行程時會先清掉舊行程的 DOM/Leaflet layers 再重建。`.dtabs` 的 grid 欄數也改成依 `DAYS.length` 動態設定（不再寫死 `repeat(10,1fr)`）。
+- `showAll()` 的地圖飛行目標改讀 `TRIPS[ACTIVE_TRIP].home`（不再寫死冰島座標）。
+- 已驗證：`node --check`（語法）＋ headless Edge DOM smoke test（實際點擊分頁切換按鈕，確認 tab/panel 數量正確切換、無 JS runtime error、地圖 marker 正常生成、Wikipedia 縮圖正常載入）。
 
 ---
 
@@ -237,6 +268,17 @@ icon.svg              app icon（極光主題）
 ---
 
 ## 最後一次 AI 作業日期
+2026-08-26（**新增荷蘭雙行程功能**，owner 要求「跟冰島一模一樣的方式設計...另一個tab是for荷蘭」；過程中發現 Sheet 又有新更動，一併同步）：
+- 🆕 **新增「🇮🇸冰島／🇳🇱荷蘭」雙行程分頁**：詳見上方「雙行程架構」章節。荷蘭 D10–D15（10/4–10/9），簡化版功能（無住宿分組/價格編輯/行前準備/差異說明，保留地圖互動＋景點時間軸＋Wikipedia縮圖＋列印）
+- ⚠️ **同步作業期間 Sheet 又被 owner 即時編輯**，比對到 2 項新變動一併修正：
+  - D0(9/24) 住宿費 NT$25,429 → **NT$28,289**
+  - D1(9/25) 新 Airbnb 住宿費由「未列」補齊為 **NT$22,000**（原 Flyers 金額 NT$10,558 已作廢）
+  - 住宿總計連動 NT$127,143 → **NT$141,445**
+- ✅ D12(10/6) NDSM 段落先前因讀取工具截斷而不完整，重新查詢已補齊：免費渡輪F4號線約14分鐘、晚餐在水岸貨櫃餐廳
+- ✅ D10(10/4) 阿姆斯特丹運河遊船補上場次時間 18:30（1小時，可免費改期）；Sheet 附的訂票連結本身被截斷不完整，未收錄
+- 已用 headless Edge 做 DOM smoke test（語法檢查＋實際點擊切換分頁＋確認無 JS runtime error＋地圖 marker/Wikipedia 縮圖正常）並截圖存證
+- 尚未 push，依專案流程待 owner 確認後上線
+
 2026-08-25（**第三次以 Google Sheet 為 source 全面比對同步**，owner 說「google sheet又更新了」，要求再同步）：
 - ⚠️ **D1(9/25) 住宿變動**：A團原訂 Flyers Airport Hotel（Carol/Agoda）Sheet 已標記「已取消（記得退掉）」，改為與 B/C團合住同一 8人 Airbnb；住宿費 NT$10,558 仍是原 Flyers 金額，新 Airbnb 費用 Sheet 未列 → 已同步至 HTML，並在差異說明與 tips 加註待確認
 - ✅ **D3(9/27) B團住宿變動**：由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原本只是 D3 備選清單中的一個候選連結，現已成為 B團正式住宿）→ 已同步，並將該連結從備選清單移除

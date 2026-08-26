@@ -87,6 +87,15 @@ body{
   text-shadow:0 0 20px rgba(242,197,61,.25);
 }
 .sb-en{font-size:9px;color:var(--t3);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
+.trip-switch{display:flex;gap:6px;margin-bottom:10px}
+.trip-btn{
+  flex:1;padding:7px 4px;border-radius:8px;font-size:12px;font-weight:700;
+  background:var(--bg0);border:1px solid var(--bd2);color:var(--t2);
+  cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.trip-btn:hover{color:var(--t1);border-color:var(--bd3)}
+.trip-btn.on{color:var(--gold);border-color:var(--gold);background:var(--gold-bg);
+  box-shadow:0 0 8px rgba(242,197,61,.15)}
 .sb-chips{display:flex;gap:5px;flex-wrap:wrap}
 /* spot search */
 .sb-search{position:relative;margin-top:9px}
@@ -602,13 +611,17 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 <!-- ═══ SIDEBAR ═══════════════════════════════════ -->
 <div id="sidebar">
   <div class="sb-head">
-    <div class="sb-title">Iceland Plan</div>
-    <div class="sb-en">ICELAND RING ROAD SELF-DRIVE · 9/24–10/3, 2026</div>
+    <div class="trip-switch">
+      <button class="trip-btn on" id="tripBtn-iceland">🇮🇸 冰島</button>
+      <button class="trip-btn" id="tripBtn-netherlands">🇳🇱 荷蘭</button>
+    </div>
+    <div class="sb-title" id="hd-title">Iceland Plan</div>
+    <div class="sb-en" id="hd-sub">ICELAND RING ROAD SELF-DRIVE · 9/24–10/3, 2026</div>
     <div class="sb-chips">
-      <div class="chip">📅 9/24–10/3</div>
-      <div class="chip"><b>10</b> 天</div>
+      <div class="chip" id="hd-datechip">📅 9/24–10/3</div>
+      <div class="chip" id="hd-daychip"><b>10</b> 天</div>
       <div class="chip"><b id="hd-spots">39</b> 景點</div>
-      <div class="chip">~<b id="hd-km">—</b> km</div>
+      <div class="chip" id="hd-kmchip">~<b id="hd-km">—</b> km</div>
     </div>
     <div class="sb-search">
       <input type="text" id="spotSearch" placeholder="🔍 搜尋景點 / Search spot…" autocomplete="off">
@@ -647,10 +660,10 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 // ════════════════════════════════════════════════════
 //  DATA  (plain text only – no HTML in values)
 // ════════════════════════════════════════════════════
-const DAYS = [
+const ICELAND_DAYS = [
 {day:0, date:'9/24(四)', color:'#607090', title:'出發日・台灣→冰島',
  depart:'提前3H到桃園機場', sunrise:'', sunset:'', km:'―', drive:'―',
- acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱（Sheet 原值 25,428.5）', price:'NT$25,429', booking:''},
+ acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱（2026-08-26 Sheet 更新為 NT$28,289）', price:'NT$28,289', booking:''},
  isD0:true,
  flights:[
    {who:'致黃', info:'台灣→阿姆斯特丹　TPE→AMS　23:59 → (+1)08:15'},
@@ -678,10 +691,10 @@ const DAYS = [
 },
 {day:1, date:'9/25(五)', color:'#E74C3C', title:'抵達冰島',
  depart:'18:20 KEF 落地', sunrise:'07:18', sunset:'19:21', km:'約30 km', drive:'約20 min',
- acc:{name:'8人住宿（Airbnb，與B/C團合住）', sub:'⚠️ 原訂 Flyers Airport Hotel（Carol／Agoda）已取消，改與B/C團合住同一 Airbnb；住宿費 NT$10,558 為原 Flyers 訂單金額，新 Airbnb 費用 Sheet 尚未列出', price:'NT$10,558', booking:'Airbnb',bSame:true,
+ acc:{name:'8人住宿（Airbnb，與B/C團合住）', sub:'原訂 Flyers Airport Hotel（Carol／Agoda）已取消，改與B/C團合住同一 Airbnb（2026-08-26 Sheet 更新為新 Airbnb 實際金額 NT$22,000）', price:'NT$22,000', booking:'Airbnb',bSame:true,
    c:{name:'C團也同住此處', sub:'與A/B團同一 Airbnb（9/25）', url:'https://www.airbnb.com.tw/rooms/1029730326325707288'}},
  tips:[
-   '⚠️ 2026-08-25 Sheet更新：D1住宿由 Flyers Airport Hotel 改為與B/C團合住 Airbnb（原Agoda訂房記得退掉），詳見 Airbnb 連結；費用待 owner 確認',
+   '2026-08-25 Sheet更新：D1住宿由 Flyers Airport Hotel 改為與B/C團合住 Airbnb（原Agoda訂房記得退掉），詳見 Airbnb 連結；2026-08-26 費用已更新為 NT$22,000',
    '取行李→出海關→搭 Lotus Car Rental 接駁車取車',
    '取車時確認保險，加買砂石險 SAAP（ISK 1,500/天）',
    '今晚在機場附近吃熱狗，明天才是真正大行程',
@@ -1098,12 +1111,161 @@ const DAYS = [
 },
 ];
 
+// ════════════════════════════════════════════════════
+//  DATA — 荷蘭（冰島行程結束後，10/4–10/9）
+//  來源：Google Sheet「荷蘭」結構化表格（D10–D15，與冰島同格式）。
+//  ⚠️ Sheet 部分儲存格內容過長被截斷，D12/D13/D14 部分候選景點暫缺，
+//     以下已如實反映目前讀到的內容，缺漏處於該日 tips 註明，待補。
+//  景點座標非 Sheet 提供（Sheet 該區 Road Map/交通列全空），為知名地標公開座標。
+// ════════════════════════════════════════════════════
+const NL_DAYS = [
+{day:10, date:'10/4(日)', color:'#3D5AFE', title:'冰島→阿姆斯特丹',
+ depart:'KEF→AMS 07:40 落地約13:00', sunrise:'', sunset:'', km:'', drive:'',
+ flights:[
+   {who:'卡致黃', info:'冰島→阿姆斯特丹　KEF→AMS　07:40 → 13:00'},
+ ],
+ tips:[
+   '中午抵達阿姆斯特丹，先去飯店 Check-in 寄放行李（住宿 Sheet 尚未列出）',
+   '安妮之家需提前約6週在官網搶票，出發前務必先訂',
+ ],
+ restaurants:[],
+ spots:[
+   {zh:'安妮之家', en:'Anne Frank House',
+    lat:52.3753, lon:4.8843, wiki:'Anne_Frank_House',
+    time:'下午', drv:'', dur:'',
+    fee:'需官網預約（提前約6週）', feeKey:'anne-frank',
+    tags:['需提前搶票','在「九街」正上方','步行3min可達'],
+    desc:'位於「九街」的正上方，步行3分鐘可達。官網門票常在數週前售罄，務必提前預約。'},
+   {zh:'阿姆斯特丹九街', en:'The 9 Streets',
+    lat:52.3676, lon:4.8853, wiki:'De_Negen_Straatjes',
+    time:'', drv:'', dur:'3小時～半天',
+    fee:'免費', feeKey:'9streets',
+    tags:['文青選物店','運河風光'],
+    desc:'文青選物店與運河風光交織的逛街區，逗留3小時到半天皆宜。'},
+   {zh:'老教堂', en:'Oude Kerk Amsterdam',
+    lat:52.3747, lon:4.8986, wiki:'Oude_Kerk,_Amsterdam',
+    time:'', drv:'', dur:'1.5～2小時',
+    fee:'', feeKey:'oude-kerk',
+    tags:['紅燈區核心','建議傍晚至夜晚前往'],
+    desc:'紅燈區核心的老教堂，建議傍晚至夜晚前往氣氛更佳。'},
+   {zh:'阿姆斯特丹運河遊船', en:'Amsterdam Canal Cruise',
+    lat:52.3745, lon:4.8977, wiki:'Canals_of_Amsterdam',
+    time:'18:30', drv:'', dur:'1小時',
+    fee:'約€15.5', feeKey:'canal-cruise',
+    tags:['可免費改期','最佳時段建議16:30後'],
+    desc:'從水上欣賞十七世紀黃金時代的建築，18:30場次，可線上預訂並免費改期（Sheet 附 Fareharbor 訂票連結，但連結被截斷不完整，請自行從 Sheet 複製）。'},
+ ],
+},
+{day:11, date:'10/5(一)', color:'#00897B', title:'梵谷博物館・公園散步',
+ depart:'', sunrise:'', sunset:'', km:'', drive:'',
+ tips:[],
+ restaurants:[],
+ spots:[
+   {zh:'梵谷博物館', en:'Van Gogh Museum',
+    lat:52.3584, lon:4.8811, wiki:'Van_Gogh_Museum',
+    time:'上午', drv:'', dur:'2～2.5小時',
+    fee:'', feeKey:'van-gogh',
+    tags:['⚠️需提前數週預約','安妮之家同樣需提前搶票'],
+    desc:'與安妮之家一樣，必須提前數週甚至數月在官網預約門票，現場買不到。'},
+   {zh:'馮德爾公園', en:'Vondelpark',
+    lat:52.3567, lon:4.8697, wiki:'Vondelpark',
+    time:'', drv:'從梵谷博物館步行5min', dur:'散步',
+    fee:'免費', feeKey:'vondelpark',
+    tags:['市區最大公園','散步放鬆'],
+    desc:'從梵谷博物館步行5分鐘可達，阿姆斯特丹市區最大的公園，適合散步放鬆。'},
+   {zh:'Albert Cuyp 市集', en:'Albert Cuyp Markt',
+    lat:52.3560, lon:4.8926, wiki:'Albert_Cuypmarkt',
+    time:'午餐/下午茶', drv:'', dur:'',
+    fee:'', feeKey:'albert-cuyp',
+    tags:['市集營業至17:00','各類荷蘭街頭小吃'],
+    desc:'各類荷蘭街頭小吃聚集的市集，營業至17:00，適合當午餐或下午茶。'},
+ ],
+},
+{day:12, date:'10/6(二)', color:'#8E24AA', title:'國家博物館・NDSM',
+ depart:'', sunrise:'', sunset:'', km:'', drive:'',
+ tips:[
+   '晚餐安排在水岸貨櫃餐廳（NDSM 碼頭一帶）',
+ ],
+ restaurants:[
+   {name:'The Pantry', type:'🍽 荷蘭家常菜', note:'Sheet 僅列店名，細節請自行查詢'},
+ ],
+ spots:[
+   {zh:'荷蘭國家博物館', en:'Rijksmuseum',
+    lat:52.3600, lon:4.8852, wiki:'Rijksmuseum',
+    time:'上午', drv:'', dur:'3～4小時',
+    fee:'€25（導覽機另€5，有中文導覽）', feeKey:'rijksmuseum',
+    tags:['林布蘭《夜巡》','有中文導覽'],
+    desc:'荷蘭最重要的博物館，收藏林布蘭《夜巡》等大師名作，停留3～4小時。'},
+   {zh:'NDSM 碼頭', en:'NDSM Wharf',
+    lat:52.4014, lon:4.8917, wiki:'NDSM-werf',
+    time:'下午', drv:'地鐵52號或電車回中央車站後方IJ碼頭，轉免費渡輪F4號線（約14分鐘）', dur:'',
+    fee:'免費（含渡輪）', feeKey:'ndsm',
+    tags:['晚餐在水岸貨櫃餐廳','免費渡輪F4號線'],
+    desc:'從市區搭乘地鐵52號或電車回到中央車站後方IJ碼頭，搭乘免費渡輪F4號線（約14分鐘）前往。晚餐安排在水岸貨櫃餐廳。'},
+ ],
+},
+{day:13, date:'10/7(三)', color:'#F9A825', title:'風車村・福倫丹',
+ depart:'', sunrise:'', sunset:'', km:'', drive:'',
+ tips:[
+   '⚠️ Sheet 該日僅讀到2個景點，可能還有第3筆內容未取得，請自行查證 Sheet',
+ ],
+ restaurants:[],
+ spots:[
+   {zh:'羊角風車村', en:'Zaanse Schans',
+    lat:52.4739, lon:4.8164, wiki:'Zaanse_Schans',
+    time:'', drv:'中央車站搭火車17分鐘', dur:'2.5小時',
+    fee:'', feeKey:'zaanse-schans',
+    tags:['木鞋工廠','乳酪試吃','綠色風車群'],
+    desc:'中央車站搭火車僅需17分鐘。巨大的綠色風車群、木鞋觀光工廠、乳酪試吃。'},
+   {zh:'福倫丹', en:'Volendam',
+    lat:52.4947, lon:5.0700, wiki:'Volendam',
+    time:'午餐', drv:'EBS 801號公車，風車村門口站牌上車，直達約35min', dur:'',
+    fee:'', feeKey:'volendam',
+    tags:['傳統漁港小鎮','午餐'],
+    desc:'傳統荷蘭海港小鎮，從風車村門口搭EBS 801號公車直達約35分鐘，當作午餐地點。'},
+ ],
+},
+{day:14, date:'10/8(四)', color:'#00ACC1', title:'羊角村',
+ depart:'', sunrise:'', sunset:'', km:'', drive:'',
+ tips:[
+   '⚠️ Sheet 該日僅讀到1個景點（羊角村），可能還有其他候選內容未取得，請自行查證 Sheet',
+   '挑沒下雨的時候去羊角村，體驗才好',
+ ],
+ restaurants:[],
+ spots:[
+   {zh:'羊角村', en:'Giethoorn',
+    lat:52.7389, lon:6.0781, wiki:'Giethoorn',
+    time:'', drv:'', dur:'一整天',
+    fee:'', feeKey:'giethoorn',
+    tags:['⭐綠色威尼斯','租船遊河','無馬路只有小橋流水'],
+    desc:'租一艘小電動船，自己駕駛穿梭在沒有馬路、只有小橋流水與茅草屋頂的童話小鎮裡。挑沒下雨的時候去體驗最佳。'},
+ ],
+},
+{day:15, date:'10/9(五)', color:'#6D4C41', title:'賦歸',
+ depart:'', sunrise:'', sunset:'', km:'', drive:'',
+ flights:[
+   {who:'致黃', info:'阿姆斯特丹→台灣　AMS→TPE　11:00 → (+1)06:15'},
+   {who:'卡羅', info:'阿姆斯特丹→香港　AMS→HKG　12:20 → (+1)06:10 → 08:10 → 10:00'},
+ ],
+ tips:[
+   '荷蘭行程到此結束，各自搭機返程',
+ ],
+ restaurants:[],
+ spots:[],
+},
+];
+
+// let DAYS point at whichever trip is currently active — reassigned in switchTrip()
+let DAYS = ICELAND_DAYS;
+
 // ─── sequential numbering (skip D0) ───
 let _n=0;
 DAYS.forEach(d=>{
   if(d.isD0){d.spots.forEach(s=>s._n='🛫');}
   else d.spots.forEach(s=>{s._n=++_n;});
 });
+let _nn=0;
+NL_DAYS.forEach(d=>{ d.spots.forEach(s=>{s._n=++_nn;}); });
 
 // ─── curated real photos for spots missing an English-Wikipedia thumbnail ───
 const SPOT_IMG={
@@ -1200,6 +1362,32 @@ const SEG_CAUTION={
  'blue-lagoon':'18:41 前後日落天黑，接雙向多線道、車流量大，注意車速。',
 };
 
+// 荷蘭景點全是城市/城鎮內地標，不是荒野停車場，一律用「🗺 導航」而非「🅿️ 停車場」
+NL_DAYS.forEach(d=>d.spots.forEach(sp=>{ sp.town=true; }));
+
+// ════════════════════════════════════════════════════
+//  TRIPS — 國家/行程層級設定，切換分頁時讀取
+// ════════════════════════════════════════════════════
+const TRIPS={
+  iceland:{
+    id:'iceland', label:'🇮🇸 冰島', days:ICELAND_DAYS,
+    ovTitle:'🗓 行程總覽（9/24–10/3，2026）',
+    sbTitle:'Iceland Plan', sbEn:'ICELAND RING ROAD SELF-DRIVE · 9/24–10/3, 2026',
+    dateChip:'📅 9/24–10/3', dayCount:10, spotsLabel:'冰島景點',
+    home:[65.1,-18.5,6],
+    showAcc:true, showPrep:true, editable:true,
+  },
+  netherlands:{
+    id:'netherlands', label:'🇳🇱 荷蘭', days:NL_DAYS,
+    ovTitle:'🗓 行程總覽（10/4–10/9，2026）',
+    sbTitle:'Netherlands Plan', sbEn:'AMSTERDAM & AROUND · 10/4–10/9, 2026',
+    dateChip:'📅 10/4–10/9', dayCount:6, spotsLabel:'荷蘭景點',
+    home:[52.30,4.88,9],
+    showAcc:false, showPrep:false, editable:false,
+  },
+};
+let ACTIVE_TRIP='iceland';
+
 // ════════════════════════════════════════════════════
 //  PRICE EDITING
 // ════════════════════════════════════════════════════
@@ -1272,21 +1460,28 @@ function makePrice(text,key){
 //  BUILD OVERVIEW
 // ════════════════════════════════════════════════════
 function buildOverview(){
+  const cfg=TRIPS[ACTIVE_TRIP];
   const panel=document.getElementById('panel-ov');
+  panel.innerHTML='';  // re-callable: clear before rebuilding (trip switch)
   // sticky header
   const top=div('ov-top');
-  const h=el('h2','','🗓 行程總覽（9/24–10/3，2026）');
+  const h=el('h2','',cfg.ovTitle);
   const p=el('p','','點任一天卡片 → 查看詳細行程');
   const stats=div('stats-row');
   const _km=DAYS.reduce((s,d)=>{const m=String(d.km||'').match(/\d+/);return s+(m?parseInt(m[0]):0);},0);
   const _spots=DAYS.reduce((s,d)=>s+(d.isD0?0:d.spots.length),0);
   document.getElementById('hd-km').textContent=_km.toLocaleString();
   document.getElementById('hd-spots').textContent=_spots;
-  [{l:'住宿總計',v:'NT$'+(DAYS.reduce((s,d)=>{return s+(parseInt((d.acc.price||'').replace(/[^\d]/g,''))||0);},0)).toLocaleString()},
-   {l:'總里程',v:'約'+_km.toLocaleString()+' km'},{l:'冰島景點',v:_spots+'個'},{l:'行程天數',v:'10天'}
-  ].forEach(x=>{const s=div('stat');s.appendChild(span('',x.l+' '));s.appendChild(el('b','',x.v));stats.appendChild(s);});
+  const kmChip=document.getElementById('hd-kmchip'); if(kmChip)kmChip.style.display=_km>0?'':'none';
+  const statList=[];
+  if(cfg.showAcc)statList.push({l:'住宿總計',v:'NT$'+(DAYS.reduce((s,d)=>{return s+(parseInt(((d.acc&&d.acc.price)||'').replace(/[^\d]/g,''))||0);},0)).toLocaleString()});
+  if(_km>0)statList.push({l:'總里程',v:'約'+_km.toLocaleString()+' km'});
+  statList.push({l:cfg.spotsLabel,v:_spots+'個'},{l:'行程天數',v:cfg.dayCount+'天'});
+  statList.forEach(x=>{const s=div('stat');s.appendChild(span('',x.l+' '));s.appendChild(el('b','',x.v));stats.appendChild(s);});
   top.appendChild(h);top.appendChild(p);top.appendChild(stats);
   panel.appendChild(top);
+
+  if(!cfg.showAcc){ buildOverviewCards(panel); return; }
 
   // discrepancy box
   const dw=div('diff-wrap');
@@ -1297,7 +1492,7 @@ function buildOverview(){
     ['fix','[已修正] 日出日落改為 2026 準確值；4處座標偏移修正（Ytri Tunga/Sky Lagoon/Vestrahorn/Brúarfoss）'],
     ['fix','[已過時，見下方2026-08-25項] Flyers Airport Hotel (D1) 住宿曾為已確認狀態，後於2026-08-25被 Sheet 取消'],
     ['fix','[已確認] D7(10/1) 住宿已訂 Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland，9/24前免費取消）'],
-    ['fix','[已確認] D0(9/24) 住宿費同步 Google Sheet 為 NT$25,429（Sheet 原值 25,428.5）'],
+    ['fix','[已過時，見下方2026-08-26項] D0(9/24) 住宿費曾同步為 NT$25,429（Sheet 原值 25,428.5），後續 Sheet 再更新'],
     ['fix','[已確認] D9(10/3) 住宿已訂 Nupan Deluxe NT$8,891（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）— 原標示的 Flyers Airport Hotel（待確認）NT$8,493 已由 Sheet 取代'],
     ['fix','[已同步] 塞爾福斯 Selfoss 8人整套房源（約NT$31,667）依 Sheet 欄位移到 D8(10/2) 備選住宿'],
     ['fix','[已確認] D6(9/30) 住宿已訂 Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消）'],
@@ -1307,9 +1502,11 @@ function buildOverview(){
     ['wrn','[待確認] 取車時間 Sheet 自身不一致：9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，但 9/25 欄景點列 Lotus Car Rental。網站目前依 D1(9/25) 落地後取車'],
     ['wrn','[待確認] D7(10/1) 斯瓦蒂佛斯 Svartifoss：Sheet 主排程分頁有列、Daily detail 分頁沒有。因與 14:00 Hof 集合時間衝突，依 owner 2026-07-28 決定未排入'],
     ['fix','[新增] Sheet 新增第三團「C團（屁孩來囉！）」，於 D2/D3/D4/D5/D8 另訂住宿（Hotel Framnes、Hotel Norðurland、Vogahraun Guesthouse、Media Luna Guesthouse、Hestheimar），已於各日住宿區塊補上連結；C團住宿費 Sheet 未列'],
-    ['wrn','[2026-08-25 Sheet更新] D1(9/25) 住宿變動：A團原訂 Flyers Airport Hotel（Carol/Agoda）已取消，改與B/C團合住同一 8人 Airbnb；住宿費 NT$10,558 仍為原 Flyers 訂單金額，新 Airbnb 費用 Sheet 未列，待 owner 確認'],
+    ['fix','[2026-08-25 Sheet更新] D1(9/25) 住宿變動：A團原訂 Flyers Airport Hotel（Carol/Agoda）已取消，改與B/C團合住同一 8人 Airbnb'],
     ['fix','[2026-08-25 Sheet更新] D3(9/27) B團住宿由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原列於備選清單，現已移至B團正式住宿）'],
     ['fix','[2026-08-25 Sheet更新] C團新增 D6(9/30) Guesthouse Skálafell（加床，與B團同地點）、D7(10/1) Stracta Apartments Orustustaðir（加床，與A/B團同地點）；D2(9/26) C團飯店名稱由連結改為明列文字「Kirkjufell Hotel」（即 Hotel Framnes）；D9(10/3) C團住宿仍「確認中」（能否與B團加床）'],
+    ['fix','[2026-08-26 Sheet更新] D0(9/24) 住宿費 NT$25,429 → NT$28,289；D1(9/25) 新 Airbnb 住宿費由「未列」補齊為 NT$22,000（原 Flyers 金額 NT$10,558 已作廢）；住宿總計連動為 NT$141,445'],
+    ['fix','[新增] D10(10/4，荷蘭第一天) NDSM 段落先前被讀取工具截斷，現已補齊完整內容（免費渡輪F4號線約14分鐘＋晚餐水岸貨櫃餐廳）'],
   ];
   dtog.innerHTML='⚠️ 與原始行程表差異說明（'+diffs.length+'項）<span id="darr">▼</span>';
   dtog.addEventListener('click',()=>{
@@ -1330,7 +1527,12 @@ function buildOverview(){
   dw.appendChild(db);
   panel.appendChild(dw);
 
-  // day cards
+  buildOverviewCards(panel);
+}
+
+// day cards — shared between Iceland (with 住宿/差異說明) and simplified trips (spots-only)
+function buildOverviewCards(panel){
+  const cfg=TRIPS[ACTIVE_TRIP];
   const list=div('ov-list');
   DAYS.forEach(day=>{
     const card=div('ov-card');
@@ -1351,20 +1553,22 @@ function buildOverview(){
     day.spots.forEach(s=>{tags.appendChild(span('ov-tag',s.zh));});
     body.appendChild(tags);
     // bottom
-    const bot=div('ov-bot');
-    const acc=div('ov-acc');
-    const aName=day.acc.name.split('(')[0].trim();
-    if(day.acc.b){
-      const bName=day.acc.b.name.split('(')[0].trim();
-      acc.innerHTML='🏨 A團 <b>'+aName+'</b>　B團 <b>'+bName+'</b>'+(day.acc.c?'　C團另訂':'');
-    }else{
-      acc.innerHTML='🏨 <b>'+aName+'</b>'+(day.acc.bSame?'（A/B團同住）':'')+(day.acc.c?'　C團另訂':'');
+    if(cfg.showAcc&&day.acc){
+      const bot=div('ov-bot');
+      const acc=div('ov-acc');
+      const aName=day.acc.name.split('(')[0].trim();
+      if(day.acc.b){
+        const bName=day.acc.b.name.split('(')[0].trim();
+        acc.innerHTML='🏨 A團 <b>'+aName+'</b>　B團 <b>'+bName+'</b>'+(day.acc.c?'　C團另訂':'');
+      }else{
+        acc.innerHTML='🏨 <b>'+aName+'</b>'+(day.acc.bSame?'（A/B團同住）':'')+(day.acc.c?'　C團另訂':'');
+      }
+      bot.appendChild(acc);
+      bot.appendChild(div('ov-km',day.km));
+      const pr=makePrice(day.acc.price,'acc-d'+day.day);pr.classList.add('ov-price');pr.style.color=day.color;
+      bot.appendChild(pr);
+      body.appendChild(bot);
     }
-    bot.appendChild(acc);
-    bot.appendChild(div('ov-km',day.km));
-    const pr=makePrice(day.acc.price,'acc-d'+day.day);pr.classList.add('ov-price');pr.style.color=day.color;
-    bot.appendChild(pr);
-    body.appendChild(bot);
     card.appendChild(stripe);card.appendChild(body);
     list.appendChild(card);
   });
@@ -1396,6 +1600,7 @@ function buildDayPanel(day){
   // info bar
   const ib=div('d-infobar');
   [{l:'出發時間',v:day.depart},{l:'總里程',v:day.km},{l:'景點數',v:day.spots.length+'個'}].forEach(({l,v})=>{
+    if(!v)return;
     const d=div('dib');d.appendChild(div('dib-l',l));d.appendChild(div('dib-v',v));ib.appendChild(d);
   });
   p.appendChild(ib);
@@ -1519,7 +1724,8 @@ function buildDayPanel(day){
     });
   }
 
-  // accommodation
+  // accommodation (Iceland only — 簡化版行程如荷蘭不顯示住宿區塊)
+  if(TRIPS[ACTIVE_TRIP].showAcc&&day.acc){
   const acc=div('acc-block');
   acc.style.borderLeftColor=C;
   acc.appendChild(div('acc-label','🏨 TODAY\'S ACCOMMODATION'));
@@ -1598,6 +1804,7 @@ function buildDayPanel(day){
     acc.appendChild(altWrap);
   }
   p.appendChild(acc);
+  }
   return p;
 }
 
@@ -1743,25 +1950,35 @@ function buildPrep(){
 // ════════════════════════════════════════════════════
 //  ASSEMBLE DOM
 // ════════════════════════════════════════════════════
-buildOverview();
 const dtabs=document.getElementById('dtabs');
 const panels=document.getElementById('panels');
-const layers={};
+let layers={};
 
-DAYS.forEach(day=>{
-  // tab button
-  const tb=el('button','dtab');
-  tb.style.setProperty('--dc',day.color);
-  tb.id='dtab-'+day.day;
-  const n=el('span','n','D'+day.day);
-  const d=el('span','d',day.date.replace(/\(.+\)/,''));
-  tb.appendChild(n);tb.appendChild(d);
-  tb.addEventListener('click',()=>activateDay(day.day));
-  dtabs.appendChild(tb);
-  // panel
-  const panel=buildDayPanel(day);
-  panels.appendChild(panel);
-});
+// (re)builds the D-tabs + day panels for whichever trip DAYS currently points at.
+// Safe to call repeatedly — clears its own previous output first (trip switch).
+function renderTabsAndPanels(){
+  dtabs.innerHTML='';
+  dtabs.style.gridTemplateColumns='repeat('+DAYS.length+',1fr)';
+  panels.querySelectorAll('.panel').forEach(p=>{
+    if(p.id!=='panel-ov'&&p.id!=='panel-prep')p.remove();
+  });
+  DAYS.forEach(day=>{
+    // tab button
+    const tb=el('button','dtab');
+    tb.style.setProperty('--dc',day.color);
+    tb.id='dtab-'+day.day;
+    const n=el('span','n','D'+day.day);
+    const d=el('span','d',day.date.replace(/\(.+\)/,''));
+    tb.appendChild(n);tb.appendChild(d);
+    tb.addEventListener('click',()=>activateDay(day.day));
+    dtabs.appendChild(tb);
+    // panel
+    const panel=buildDayPanel(day);
+    panels.appendChild(panel);
+  });
+}
+buildOverview();
+renderTabsAndPanels();
 
 buildPrep();
 document.getElementById('prepBtn').addEventListener('click',showPrep);
@@ -1897,8 +2114,20 @@ function accPopupHtml(day){
   return d;
 }
 
+// (re)builds all Leaflet layers (route lines/markers/arrows/bed/park pins) for
+// whichever trip DAYS currently points at. Removes previous trip's layers first.
+function renderMapLayers(){
+  Object.values(layers).forEach(ly=>{
+    ly.glow&&map.removeLayer(ly.glow); ly.line&&map.removeLayer(ly.line);
+    (ly.marks||[]).forEach(m=>map.removeLayer(m));
+    (ly.arrows||[]).forEach(m=>map.removeLayer(m));
+    (ly.segLabels||[]).forEach(m=>map.removeLayer(m));
+    (ly.parks||[]).forEach(m=>map.removeLayer(m));
+    if(ly.bed)map.removeLayer(ly.bed);
+  });
+  layers={};
 DAYS.forEach(day=>{
-  if(day.isD0)return;
+  if(day.isD0||!day.spots.length)return;
   const lls=day.spots.map(s=>[s.lat,s.lon]);
   const C=day.color;
   const glow=L.polyline(lls,{color:C,weight:11,opacity:.14,lineJoin:'round'}).addTo(map);
@@ -1942,6 +2171,8 @@ DAYS.forEach(day=>{
   });
   layers[day.day]={glow,line,marks,arrows,segLabels,bed,parks,day};
 });
+}
+renderMapLayers();
 
 // ════════════════════════════════════════════════════
 //  NAVIGATION
@@ -2005,7 +2236,8 @@ function showAll(){
   showSegLabels(null);
   showBeds(null);
   showParks(null);
-  map.flyTo([65.1,-18.5],6,{duration:.8});
+  const home=TRIPS[ACTIVE_TRIP].home;
+  map.flyTo([home[0],home[1]],home[2],{duration:.8});
 }
 
 function activateDay(dayNum,flyTo=true){
@@ -2050,7 +2282,7 @@ function scrollMapIntoView(){
 
 let _flyTimeout=null;
 function flyToSpot(sp,day){
-  if(!sp.lat||sp.lat<50)return; // skip non-Iceland (Taiwan lat≈25, Iceland lat≈63-66)
+  if(!sp.lat||sp.lat<40)return; // skip Taiwan/transit spots (lat≈25); Iceland≈63-66, Netherlands≈52
   if(_flyTimeout){clearTimeout(_flyTimeout);_flyTimeout=null;}
   scrollMapIntoView();
   map.flyTo([sp.lat,sp.lon],11,{duration:.7});
@@ -2073,13 +2305,47 @@ document.getElementById('printBtn').addEventListener('click', ()=>window.print()
 
 initPrices();
 
+// ════════════════════════════════════════════════════
+//  TRIP SWITCH — 🇮🇸 冰島 / 🇳🇱 荷蘭
+// ════════════════════════════════════════════════════
+function switchTrip(id){
+  if(id===ACTIVE_TRIP||!TRIPS[id])return;
+  ACTIVE_TRIP=id;
+  const cfg=TRIPS[id];
+  DAYS=cfg.days;
+  document.getElementById('tripBtn-iceland').classList.toggle('on',id==='iceland');
+  document.getElementById('tripBtn-netherlands').classList.toggle('on',id==='netherlands');
+  document.getElementById('hd-title').textContent=cfg.sbTitle;
+  document.getElementById('hd-sub').textContent=cfg.sbEn;
+  document.getElementById('hd-datechip').textContent=cfg.dateChip;
+  document.getElementById('hd-daychip').innerHTML='<b>'+cfg.dayCount+'</b> 天';
+  document.getElementById('prepBtn').style.display=cfg.showPrep?'':'none';
+  document.getElementById('editBtn').style.display=cfg.editable?'':'none';
+  document.getElementById('resetBtn').style.display=cfg.editable?'':'none';
+  if(!cfg.editable&&editMode)toggleEdit();  // exit edit mode when leaving Iceland
+  buildOverview();
+  renderTabsAndPanels();
+  renderMapLayers();
+  if(rebuildSearchIndex)rebuildSearchIndex();
+  const si=document.getElementById('spotSearch'); if(si)si.value='';
+  const sr=document.getElementById('searchResults'); if(sr){sr.classList.remove('on');sr.innerHTML='';}
+  showAll();
+}
+document.getElementById('tripBtn-iceland').addEventListener('click',()=>switchTrip('iceland'));
+document.getElementById('tripBtn-netherlands').addEventListener('click',()=>switchTrip('netherlands'));
+
 // ── spot search (jump + fly) ──
+let rebuildSearchIndex=null;  // set below; called again by switchTrip() on trip change
 (function(){
   const inp=document.getElementById('spotSearch');
   const box=document.getElementById('searchResults');
   if(!inp||!box)return;
-  const INDEX=[];
-  DAYS.forEach(day=>day.spots.forEach(sp=>{ if(sp.lat&&sp.lat>50) INDEX.push({sp,day}); }));
+  let INDEX=[];
+  rebuildSearchIndex=()=>{
+    INDEX=[];
+    DAYS.forEach(day=>day.spots.forEach(sp=>{ if(sp.lat&&sp.lat>40) INDEX.push({sp,day}); }));
+  };
+  rebuildSearchIndex();
   let sel=-1, cur=[];
   const hide=()=>{box.classList.remove('on');box.innerHTML='';sel=-1;cur=[];};
   const paint=()=>{[...box.children].forEach((c,i)=>c.classList.toggle('sel',i===sel));};
