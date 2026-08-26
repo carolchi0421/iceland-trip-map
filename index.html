@@ -678,9 +678,10 @@ const DAYS = [
 },
 {day:1, date:'9/25(五)', color:'#E74C3C', title:'抵達冰島',
  depart:'18:20 KEF 落地', sunrise:'07:18', sunset:'19:21', km:'約30 km', drive:'約20 min',
- acc:{name:'Flyers Airport Hotel', sub:'機場附近，步行可達航廈（已確認）', price:'NT$10,558', booking:'Agoda', bSame:true},
+ acc:{name:'8人住宿（Airbnb，與B/C團合住）', sub:'⚠️ 原訂 Flyers Airport Hotel（Carol／Agoda）已取消，改與B/C團合住同一 Airbnb；住宿費 NT$10,558 為原 Flyers 訂單金額，新 Airbnb 費用 Sheet 尚未列出', price:'NT$10,558', booking:'Airbnb',bSame:true,
+   c:{name:'C團也同住此處', sub:'與A/B團同一 Airbnb（9/25）', url:'https://www.airbnb.com.tw/rooms/1029730326325707288'}},
  tips:[
-   'Flyers Airport Hotel 已確認，步行可達航廈',
+   '⚠️ 2026-08-25 Sheet更新：D1住宿由 Flyers Airport Hotel 改為與B/C團合住 Airbnb（原Agoda訂房記得退掉），詳見 Airbnb 連結；費用待 owner 確認',
    '取行李→出海關→搭 Lotus Car Rental 接駁車取車',
    '取車時確認保險，加買砂石險 SAAP（ISK 1,500/天）',
    '今晚在機場附近吃熱狗，明天才是真正大行程',
@@ -702,7 +703,7 @@ const DAYS = [
 {day:2, date:'9/26(六)', color:'#E67E22', title:'斯奈山半島',
  depart:'建議 08:30 出發（拉車較長）', sunrise:'07:21', sunset:'19:17', km:'約220 km', drive:'約3.5 H',
  acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda', bSame:true,
-   c:{name:'Hotel Framnes', sub:'Grundarfjörður，近教會山，Booking 訂（Share連結）', url:'https://www.booking.com/Share-0mYKtX'},
+   c:{name:'Kirkjufell Hotel', sub:'Grundarfjörður，近教會山（即 Hotel Framnes，Sheet 2026-08-25 更新為此名）', url:'https://www.booking.com/Share-0mYKtX'},
    alts:[
      {name:'Hömluholt 度假屋（8人獨棟・近1號公路但離教會山較遠）', price:'約NT$25,314', url:'https://www.airbnb.com.tw/rooms/25182840?check_in=2026-09-26&check_out=2026-09-27&guests=1&adults=8&s=67&unique_share_id=db4ca5d4-797b-44ab-a35d-df09d9e526be'},
    ]},
@@ -754,11 +755,10 @@ const DAYS = [
 {day:3, date:'9/27(日)', color:'#F39C12', title:'北上亞庫來利',
  depart:'建議 08:30 出發', sunrise:'07:24', sunset:'19:14', km:'約380 km', drive:'約4H 40min（全程最長）',
  acc:{name:'Steinaskjól Apartments', sub:'亞庫來利市區，有個人廚房。Agoda訂（雅致），9/4前免費取消', price:'NT$8,579', booking:'Agoda',
-   b:{name:'Guesthouse AkurInn', sub:'亞庫來利，B團另住'},
-   c:{name:'Hotel Norðurland', sub:'亞庫來利市區，Booking 訂', url:'https://www.booking.com/hotel/is/nordurland.zh-tw.html'},
+   b:{name:'Colin 的 Airbnb 訂房', sub:'⚠️ 2026-08-25 Sheet更新：由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原在備選清單）', url:'https://www.airbnb.com.tw/trips/v1/reservation-details/ro/RESERVATION2_CHECKIN/HM2Q9WAPW5/directions-modal'},
+   c:{name:'Hotel Norðurland', sub:'亞庫來利市區，Booking 訂。距 A團步行2分鐘、距 B團步行3分鐘', url:'https://www.booking.com/hotel/is/nordurland.zh-tw.html'},
    alts:[
      {name:'家庭公寓 4臥室（8人・附陽臺）', price:'約NT$17,584', url:'https://www.airbnb.com.tw/rooms/1044098317726008495?check_in=2026-09-27&check_out=2026-09-28&guests=1&adults=8&s=67&unique_share_id=99980c00-78eb-467d-bfdc-32f84ca160f9'},
-     {name:'Colin 訂房詳情（9/22前可取消）', price:'—', url:'https://www.airbnb.com.tw/trips/v1/reservation-details/ro/RESERVATION2_CHECKIN/HM2Q9WAPW5/directions-modal'},
    ]},
  tips:[
    '全程最長拉車日，副駕持續與司機聊天防瞌睡！',
@@ -795,7 +795,7 @@ const DAYS = [
 {day:4, date:'9/28', color:'#27AE60', title:'米湖火山地景',
  depart:'建議 08:00 出發（景點集中米湖周邊）', sunrise:'07:27', sunset:'19:10', km:'約135 km', drive:'約2 H（景點集中）',
  acc:{name:'Vogar Travel Service', sub:'米湖旁，公共廚房。Booking訂（秉翔訂）', price:'NT$9,116', booking:'Booking', bSame:true,
-   c:{name:'Vogahraun Guesthouse', sub:'米湖旁，與A/B團同一區域（Vogar一帶），Booking 訂', url:'https://www.booking.com/hotel/is/vogahraun-guesthouse.zh-tw.html'}},
+   c:{name:'Vogahraun Guesthouse（同AB團地點）', sub:'Sheet：「同AB團地點 Vogar Travel Service」，與A/B團同一物業', url:'https://www.booking.com/hotel/is/vogahraun-guesthouse.zh-tw.html'}},
  tips:[
    '今日景點全在米湖方圓20km，拉車最輕鬆的一天',
    '惠爾偽火山：陡坡碎石消耗體力，預留1.5H，鞋帶一定要綁緊',
@@ -850,7 +850,7 @@ const DAYS = [
  depart:'建議 08:00 出發', sunrise:'07:30', sunset:'19:06', km:'約250 km', drive:'約3.5–4 H',
  acc:{name:'Hafaldan HI Hostel', sub:'Seyðisfjörður 彩虹小鎮，港口邊。Booking訂（卡羅訂）', price:'NT$9,565', booking:'Booking',
    b:{name:'Greystone summerhouse', sub:'B團另住'},
-   c:{name:'Media Luna Guesthouse', sub:'Seyðisfjörður 市區，Booking 訂', url:'https://www.booking.com/hotel/is/media-luna-guesthouse.zh-tw.html'}},
+   c:{name:'Media Luna Guesthouse', sub:'Seyðisfjörður 市區，距A團3分鐘車程、距B團(Egilsstaðir)30分鐘車程', url:'https://www.booking.com/hotel/is/media-luna-guesthouse.zh-tw.html'}},
  tips:[
    'Egilsstaðir Bónus 小豬超市：務必把後兩天食物補齊，峽灣物價高',
    '翻越93號公路進 Seyðisfjörður：坡度極陡，9月底可能有初雪，低速慢行',
@@ -902,7 +902,8 @@ const DAYS = [
 {day:6, date:'9/30', color:'#2980B9', title:'峽灣南下赫本',
  depart:'建議 08:30 出發', sunrise:'07:33', sunset:'19:03', km:'約270 km', drive:'約3.5–4 H',
  acc:{name:'Guesthouse Stekkatun', sub:'雙人房×2間，含早餐。Trip.com訂（雅致），不可取消', price:'NT$17,442', booking:'Trip.com',
-   b:{name:'Guesthouse Skálafell', sub:'B團另住'}},
+   b:{name:'Guesthouse Skálafell', sub:'B團另住'},
+   c:{name:'Guesthouse Skálafell（加床）', sub:'與B團同一地點，加床同住'}},
  tips:[
    '繞行峽灣線（經 Djúpivogur）實際約270km，比走 Öxi 山口捷徑長，體感時間會拉長',
    '蒸氣瀑布在93號公路上，離小鎮僅5分鐘，順路必停',
@@ -945,6 +946,7 @@ const DAYS = [
 {day:7, date:'10/1', color:'#8E44AD', title:'冰河湖・冰川健行',
  depart:'建議 09:00 出發', sunrise:'07:35', sunset:'18:59', km:'約270 km', drive:'約3.5 H',
  acc:{name:'Stracta Apartments Orustustaðir', sub:'教堂城 Orustustaðir 一帶。雅致訂（Guide to Iceland），9/24前可免費取消', price:'NT$14,520', booking:'Guide to Iceland', bSame:true,
+   c:{name:'Stracta Apartments Orustustaðir（加床）', sub:'與A/B團同一地點，加床同住'},
    alts:[
      {name:'Midgard Base Camp（家庭房・私人衛浴）', price:'NT$9,826・Booking', url:''},
    ]},
@@ -1038,7 +1040,8 @@ const DAYS = [
 {day:9, date:'10/3', color:'#D35400', title:'黃金圈→藍湖→深夜班機',
  depart:'建議 08:30 出發（景點最多！）', sunrise:'07:41', sunset:'18:52', km:'約270 km', drive:'約4.5 H',
  acc:{name:'Nupan Deluxe', sub:'凱夫拉維克市區 Aðalgata 10，距 KEF 機場約 5 分鐘車程（藍湖→約 20min）。雅致訂（Booking），2026/9/27前（不含當日）可免費取消。Carol+致黃 住此休憩後搭 10/4 07:40 KEF→AMS（約 04:40 完成還車與報到）；桓哥搭 10/4 01:10 凌晨班機先離境，不入住', price:'NT$8,891', booking:'Booking',
-   b:{name:'Golden Circle Domes - Lake View', sub:'黃金圈玻璃屋，B團另住'}},
+   b:{name:'Golden Circle Domes - Lake View', sub:'黃金圈玻璃屋，B團另住'},
+   c:{name:'⏳ 確認中：能否與B團加床', sub:'Sheet 原文「看B團能不能加床（確認中）」，尚無確定住宿'}},
  flights:[
    {who:'Carol+致黃', info:'冰島→阿姆斯特丹　KEF→AMS　07:40 → 13:00（10/4 回程首段）'},
    {who:'桓哥',       info:'冰島離境　KEF 出發　01:10 → 08:50（10/4 凌晨，先行離開）'},
@@ -1288,19 +1291,11 @@ function buildOverview(){
   // discrepancy box
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
-  dtog.innerHTML='⚠️ 與原始行程表差異說明（14項）<span id="darr">▼</span>';
-  dtog.addEventListener('click',()=>{
-    const b=dw.querySelector('.diff-body');
-    b.classList.toggle('open');
-    document.getElementById('darr').textContent=b.classList.contains('open')?'▲':'▼';
-  });
-  dw.appendChild(dtog);
-  const db=div('diff-body');
   const diffs=[
     ['fix','[已修正] 哈爾格林教堂移至正確的 Day 2(9/26) 08:30，不是Day 1'],
     ['fix','[已修正] D6(9/30)繞峽灣線里程約270km（經Djúpivogur）'],
     ['fix','[已修正] 日出日落改為 2026 準確值；4處座標偏移修正（Ytri Tunga/Sky Lagoon/Vestrahorn/Brúarfoss）'],
-    ['fix','[已確認] Flyers Airport Hotel (D1) 住宿已更新為已確認狀態'],
+    ['fix','[已過時，見下方2026-08-25項] Flyers Airport Hotel (D1) 住宿曾為已確認狀態，後於2026-08-25被 Sheet 取消'],
     ['fix','[已確認] D7(10/1) 住宿已訂 Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland，9/24前免費取消）'],
     ['fix','[已確認] D0(9/24) 住宿費同步 Google Sheet 為 NT$25,429（Sheet 原值 25,428.5）'],
     ['fix','[已確認] D9(10/3) 住宿已訂 Nupan Deluxe NT$8,891（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）— 原標示的 Flyers Airport Hotel（待確認）NT$8,493 已由 Sheet 取代'],
@@ -1312,7 +1307,18 @@ function buildOverview(){
     ['wrn','[待確認] 取車時間 Sheet 自身不一致：9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，但 9/25 欄景點列 Lotus Car Rental。網站目前依 D1(9/25) 落地後取車'],
     ['wrn','[待確認] D7(10/1) 斯瓦蒂佛斯 Svartifoss：Sheet 主排程分頁有列、Daily detail 分頁沒有。因與 14:00 Hof 集合時間衝突，依 owner 2026-07-28 決定未排入'],
     ['fix','[新增] Sheet 新增第三團「C團（屁孩來囉！）」，於 D2/D3/D4/D5/D8 另訂住宿（Hotel Framnes、Hotel Norðurland、Vogahraun Guesthouse、Media Luna Guesthouse、Hestheimar），已於各日住宿區塊補上連結；C團住宿費 Sheet 未列'],
+    ['wrn','[2026-08-25 Sheet更新] D1(9/25) 住宿變動：A團原訂 Flyers Airport Hotel（Carol/Agoda）已取消，改與B/C團合住同一 8人 Airbnb；住宿費 NT$10,558 仍為原 Flyers 訂單金額，新 Airbnb 費用 Sheet 未列，待 owner 確認'],
+    ['fix','[2026-08-25 Sheet更新] D3(9/27) B團住宿由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原列於備選清單，現已移至B團正式住宿）'],
+    ['fix','[2026-08-25 Sheet更新] C團新增 D6(9/30) Guesthouse Skálafell（加床，與B團同地點）、D7(10/1) Stracta Apartments Orustustaðir（加床，與A/B團同地點）；D2(9/26) C團飯店名稱由連結改為明列文字「Kirkjufell Hotel」（即 Hotel Framnes）；D9(10/3) C團住宿仍「確認中」（能否與B團加床）'],
   ];
+  dtog.innerHTML='⚠️ 與原始行程表差異說明（'+diffs.length+'項）<span id="darr">▼</span>';
+  dtog.addEventListener('click',()=>{
+    const b=dw.querySelector('.diff-body');
+    b.classList.toggle('open');
+    document.getElementById('darr').textContent=b.classList.contains('open')?'▲':'▼';
+  });
+  dw.appendChild(dtog);
+  const db=div('diff-body');
   diffs.forEach(([cls,txt])=>{
     const d=div('di');
     const [tag,...rest]=txt.split(']');
@@ -1546,7 +1552,13 @@ function buildDayPanel(day){
     const bWrap=div('acc-team-b');
     const tb=div('acc-team-tag','B團 · 豆林羅哈');
     tb.style.color=C;tb.style.borderColor=C+'66';bWrap.appendChild(tb);
-    bWrap.appendChild(div('acc-name',day.acc.b.name));
+    if(day.acc.b.url){
+      const bLink=el('a','acc-name',day.acc.b.name);
+      bLink.href=day.acc.b.url;bLink.target='_blank';bLink.rel='noopener';
+      bWrap.appendChild(bLink);
+    }else{
+      bWrap.appendChild(div('acc-name',day.acc.b.name));
+    }
     bWrap.appendChild(div('acc-sub',(day.acc.b.sub||'')+(day.acc.b.booking?' · '+day.acc.b.booking:'')));
     bWrap.appendChild(div('acc-team-note','B團住宿費 Sheet 未列'));
     acc.appendChild(bWrap);

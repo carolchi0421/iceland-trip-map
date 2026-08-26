@@ -65,9 +65,9 @@ Sheet 結構（Tab: gid=461091797）：
 | Day | 日期 | A團（卡致豆桓）飯店 | A團費用 | 訂房方 | B團（豆林羅哈）飯店 | 狀態 |
 |-----|------|------|------|--------|------|------|
 | D0 | 9/24(四) | 飯店未知 | NT$25,429 | — | — | 待確認飯店名稱（Sheet 9/24 欄原值 25,428.5，2026-08-13 同步） |
-| D1 | 9/25(五) | Flyers Airport Hotel | NT$10,558 | Carol / Agoda | **同 A團** | 9/26前可免費取消 |
+| D1 | 9/25(五) | ~~Flyers Airport Hotel~~ → 8人住宿 Airbnb（與B/C團合住） | NT$10,558 | Carol / Agoda（**已取消，記得退掉**） | **同 A團（合住 Airbnb）** | ⚠️ 2026-08-25 Sheet更新：原 Flyers 訂房取消，改與 B/C團合住同一 Airbnb（連結見下）；費用仍列 Flyers 原金額，新費用未列 |
 | D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | **同 A團** | 9/21前可免費取消 |
-| D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | Guesthouse AkurInn（另訂） | 9/4前可免費取消 |
+| D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | ~~Guesthouse AkurInn~~ → Colin 的 Airbnb 訂房（另訂） | ⚠️ 2026-08-25 Sheet更新：B團住宿由 AkurInn 改為 Colin 已訂的 Airbnb（原在備選清單） |
 | D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | **同 A團** | — |
 | D5 | 9/29 | Hafaldan HI Hostel | NT$9,565 | 卡羅 / Booking | Greystone summerhouse（另訂） | — |
 | D6 | 9/30 | Guesthouse Stekkatun | NT$17,442 | 雅致 / Trip.com | Guesthouse Skálafell（另訂） | 雙人房×2間含早餐，不可取消（2026-07-17 已訂） |
@@ -77,17 +77,21 @@ Sheet 結構（Tab: gid=461091797）：
 
 **A團住宿費加總**：NT$127,143（全部 D0–D9 已有金額；Sheet 精確總和 127,142.5）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
 
-### C團（屁孩來囉！）住宿對照表（2026-08-24 新發現）
+### C團（屁孩來囉！）住宿對照表（2026-08-24 新發現，2026-08-25 擴充）
 
-> Sheet 新增「C團住宿 (屁孩來囉！)」列，僅 D2/D3/D4/D5/D8 有 Booking.com 連結，其餘天數空白，皆未列費用。名稱由連結網址／WebSearch 反查確認。
+> Sheet 新增「C團住宿 (屁孩來囉！)」列。2026-08-24 首次發現時僅 D2/D3/D4/D5/D8 有資料；2026-08-25 Sheet 再更新，補上 D1/D6/D7/D9，僅 D0/D10 仍空白。C團住宿費 Sheet 全程未列。
 
 | Day | 日期 | C團飯店 | 備註 |
 |-----|------|--------|------|
-| D2 | 9/26(六) | Hotel Framnes | Grundarfjörður，近教會山。Sheet 為 Share 短連結，已反查出實際飯店 |
-| D3 | 9/27(日) | Hotel Norðurland | 亞庫來利市區 |
-| D4 | 9/28 | Vogahraun Guesthouse | 米湖旁 Vogar 一帶，與 A/B團住宿（Vogar Travel Service）同一區域 |
-| D5 | 9/29 | Media Luna Guesthouse | Seyðisfjörður 市區 |
+| D1 | 9/25(五) | 8人住宿 Airbnb（與A/B團合住） | 2026-08-25新增，與A/B團同一 Airbnb |
+| D2 | 9/26(六) | Kirkjufell Hotel（即 Hotel Framnes） | Grundarfjörður，近教會山。2026-08-24 Sheet 為 Share 短連結（已反查出實際飯店 Hotel Framnes）；2026-08-25 Sheet 改列明文「Kirkjufell Hotel」（同一物業的別名） |
+| D3 | 9/27(日) | Hotel Norðurland | 亞庫來利市區，距A團步行2分鐘、距B團步行3分鐘（2026-08-25 Sheet 新增距離資訊） |
+| D4 | 9/28 | Vogahraun Guesthouse（同AB團地點） | Sheet 原文「同AB團地點 Vogar Travel Service」，與 A/B團同一物業 |
+| D5 | 9/29 | Media Luna Guesthouse | Seyðisfjörður 市區，距A團3分鐘車程、距B團(Egilsstaðir)30分鐘車程（2026-08-25 Sheet 新增距離資訊） |
+| D6 | 9/30 | Guesthouse Skálafell（加床） | 2026-08-25新增，與B團同地點，加床同住 |
+| D7 | 10/1 | Stracta Apartments Orustustaðir（加床） | 2026-08-25新增，與A/B團同地點，加床同住 |
 | D8 | 10/2 | Hestheimar（另訂房） | 與 A/B團同一地點，2人1房另訂 |
+| D9 | 10/3 | ⏳ 確認中 | 2026-08-25新增，Sheet 原文「看B團能不能加床（確認中）」，尚無確定住宿 |
 
 ---
 
@@ -233,11 +237,20 @@ icon.svg              app icon（極光主題）
 ---
 
 ## 最後一次 AI 作業日期
+2026-08-25（**第三次以 Google Sheet 為 source 全面比對同步**，owner 說「google sheet又更新了」，要求再同步）：
+- ⚠️ **D1(9/25) 住宿變動**：A團原訂 Flyers Airport Hotel（Carol/Agoda）Sheet 已標記「已取消（記得退掉）」，改為與 B/C團合住同一 8人 Airbnb；住宿費 NT$10,558 仍是原 Flyers 金額，新 Airbnb 費用 Sheet 未列 → 已同步至 HTML，並在差異說明與 tips 加註待確認
+- ✅ **D3(9/27) B團住宿變動**：由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原本只是 D3 備選清單中的一個候選連結，現已成為 B團正式住宿）→ 已同步，並將該連結從備選清單移除
+- ✅ **C團擴充**：新增 D6(Guesthouse Skálafell加床)、D7(Stracta Apartments Orustustaðir加床)、D9(⏳確認中，能否與B團加床)；D1(與A/B團合住同一Airbnb)；D2 由連結改列明文「Kirkjufell Hotel」（即先前反查到的 Hotel Framnes）；D3/D5 新增距其他團的步行/車程距離備註 → C團現已涵蓋 D1–D9（僅 D0/D10 空白），全部同步進 HTML
+- ✅ B團住宿區塊 render 新增可點擊連結支援（`day.acc.b.url`，比照 C團）
+- 差異說明區塊新增 3 項並修正 1 項過時項目（原「Flyers已確認」→ 標註後續已取消），改為依 `diffs.length` 動態計算項目數，避免手動計數再度失準
+- 比對結果：A/B團住宿費、景點清單、班機、冰川健行預約、Road Map 等其餘欄位與 2026-08-24 同步版本一致，無其他落差
+- 已 push 上線（owner 確認後）
+
 2026-08-24（**再次以 Google Sheet 為 source 全面比對同步**，owner 要求「不match的馬上補進html」）：
 - ✅ Sheet 主排程分頁新增第三團「**C團住宿 (屁孩來囉！)**」列（HANDOVER 先前未記錄，Sheet modifiedTime 2026-08-24，晚於 2026-08-13 上次同步），於 D2/D3/D4/D5/D8 有 Booking.com 連結、其餘天數空白、Sheet 未列費用
 - ✅ 已補進 HTML：D2 Hotel Framnes（Sheet 為 Share 短連結，已反查出實際飯店）、D3 Hotel Norðurland、D4 Vogahraun Guesthouse、D5 Media Luna Guesthouse、D8 Hestheimar（另訂房）— 每日住宿區塊新增「C團」標籤與連結，總覽卡片與差異說明區塊（13→14項）同步更新
 - 比對結果：A團/B團住宿費、景點清單、班機、冰川健行預約等其餘欄位與 2026-08-13 同步版本一致，無其他落差
-- ⚠️ **尚未 push**：依本文件流程，commit 已完成，push 上線前需先詢問 owner
+- ✅ 已 push 上線（owner 確認後，2026-08-24）
 
 2026-08-13（**以 Google Sheet 為 source 做全面比對同步**）：
 - ✅ D9(10/3) 住宿 `Flyers Airport Hotel（待確認）NT$8,493` → **`Nupan Deluxe` NT$8,891**（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）；`ACC_GEO[9]` 座標由機場 63.985,-22.605 → 市區 **64.0043,-22.5644**
