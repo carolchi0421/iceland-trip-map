@@ -691,10 +691,9 @@ const ICELAND_DAYS = [
 },
 {day:1, date:'9/25(五)', color:'#E74C3C', title:'抵達冰島',
  depart:'18:20 KEF 落地', sunrise:'07:18', sunset:'19:21', km:'約30 km', drive:'約20 min',
- acc:{name:'8人住宿（Airbnb，與B/C團合住）', sub:'原訂 Flyers Airport Hotel（Carol／Agoda）已取消，改與B/C團合住同一 Airbnb（2026-08-26 Sheet 更新為新 Airbnb 實際金額 NT$22,000）', price:'NT$22,000', booking:'Airbnb',bSame:true,
-   c:{name:'C團也同住此處', sub:'與A/B團同一 Airbnb（9/25）', url:'https://www.airbnb.com.tw/rooms/1029730326325707288'}},
+ acc:{name:'8人住宿（Airbnb）', sub:'A團＋B團＋C團（卡致豆桓、豆林羅哈、屁孩來囉！）全部同住此處；原A團訂的 Flyers Airport Hotel（Carol/Agoda）已取消', price:'NT$22,000', booking:'Airbnb'},
  tips:[
-   '2026-08-25 Sheet更新：D1住宿由 Flyers Airport Hotel 改為與B/C團合住 Airbnb（原Agoda訂房記得退掉），詳見 Airbnb 連結；2026-08-26 費用已更新為 NT$22,000',
+   'D1住宿：A/B/C三團合住同一 Airbnb（原 Flyers Airport Hotel 訂房記得退掉），連結：airbnb.com.tw/rooms/1029730326325707288',
    '取行李→出海關→搭 Lotus Car Rental 接駁車取車',
    '取車時確認保險，加買砂石險 SAAP（ISK 1,500/天）',
    '今晚在機場附近吃熱狗，明天才是真正大行程',
@@ -1485,27 +1484,15 @@ function buildOverview(){
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
   const diffs=[
-    ['fix','[已修正] 哈爾格林教堂移至正確的 Day 2(9/26) 08:30，不是Day 1'],
-    ['fix','[已修正] D6(9/30)繞峽灣線里程約270km（經Djúpivogur）'],
-    ['fix','[已修正] 日出日落改為 2026 準確值；4處座標偏移修正（Ytri Tunga/Sky Lagoon/Vestrahorn/Brúarfoss）'],
-    ['fix','[已過時，見下方2026-08-25項] Flyers Airport Hotel (D1) 住宿曾為已確認狀態，後於2026-08-25被 Sheet 取消'],
-    ['fix','[已確認] D7(10/1) 住宿已訂 Stracta Apartments Orustustaðir NT$14,520（雅致/Guide to Iceland，9/24前免費取消）'],
-    ['fix','[已過時，見下方2026-08-26項] D0(9/24) 住宿費曾同步為 NT$25,429（Sheet 原值 25,428.5），後續 Sheet 再更新'],
-    ['fix','[已確認] D9(10/3) 住宿已訂 Nupan Deluxe NT$8,891（雅致/Booking，凱夫拉維克市區 Aðalgata 10，2026/9/27前不含當日可免費取消）— 原標示的 Flyers Airport Hotel（待確認）NT$8,493 已由 Sheet 取代'],
-    ['fix','[已同步] 塞爾福斯 Selfoss 8人整套房源（約NT$31,667）依 Sheet 欄位移到 D8(10/2) 備選住宿'],
-    ['fix','[已確認] D6(9/30) 住宿已訂 Guesthouse Stekkatun NT$17,442（雅致/Trip.com，雙人房×2含早餐，不可取消）'],
-    ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
-    ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
+    ['wrn','[待確認] D0(9/24) 飯店名稱 Sheet 尚未列出，僅有住宿費 NT$28,289'],
     ['wrn','[待確認] D2(9/26) 溫泉地點 Sheet 兩分頁不一致：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。網站目前採用 Sky Lagoon，請確認實際要去哪一個'],
     ['wrn','[待確認] 取車時間 Sheet 自身不一致：9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，但 9/25 欄景點列 Lotus Car Rental。網站目前依 D1(9/25) 落地後取車'],
     ['wrn','[待確認] D7(10/1) 斯瓦蒂佛斯 Svartifoss：Sheet 主排程分頁有列、Daily detail 分頁沒有。因與 14:00 Hof 集合時間衝突，依 owner 2026-07-28 決定未排入'],
-    ['fix','[新增] Sheet 新增第三團「C團（屁孩來囉！）」，於 D2/D3/D4/D5/D8 另訂住宿（Hotel Framnes、Hotel Norðurland、Vogahraun Guesthouse、Media Luna Guesthouse、Hestheimar），已於各日住宿區塊補上連結；C團住宿費 Sheet 未列'],
-    ['fix','[2026-08-25 Sheet更新] D1(9/25) 住宿變動：A團原訂 Flyers Airport Hotel（Carol/Agoda）已取消，改與B/C團合住同一 8人 Airbnb'],
-    ['fix','[2026-08-25 Sheet更新] D3(9/27) B團住宿由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原列於備選清單，現已移至B團正式住宿）'],
-    ['fix','[2026-08-25 Sheet更新] C團新增 D6(9/30) Guesthouse Skálafell（加床，與B團同地點）、D7(10/1) Stracta Apartments Orustustaðir（加床，與A/B團同地點）；D2(9/26) C團飯店名稱由連結改為明列文字「Kirkjufell Hotel」（即 Hotel Framnes）；D9(10/3) C團住宿仍「確認中」（能否與B團加床）'],
-    ['fix','[2026-08-26 Sheet更新] D0(9/24) 住宿費 NT$25,429 → NT$28,289；D1(9/25) 新 Airbnb 住宿費由「未列」補齊為 NT$22,000（原 Flyers 金額 NT$10,558 已作廢）；住宿總計連動為 NT$141,445'],
-    ['fix','[新增] 荷蘭 D12(10/6) NDSM 段落先前被讀取工具截斷，現已補齊完整內容（免費渡輪F4號線約14分鐘＋晚餐水岸貨櫃餐廳）'],
-    ['fix','[已修正] 荷蘭 D11(10/5) 補上運河遊船（含完整 Fareharbor 訂票連結，先前誤放在 D10 且連結被截斷）；D13(10/7) 風車村＋福倫丹同天、D14(10/8) 僅羊角村一天（依 owner 確認修正，先前一度誤拆成福倫丹與羊角村同天）'],
+    ['wrn','[待確認] D9(10/3) C團住宿仍「確認中」，能否與B團加床尚未定案'],
+    ['wrn','[待確認] B團另訂之夜（D3/D5/D6/D9）住宿費 Sheet 未列'],
+    ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
+    ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
+    ['wrn','[待確認] 荷蘭 D13(10/7)/D14(10/8) 每天可能還有 Sheet 未完整讀到的候選景點，建議直接開 Sheet 核對'],
   ];
   dtog.innerHTML='⚠️ 與原始行程表差異說明（'+diffs.length+'項）<span id="darr">▼</span>';
   dtog.addEventListener('click',()=>{
