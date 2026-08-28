@@ -1974,9 +1974,9 @@ document.getElementById('prepBtn').addEventListener('click',showPrep);
 // ════════════════════════════════════════════════════
 const map=L.map('map',{center:[65.1,-18.5],zoom:6,zoomControl:false});
 L.control.zoom({position:'bottomright'}).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
-  attribution:'© OpenStreetMap contributors · © CartoDB · Photos: Wikipedia CC',
-  subdomains:'abcd',maxZoom:19,
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'© OpenStreetMap contributors · Photos: Wikipedia CC',
+  subdomains:'abc',maxZoom:19,
 }).addTo(map);
 
 // floating「回總覽」button (top-left)
