@@ -663,7 +663,8 @@ body.editing .ep:hover{background:var(--gold-bg);border-radius:3px}
 const ICELAND_DAYS = [
 {day:0, date:'9/24(四)', color:'#607090', title:'出發日・台灣→冰島',
  depart:'提前3H到桃園機場', sunrise:'', sunset:'', km:'―', drive:'―',
- acc:{name:'飯店未知', sub:'9/24出發日住宿，待確認飯店名稱（2026-08-26 Sheet 更新為 NT$28,289）', price:'NT$28,289', booking:''},
+ acc:{name:'飯店未知（A/B/C團）', sub:'9/24出發日住宿，待確認飯店名稱（2026-09-06 Sheet 更新住宿費為 NT$18,191）', price:'NT$18,191', booking:'',
+   d:{name:'Flyers Airport Hotel', sub:'D團（摸摸小姐）獨立訂房，與A/B/C團不同處'}},
  isD0:true,
  flights:[
    {who:'致黃', info:'台灣→阿姆斯特丹　TPE→AMS　23:59 → (+1)08:15'},
@@ -672,6 +673,7 @@ const ICELAND_DAYS = [
    {who:'致黃+Carol', info:'阿姆斯特丹→冰島　AMS→KEF　17:05 → 18:20（AMS 會合後同班，9/25 落地）'},
    {who:'桓哥',  info:'司徒加特→冰島　STR→KEF　15:15 → 23:20（9/25 落地）'},
    {who:'林豆',  info:'倫敦→冰島　LHR→KEF　21:25 → 23:35（9/25 落地）'},
+   {who:'摸摸小姐', info:'台灣→西雅圖→冰島　9/23出發　TPE→SEA 20:10→(+1)16:10、SEA→KEF 19:00→(+1)09:25（9/25 落地，比其他人早一天出發）'},
  ],
  tips:[
    '確認：護照、國際駕照、信用卡（需租車押金）、冰島保險',
@@ -691,9 +693,10 @@ const ICELAND_DAYS = [
 },
 {day:1, date:'9/25(五)', color:'#E74C3C', title:'抵達冰島',
  depart:'18:20 KEF 落地', sunrise:'07:18', sunset:'19:21', km:'約30 km', drive:'約20 min',
- acc:{name:'8人住宿（Airbnb）', sub:'A團＋B團＋C團（卡致豆桓、豆林羅哈、屁孩來囉！）全部同住此處；原A團訂的 Flyers Airport Hotel（Carol/Agoda）已取消', price:'NT$22,000', booking:'Airbnb'},
+ acc:{name:'8人住宿（Airbnb）', sub:'A團＋B團＋C團＋D團（卡致水桓、豆林羅哈、屁孩來囉！、摸摸小姐）全部同住此處；原A團訂的 Flyers Airport Hotel（Carol/Agoda）已取消', price:'―', booking:'Airbnb'},
  tips:[
-   'D1住宿：A/B/C三團合住同一 Airbnb（原 Flyers Airport Hotel 訂房記得退掉），連結：airbnb.com.tw/rooms/1029730326325707288',
+   '⚠️ D1住宿費：2026-08-26 Sheet 曾列 NT$22,000，2026-09-06 Sheet 該欄與說明文字合併後未再顯示獨立金額，暫列待確認，請 owner 核對實際金額',
+   'D1住宿：A/B/C/D四團合住同一 Airbnb（原 Flyers Airport Hotel 訂房記得退掉），連結：airbnb.com.tw/rooms/1029730326325707288',
    '取行李→出海關→搭 Lotus Car Rental 接駁車取車',
    '取車時確認保險，加買砂石險 SAAP（ISK 1,500/天）',
    '今晚在機場附近吃熱狗，明天才是真正大行程',
@@ -716,6 +719,7 @@ const ICELAND_DAYS = [
  depart:'建議 08:30 出發（拉車較長）', sunrise:'07:21', sunset:'19:17', km:'約220 km', drive:'約3.5 H',
  acc:{name:'Kirkjufell View Cottages', sub:'有個人廚房。Agoda訂（雅致），9/21前可免費取消', price:'NT$13,228', booking:'Agoda', bSame:true,
    c:{name:'Kirkjufell Hotel', sub:'Grundarfjörður，近教會山（即 Hotel Framnes，Sheet 2026-08-25 更新為此名）', url:'https://www.booking.com/Share-0mYKtX'},
+   d:{name:'⏳ 房間安排中', sub:'Sheet 原文「可一起住/後續喬房間」，尚未確定跟哪一團同住'},
    alts:[
      {name:'Hömluholt 度假屋（8人獨棟・近1號公路但離教會山較遠）', price:'約NT$25,314', url:'https://www.airbnb.com.tw/rooms/25182840?check_in=2026-09-26&check_out=2026-09-27&guests=1&adults=8&s=67&unique_share_id=db4ca5d4-797b-44ab-a35d-df09d9e526be'},
    ]},
@@ -766,13 +770,14 @@ const ICELAND_DAYS = [
 },
 {day:3, date:'9/27(日)', color:'#F39C12', title:'北上亞庫來利',
  depart:'建議 08:30 出發', sunrise:'07:24', sunset:'19:14', km:'約380 km', drive:'約4H 40min（全程最長）',
- acc:{name:'Steinaskjól Apartments', sub:'亞庫來利市區，有個人廚房。Agoda訂（雅致），9/4前免費取消', price:'NT$8,579', booking:'Agoda',
-   b:{name:'Colin 的 Airbnb 訂房', sub:'⚠️ 2026-08-25 Sheet更新：由 Guesthouse AkurInn 改為 Colin 已訂的 Airbnb（原在備選清單）', url:'https://www.airbnb.com.tw/trips/v1/reservation-details/ro/RESERVATION2_CHECKIN/HM2Q9WAPW5/directions-modal'},
-   c:{name:'Hotel Norðurland', sub:'亞庫來利市區，Booking 訂。距 A團步行2分鐘、距 B團步行3分鐘', url:'https://www.booking.com/hotel/is/nordurland.zh-tw.html'},
+ acc:{name:'Day Dream - Townhall Square Apartment', sub:'⚠️ 2026-09-06 Sheet更新：A團＋B團改合住這間新 Airbnb（原 Steinaskjól Apartments／Colin訂的Airbnb已不再使用），亞庫來利市區，面對Town Hall廣場。住宿費 Sheet 未列金額', price:'―', booking:'Airbnb', bSame:true,
+   c:{name:'Hotel Norðurland', sub:'亞庫來利市區，Booking 訂。距 A/B團步行3分鐘', url:'https://www.booking.com/hotel/is/nordurland.zh-tw.html'},
+   d:{name:'⏳ 房間安排中', sub:'Sheet 原文「可一起住/後續喬房間」，尚未確定跟哪一團同住'},
    alts:[
      {name:'家庭公寓 4臥室（8人・附陽臺）', price:'約NT$17,584', url:'https://www.airbnb.com.tw/rooms/1044098317726008495?check_in=2026-09-27&check_out=2026-09-28&guests=1&adults=8&s=67&unique_share_id=99980c00-78eb-467d-bfdc-32f84ca160f9'},
    ]},
  tips:[
+   'A/B團新住宿連結：airbnb.com/rooms/1165797135471247556（Day Dream - Townhall Square Apartment）',
    '全程最長拉車日，副駕持續與司機聊天防瞌睡！',
    '翻越 Öxnadalsheiði 高地：9月底極易起霧/路面薄冰，保持低速',
    '亞庫來利全市紅綠燈都是愛心形狀，路口停等一定要拍照！',
@@ -807,7 +812,8 @@ const ICELAND_DAYS = [
 {day:4, date:'9/28', color:'#27AE60', title:'米湖火山地景',
  depart:'建議 08:00 出發（景點集中米湖周邊）', sunrise:'07:27', sunset:'19:10', km:'約135 km', drive:'約2 H（景點集中）',
  acc:{name:'Vogar Travel Service', sub:'米湖旁，公共廚房。Booking訂（秉翔訂）', price:'NT$9,116', booking:'Booking', bSame:true,
-   c:{name:'Vogahraun Guesthouse（同AB團地點）', sub:'Sheet：「同AB團地點 Vogar Travel Service」，與A/B團同一物業', url:'https://www.booking.com/hotel/is/vogahraun-guesthouse.zh-tw.html'}},
+   c:{name:'Vogahraun Guesthouse（同AB團地點）', sub:'Sheet：「同AB團地點 Vogar Travel Service」，與A/B團同一物業', url:'https://www.booking.com/hotel/is/vogahraun-guesthouse.zh-tw.html'},
+   d:{name:'⏳ 房間安排中', sub:'Sheet 原文「可一起住/後續喬房間」，尚未確定跟哪一團同住'}},
  tips:[
    '今日景點全在米湖方圓20km，拉車最輕鬆的一天',
    '惠爾偽火山：陡坡碎石消耗體力，預留1.5H，鞋帶一定要綁緊',
@@ -862,7 +868,8 @@ const ICELAND_DAYS = [
  depart:'建議 08:00 出發', sunrise:'07:30', sunset:'19:06', km:'約250 km', drive:'約3.5–4 H',
  acc:{name:'Hafaldan HI Hostel', sub:'Seyðisfjörður 彩虹小鎮，港口邊。Booking訂（卡羅訂）', price:'NT$9,565', booking:'Booking',
    b:{name:'Greystone summerhouse', sub:'B團另住'},
-   c:{name:'Media Luna Guesthouse', sub:'Seyðisfjörður 市區，距A團3分鐘車程、距B團(Egilsstaðir)30分鐘車程', url:'https://www.booking.com/hotel/is/media-luna-guesthouse.zh-tw.html'}},
+   c:{name:'Media Luna Guesthouse', sub:'Seyðisfjörður 市區，距A團3分鐘車程、距B團(Egilsstaðir)30分鐘車程', url:'https://www.booking.com/hotel/is/media-luna-guesthouse.zh-tw.html'},
+   d:{name:'與A團同住此處', sub:'Hafaldan HI Hostel'}},
  tips:[
    'Egilsstaðir Bónus 小豬超市：務必把後兩天食物補齊，峽灣物價高',
    '翻越93號公路進 Seyðisfjörður：坡度極陡，9月底可能有初雪，低速慢行',
@@ -915,7 +922,8 @@ const ICELAND_DAYS = [
  depart:'建議 08:30 出發', sunrise:'07:33', sunset:'19:03', km:'約270 km', drive:'約3.5–4 H',
  acc:{name:'Guesthouse Stekkatun', sub:'雙人房×2間，含早餐。Trip.com訂（雅致），不可取消', price:'NT$17,442', booking:'Trip.com',
    b:{name:'Guesthouse Skálafell', sub:'B團另住'},
-   c:{name:'Guesthouse Skálafell（加床）', sub:'與B團同一地點，加床同住'}},
+   c:{name:'Guesthouse Skálafell（加床）', sub:'與B團同一地點，加床同住'},
+   d:{name:'⚠️ 確認中', sub:'Sheet 兩處記載矛盾：一處寫已加床同住B/C團（Guesthouse Skálafell），另一處寫「需要另外找住宿」尚未定案'}},
  tips:[
    '繞行峽灣線（經 Djúpivogur）實際約270km，比走 Öxi 山口捷徑長，體感時間會拉長',
    '蒸氣瀑布在93號公路上，離小鎮僅5分鐘，順路必停',
@@ -959,6 +967,7 @@ const ICELAND_DAYS = [
  depart:'建議 09:00 出發', sunrise:'07:35', sunset:'18:59', km:'約270 km', drive:'約3.5 H',
  acc:{name:'Stracta Apartments Orustustaðir', sub:'教堂城 Orustustaðir 一帶。雅致訂（Guide to Iceland），9/24前可免費取消', price:'NT$14,520', booking:'Guide to Iceland', bSame:true,
    c:{name:'Stracta Apartments Orustustaðir（加床）', sub:'與A/B團同一地點，加床同住'},
+   d:{name:'Stracta Apartments Orustustaðir（雙人房）', sub:'與A/B/C團同一地點，雙人房另訂'},
    alts:[
      {name:'Midgard Base Camp（家庭房・私人衛浴）', price:'NT$9,826・Booking', url:''},
    ]},
@@ -998,13 +1007,13 @@ const ICELAND_DAYS = [
 },
 {day:8, date:'10/2', color:'#C0392B', title:'南岸瀑布群',
  depart:'建議 08:30 出發', sunrise:'07:38', sunset:'18:56', km:'約208 km', drive:'約3 H（景點密集）',
- acc:{name:'Hestheimar, Hella', sub:'鄉村小木屋，雙臥室四人房（個廚），追極光絕佳。雅致訂', price:'NT$9,815', booking:'Booking', bSame:true,
-   c:{name:'Hestheimar（C團另訂房）', sub:'與A/B團同一地點，2人1房另訂，Booking 訂', url:'https://www.booking.com/hotel/is/hestheimar.zh-tw.html?aid=304142&label=gen173bo-10CAsocEIKaGVzdGhlaW1hckgwWANo5wGIAQGYATO4ARfIAQzYAQPoAQH4AQGIAgGYAgSoAgG4Aq3tsNQGwAIB0gIkN2U3NzJhMmEtNjVmMS00YWM4LWI2OWUtNjZjYjY0OTM0ZGVm2AIB4AIB&sid=63b452fceaf77f236077ea1a6f61f258&checkin=2026-10-02&checkout=2026-10-03&dest_id=-2646179&dest_type=city&group_adults=2&group_children=0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA'},
+ acc:{name:'12人住宿（Airbnb，含早餐）', sub:'⚠️ 2026-09-06 Sheet更新：A團＋B團＋C團＋D團全部合住這間12人 Airbnb（原本 Hestheimar 各自訂房已不再使用），含早餐。雅致訂', price:'NT$26,626', booking:'Airbnb',
    alts:[
      {name:'8人整套房源（Hella）', price:'約NT$17,177', url:'https://www.airbnb.com.tw/rooms/15251515?check_in=2026-10-02&check_out=2026-10-03&guests=1&adults=8&s=67&unique_share_id=5f5cee24-6244-4b09-bddd-76bf325b6053'},
      {name:'8人整套房源（塞爾福斯 Selfoss・豪華大房子）', price:'約NT$31,667', url:'https://www.airbnb.com.tw/rooms/1326887757600236278?check_in=2026-10-02&check_out=2026-10-03&guests=1&adults=8&s=67&unique_share_id=7c8720c9-e8a0-463a-b99f-7820247055cc'},
    ]},
  tips:[
+   '全團12人合住同一 Airbnb：airbnb.com.tw/rooms/18678121（含早餐，NT$26,626）',
    '今日景點最密集，沿1號公路一字排開，拉車最輕鬆',
    '史可加瀑布右側有527階陡梯，登頂俯瞰值得爬',
    '塞里亞蘭瀑布：穿全防水衣褲走後方水洞，相機記得防水',
@@ -1052,13 +1061,16 @@ const ICELAND_DAYS = [
 {day:9, date:'10/3', color:'#D35400', title:'黃金圈→藍湖→深夜班機',
  depart:'建議 08:30 出發（景點最多！）', sunrise:'07:41', sunset:'18:52', km:'約270 km', drive:'約4.5 H',
  acc:{name:'Nupan Deluxe', sub:'凱夫拉維克市區 Aðalgata 10，距 KEF 機場約 5 分鐘車程（藍湖→約 20min）。雅致訂（Booking），2026/9/27前（不含當日）可免費取消。Carol+致黃 住此休憩後搭 10/4 07:40 KEF→AMS（約 04:40 完成還車與報到）；桓哥搭 10/4 01:10 凌晨班機先離境，不入住', price:'NT$8,891', booking:'Booking',
-   b:{name:'Golden Circle Domes - Lake View', sub:'黃金圈玻璃屋，B團另住'},
-   c:{name:'⏳ 確認中：能否與B團加床', sub:'Sheet 原文「看B團能不能加床（確認中）」，尚無確定住宿'}},
+   b:{name:'Tower Apartments（Reykjavík）', sub:'⚠️ 2026-09-06 Sheet更新：由「Golden Circle Domes」改為此處，B/C/D團共用同一地點'},
+   c:{name:'Tower Apartments（與B團同處）', sub:'⚠️ 2026-09-06 Sheet更新：已確定與B/D團同住 Tower Apartments，不再是「確認中」'},
+   d:{name:'Tower Apartments（與B/C團同處）', sub:'摸摸小姐與B/C團同住此處'}},
  flights:[
    {who:'Carol+致黃', info:'冰島→阿姆斯特丹　KEF→AMS　07:40 → 13:00（10/4 回程首段）'},
    {who:'桓哥',       info:'冰島離境　KEF 出發　01:10 → 08:50（10/4 凌晨，先行離開）'},
+   {who:'摸摸小姐',   info:'冰島→西雅圖→台灣　KEF→SEA　19:45 → 20:40，接　SEA→TPE　(+1)01:15 → (+2)04:55'},
  ],
  tips:[
+   '⚠️ B/C/D團 Sheet 還多附了另一個地點連結「Keflavik Micro Suites」（近KEF機場，含2026-10-04日期資訊），用途不確定（可能是回程當天的另一個落腳點），請 owner 確認是否也要收錄',
    '09:00前一定出發！今日景點最多，時間非常緊湊',
    'Geysir 遊客中心廁所免費，早點解決，後面廁所要付費',
    '藍湖需提前預訂18:30入場，確保21:00能離開趕機場',
@@ -1337,7 +1349,7 @@ const ACC_GEO={
   5:[65.263,-14.006],  // Seyðisfjörður
   6:[64.253,-15.216],  // Höfn 一帶
   7:[63.790,-18.061],  // Kirkjubæjarklaustur（教堂城）
-  8:[63.833,-20.389],  // Hella
+  8:[63.6466,-19.9449],// 12人 Airbnb（2026-09-06 Sheet 座標，Hella一帶）
   9:[64.0043,-22.5644],// Keflavík 市區 Aðalgata 10（Nupan Deluxe）
 };
 DAYS.forEach(d=>{ if(ACC_GEO[d.day]&&d.acc) d.acc.geo=ACC_GEO[d.day]; });
@@ -1484,12 +1496,18 @@ function buildOverview(){
   const dw=div('diff-wrap');
   const dtog=el('button','diff-toggle');
   const diffs=[
-    ['wrn','[待確認] D0(9/24) 飯店名稱 Sheet 尚未列出，僅有住宿費 NT$28,289'],
+    ['fix','[新增] Sheet 新增第四團「D團（摸摸小姐）」：9/23 提前出發（台灣→西雅圖→冰島，9/25 09:25落地KEF），10/3晚班機（KEF→SEA→台灣）離境，行程中多數天與A/B/C團合住或加床，已同步進各日住宿區塊'],
+    ['wrn','[待確認] D0(9/24) 飯店名稱 Sheet 尚未列出，僅有住宿費 NT$18,191（A/B/C團共用；D團另訂 Flyers Airport Hotel）'],
+    ['wrn','[待確認] D1(9/25) 住宿費：2026-08-26曾列NT$22,000，2026-09-06 Sheet該欄與說明文字合併後未再顯示獨立金額，實際金額待 owner 確認'],
     ['wrn','[待確認] D2(9/26) 溫泉地點 Sheet 兩分頁不一致：主排程分頁寫「藍湖溫泉 Blue Lagoon」，Daily detail／景點簡表分頁寫「Sky Lagoon」。網站目前採用 Sky Lagoon，請確認實際要去哪一個'],
+    ['wrn','[待確認] D2/D3/D4 D團（摸摸小姐）住宿仍「後續喬房間」，尚未確定跟哪一團同住'],
+    ['wrn','[待確認] D3(9/27) A/B團新合住的 Day Dream Apartment（Akureyri）住宿費 Sheet 未列金額'],
+    ['wrn','[待確認] 住宿總計 NT$117,579 不含 D1/D3 兩晚金額（Sheet 未列），實際總花費會更高，待補齊後金額才準確'],
     ['wrn','[待確認] 取車時間 Sheet 自身不一致：9/26 欄註記「取車約 08:00 在機場取車（桓哥訂的 Booking）」，但 9/25 欄景點列 Lotus Car Rental。網站目前依 D1(9/25) 落地後取車'],
+    ['wrn','[待確認] D6(9/30) D團住宿 Sheet 兩處矛盾：一處寫已加床同住B/C團，另一處寫「需要另外找住宿」尚未定案'],
     ['wrn','[待確認] D7(10/1) 斯瓦蒂佛斯 Svartifoss：Sheet 主排程分頁有列、Daily detail 分頁沒有。因與 14:00 Hof 集合時間衝突，依 owner 2026-07-28 決定未排入'],
-    ['wrn','[待確認] D9(10/3) C團住宿仍「確認中」，能否與B團加床尚未定案'],
-    ['wrn','[待確認] B團另訂之夜（D3/D5/D6/D9）住宿費 Sheet 未列'],
+    ['wrn','[待確認] D9(10/3) B/C/D團住宿改列 Google Maps 連結「Tower Apartments」（Reykjavík），另有第二個連結「Keflavik Micro Suites」（近KEF機場，含10/4日期資訊）用途不明，需 owner 確認是否也要收錄'],
+    ['wrn','[待確認] B團另訂之夜（D5 Greystone、D6 Skálafell）住宿費 Sheet 仍未列'],
     ['wrn','[價格估算] 米湖溫泉列 ISK 5,800，2026可能為 ISK 6,500-7,800'],
     ['wrn','[價格估算] 藍湖溫泉套餐：Comfort 約 ISK 11,000 起、Premium 約 15,900、Retreat 約 74,990，建議官網確認'],
     ['wrn','[待確認] 荷蘭 D13(10/7)/D14(10/8) 每天可能還有 Sheet 未完整讀到的候選景點，建議直接開 Sheet 核對'],
@@ -1543,11 +1561,12 @@ function buildOverviewCards(panel){
       const bot=div('ov-bot');
       const acc=div('ov-acc');
       const aName=day.acc.name.split('(')[0].trim();
+      const cdTag=(day.acc.c?'　C團另訂':'')+(day.acc.d?'　D團另訂':'');
       if(day.acc.b){
         const bName=day.acc.b.name.split('(')[0].trim();
-        acc.innerHTML='🏨 A團 <b>'+aName+'</b>　B團 <b>'+bName+'</b>'+(day.acc.c?'　C團另訂':'');
+        acc.innerHTML='🏨 A團 <b>'+aName+'</b>　B團 <b>'+bName+'</b>'+cdTag;
       }else{
-        acc.innerHTML='🏨 <b>'+aName+'</b>'+(day.acc.bSame?'（A/B團同住）':'')+(day.acc.c?'　C團另訂':'');
+        acc.innerHTML='🏨 <b>'+aName+'</b>'+(day.acc.bSame?'（A/B團同住）':'')+cdTag;
       }
       bot.appendChild(acc);
       bot.appendChild(div('ov-km',day.km));
@@ -1715,10 +1734,10 @@ function buildDayPanel(day){
   const acc=div('acc-block');
   acc.style.borderLeftColor=C;
   acc.appendChild(div('acc-label','🏨 TODAY\'S ACCOMMODATION'));
-  // Travel groups: A團(卡致豆桓) / B團(豆林羅哈) / C團(屁孩來囉！，D2/D3/D4/D5/D8另訂). Only tag teams when there is B/C-team info.
-  const hasTeams=!!(day.acc.b||day.acc.bSame||day.acc.c);
+  // Travel groups: A團(卡致水桓) / B團(豆林羅哈) / C團(屁孩來囉！) / D團(摸摸小姐，2026-09-06新加入). Only tag teams when there is B/C/D-team info.
+  const hasTeams=!!(day.acc.b||day.acc.bSame||day.acc.c||day.acc.d);
   if(hasTeams){
-    const ta=div('acc-team-tag','A團 · 卡致豆桓');
+    const ta=div('acc-team-tag','A團 · 卡致水桓');
     ta.style.color=C;ta.style.borderColor=C+'66';acc.appendChild(ta);
   }
   acc.appendChild(div('acc-name',day.acc.name));
@@ -1770,6 +1789,22 @@ function buildDayPanel(day){
     cWrap.appendChild(div('acc-sub',day.acc.c.sub||''));
     cWrap.appendChild(div('acc-team-note','C團住宿費 Sheet 未列，僅提供 Booking.com 連結'));
     acc.appendChild(cWrap);
+  }
+  // Team D (摸摸小姐，2026-09-06新加入)：獨立訂房或待安排
+  if(day.acc.d){
+    const dWrap=div('acc-team-b');
+    const td=div('acc-team-tag','D團 · 摸摸小姐');
+    td.style.color=C;td.style.borderColor=C+'66';dWrap.appendChild(td);
+    if(day.acc.d.url){
+      const dLink=el('a','acc-name',day.acc.d.name);
+      dLink.href=day.acc.d.url;dLink.target='_blank';dLink.rel='noopener';
+      dWrap.appendChild(dLink);
+    }else{
+      dWrap.appendChild(div('acc-name',day.acc.d.name));
+    }
+    dWrap.appendChild(div('acc-sub',day.acc.d.sub||''));
+    if(day.acc.d.note)dWrap.appendChild(div('acc-team-note',day.acc.d.note));
+    acc.appendChild(dWrap);
   }
   // alternative / candidate accommodations (Sheet「未確認」備選)
   if(day.acc.alts&&day.acc.alts.length){

@@ -56,44 +56,59 @@ Sheet 結構（Tab: gid=461091797）：
 
 ---
 
-## 住宿費對照表（最終確認版）
+## 住宿費對照表（2026-09-06 更新版）
 
 > **重要**：住宿費 row 為 **column-aligned**（每欄的價格對應該欄的日期）。
 > 舊版 HTML 曾誤用「sequential pairing」導致 D1–D5 全部錯位。已修正。
 
-> **兩團分開**：A團（卡致豆桓）與 B團（豆林羅哈）在 Sheet 是兩列。部分夜晚同住、部分各自訂房。
-> 「住宿費」row 為 **A團**（已訂/計價）；B團費用 Sheet 未列。
+> **四團並行**：A團（卡致水桓，2026-09-06 由「卡致豆桓」改名）／B團（豆林羅哈）／C團（屁孩來囉！）／**D團（摸摸小姐，2026-09-06 新加入）**在 Sheet 是四列。部分夜晚合住、部分各自訂房。「住宿費」row 主要對應 A團（已訂/計價），其餘團費用 Sheet 多數未列。
+> ⚠️ **2026-09-06 Sheet 把好幾個晚上的住宿「合併」成同一團體訂房**：D1（A+B+C+D合住一個Airbnb）、D3（A+B合住新Airbnb）、D8（A+B+C+D合住12人Airbnb）、D9（B+C+D改列同一Google Maps連結）。合併後 Sheet 對這些欄位大多**不再顯示獨立金額**（住宿費儲存格被合併進說明文字裡），HTML 對應顯示「―」並在差異說明區塊標註待確認。
 
-| Day | 日期 | A團（卡致豆桓）飯店 | A團費用 | 訂房方 | B團（豆林羅哈）飯店 | 狀態 |
-|-----|------|------|------|--------|------|------|
-| D0 | 9/24(四) | 飯店未知 | NT$28,289 | — | — | 待確認飯店名稱（2026-08-26 Sheet 再更新為 NT$28,289，先前為 25,429／25,329） |
-| D1 | 9/25(五) | ~~Flyers Airport Hotel~~ → 8人住宿 Airbnb（與B/C團合住） | NT$22,000 | Carol / Agoda（**已取消，記得退掉**） | **同 A團（合住 Airbnb）** | 2026-08-25 Sheet更新：原 Flyers 訂房取消，改與 B/C團合住同一 Airbnb（連結見下）；2026-08-26 Sheet 補上新 Airbnb 實際費用 NT$22,000 |
-| D2 | 9/26(六) | Kirkjufell View Cottages | NT$13,228 | 雅致 / Agoda | **同 A團** | 9/21前可免費取消 |
-| D3 | 9/27(日) | Steinaskjól Apartments | NT$8,579 | 雅致 / Agoda | ~~Guesthouse AkurInn~~ → Colin 的 Airbnb 訂房（另訂） | ⚠️ 2026-08-25 Sheet更新：B團住宿由 AkurInn 改為 Colin 已訂的 Airbnb（原在備選清單） |
-| D4 | 9/28 | Vogar Travel Service | NT$9,116 | 秉翔 / Booking | **同 A團** | — |
-| D5 | 9/29 | Hafaldan HI Hostel | NT$9,565 | 卡羅 / Booking | Greystone summerhouse（另訂） | — |
-| D6 | 9/30 | Guesthouse Stekkatun | NT$17,442 | 雅致 / Trip.com | Guesthouse Skálafell（另訂） | 雙人房×2間含早餐，不可取消（2026-07-17 已訂） |
-| D7 | 10/1 | Stracta Apartments Orustustaðir | NT$14,520 | 雅致 / Guide to Iceland | **同 A團** | 已訂，9/24前可免費取消 |
-| D8 | 10/2 | Hestheimar, Hella | NT$9,815 | 雅致 / Booking | **同 A團** | 9/27前可免費取消 |
-| D9 | 10/3 | **Nupan Deluxe**（凱夫拉維克市區 Aðalgata 10） | NT$8,891 | 雅致 / Booking | Golden Circle Domes - Lake View（另訂） | 已訂，2026/9/27前（不含當日）可免費取消（2026-08-13 同步 Sheet） |
+| Day | 日期 | A團飯店 | A團費用 | 狀態 |
+|-----|------|------|------|------|
+| D0 | 9/24(四) | 飯店未知（A/B/C團共用） | NT$18,191 | 2026-09-06 Sheet 再更新（原 28,289→25,429→25,329）；D團另訂 Flyers Airport Hotel |
+| D1 | 9/25(五) | 8人住宿 Airbnb（**A+B+C+D四團合住**） | ― | 2026-08-26曾列NT$22,000，2026-09-06該欄與說明文字合併，未再顯示獨立金額 |
+| D2 | 9/26(六) | Kirkjufell View Cottages（A+B同住） | NT$13,228 | 9/21前可免費取消；D團「後續喬房間」尚未定案 |
+| D3 | 9/27(日) | **Day Dream - Townhall Square Apartment**（**A+B合住**，亞庫來利市區） | ― | 2026-09-06 Sheet更新：取代原 Steinaskjól／Colin訂的Airbnb；住宿費未列；D團「後續喬房間」尚未定案 |
+| D4 | 9/28 | Vogar Travel Service（A+B同住） | NT$9,116 | D團「後續喬房間」尚未定案 |
+| D5 | 9/29 | Hafaldan HI Hostel（**A+D同住**） | NT$9,565 | B團另訂 Greystone summerhouse、C團另訂 Media Luna Guesthouse |
+| D6 | 9/30 | Guesthouse Stekkatun | NT$17,442 | 雙人房×2間含早餐，不可取消；D團住宿 Sheet 兩處矛盾（待確認） |
+| D7 | 10/1 | Stracta Apartments Orustustaðir（A+B+C+D同地點，D團雙人房另訂） | NT$14,520 | 9/24前可免費取消 |
+| D8 | 10/2 | **12人住宿 Airbnb**（**A+B+C+D四團合住**，含早餐） | NT$26,626 | 2026-09-06 Sheet更新：取代原 Hestheimar 各自訂房 |
+| D9 | 10/3 | Nupan Deluxe（僅A團） | NT$8,891 | **B/C/D團改列「Tower Apartments」（Reykjavík）**，另有「Keflavik Micro Suites」連結用途待確認 |
 
-**A團住宿費加總**：NT$141,445（2026-08-26 Sheet 更新後：D0 28,289 + D1 22,000 + D2 13,228 + D3 8,579 + D4 9,116 + D5 9,565 + D6 17,442 + D7 14,520 + D8 9,815 + D9 8,891）。B團另訂之夜（D3/D5/D6/D9）費用 Sheet 未列。
+**A團住宿費加總**：NT$117,579（D0 18,191 + D1 0(未列) + D2 13,228 + D3 0(未列) + D4 9,116 + D5 9,565 + D6 17,442 + D7 14,520 + D8 26,626 + D9 8,891）。**⚠️ 不含 D1/D3 兩晚金額（Sheet 未列），實際總花費會更高**。
 
-### C團（屁孩來囉！）住宿對照表（2026-08-24 新發現，2026-08-25 擴充）
-
-> Sheet 新增「C團住宿 (屁孩來囉！)」列。2026-08-24 首次發現時僅 D2/D3/D4/D5/D8 有資料；2026-08-25 Sheet 再更新，補上 D1/D6/D7/D9，僅 D0/D10 仍空白。C團住宿費 Sheet 全程未列。
+### C團（屁孩來囉！）住宿對照表（2026-08-24 新發現，2026-08-25/26 擴充）
 
 | Day | 日期 | C團飯店 | 備註 |
 |-----|------|--------|------|
-| D1 | 9/25(五) | 8人住宿 Airbnb（與A/B團合住） | 2026-08-25新增，與A/B團同一 Airbnb |
-| D2 | 9/26(六) | Kirkjufell Hotel（即 Hotel Framnes） | Grundarfjörður，近教會山。2026-08-24 Sheet 為 Share 短連結（已反查出實際飯店 Hotel Framnes）；2026-08-25 Sheet 改列明文「Kirkjufell Hotel」（同一物業的別名） |
-| D3 | 9/27(日) | Hotel Norðurland | 亞庫來利市區，距A團步行2分鐘、距B團步行3分鐘（2026-08-25 Sheet 新增距離資訊） |
-| D4 | 9/28 | Vogahraun Guesthouse（同AB團地點） | Sheet 原文「同AB團地點 Vogar Travel Service」，與 A/B團同一物業 |
-| D5 | 9/29 | Media Luna Guesthouse | Seyðisfjörður 市區，距A團3分鐘車程、距B團(Egilsstaðir)30分鐘車程（2026-08-25 Sheet 新增距離資訊） |
-| D6 | 9/30 | Guesthouse Skálafell（加床） | 2026-08-25新增，與B團同地點，加床同住 |
-| D7 | 10/1 | Stracta Apartments Orustustaðir（加床） | 2026-08-25新增，與A/B團同地點，加床同住 |
-| D8 | 10/2 | Hestheimar（另訂房） | 與 A/B團同一地點，2人1房另訂 |
-| D9 | 10/3 | ⏳ 確認中 | 2026-08-25新增，Sheet 原文「看B團能不能加床（確認中）」，尚無確定住宿 |
+| D1 | 9/25(五) | 與A/B/D團合住8人Airbnb | 2026-09-06：D團也加入 |
+| D2 | 9/26(六) | Kirkjufell Hotel（即 Hotel Framnes） | Grundarfjörður，近教會山 |
+| D3 | 9/27(日) | Hotel Norðurland | 亞庫來利市區，距A/B團步行3分鐘（2026-09-06 Sheet 簡化措辭） |
+| D4 | 9/28 | Vogahraun Guesthouse（同AB團地點） | 與 A/B團同一物業 |
+| D5 | 9/29 | Media Luna Guesthouse | Seyðisfjörður 市區 |
+| D6 | 9/30 | Guesthouse Skálafell（加床） | 與B團同地點，加床同住 |
+| D7 | 10/1 | Stracta Apartments Orustustaðir（加床） | 與A/B/D團同地點，加床同住 |
+| D8 | 10/2 | 與A/B/D團合住12人Airbnb | 2026-09-06：取代原本各自訂房的 Hestheimar |
+| D9 | 10/3 | **Tower Apartments（Reykjavík）** | 2026-09-06 Sheet更新：已確定與B/D團同住，不再是「確認中」 |
+
+### D團（摸摸小姐）住宿對照表（2026-09-06 新加入）
+
+> D團是 2026-09-06 Sheet 新增的第四位旅伴，暱稱「摸摸小姐」。**班機與大家不同**：9/23 提前一天出發（台灣→西雅圖→冰島 TPE-SEA-KEF），9/25 09:25 落地KEF；回程 10/3 晚上 KEF→SEA→台灣（比其他人晚一天回到台灣，10/5清晨抵台）。
+
+| Day | 日期 | D團住宿 | 備註 |
+|-----|------|--------|------|
+| D0 | 9/24(四) | **Flyers Airport Hotel**（獨立訂房） | 與A/B/C團「飯店未知」不同，D團已自行確認 |
+| D1 | 9/25(五) | 與A/B/C團合住8人Airbnb | 可一起住 |
+| D2 | 9/26(六) | ⏳ 房間安排中 | Sheet「可一起住/後續喬房間」，尚未定案跟哪一團 |
+| D3 | 9/27(日) | ⏳ 房間安排中 | 同上 |
+| D4 | 9/28 | ⏳ 房間安排中 | 同上 |
+| D5 | 9/29 | 與A團同住 Hafaldan HI Hostel | 已確定 |
+| D6 | 9/30 | ⚠️ 確認中 | Sheet 兩處矛盾：一處寫已加床同住B/C團 Guesthouse Skálafell，另一處寫「需要另外找住宿」 |
+| D7 | 10/1 | Stracta Apartments Orustustaðir（雙人房） | 與A/B/C團同地點，雙人房另訂 |
+| D8 | 10/2 | 與A/B/C團合住12人Airbnb | 已確定 |
+| D9 | 10/3 | Tower Apartments（Reykjavík，與B/C團同處） | 已確定 |
 
 ---
 
@@ -277,6 +292,20 @@ icon.svg              app icon（極光主題）
 ---
 
 ## 最後一次 AI 作業日期
+2026-09-06（第六輪：**新旅伴「D團（摸摸小姐）」加入＋多筆住宿合併**，owner 說「google sheet又更新了，再把html同步更新」）：
+- 🆕 **Sheet 新增第四團「D團（摸摸小姐）」**：9/23 提前出發（台灣→西雅圖→冰島 TPE-SEA-KEF，9/25 09:25落地KEF）、10/3晚班機KEF→SEA→台灣離境（比其他人晚回台）。已在 D0–D9 各日住宿區塊補上 D團資訊，全新的 `day.acc.d` 渲染邏輯（比照 C團模式）
+- ⚠️ **A團隊名變更**：「卡致豆桓」→「卡致水桓」，Sheet 兩處一致，已同步改名
+- ⚠️ **D0(9/24) 住宿費**：NT$28,289 → **NT$18,191**
+- ⚠️ **D3(9/27) A+B團合住新 Airbnb**：由 Steinaskjól Apartments／Colin訂的Airbnb改為「Day Dream - Townhall Square Apartment」（亞庫來利市區，WebSearch 反查確認），住宿費 Sheet 未列
+- ⚠️ **D8(10/2) A+B+C+D團合住12人 Airbnb**（NT$26,626，含早餐），取代原本 Hestheimar 各自訂房；ACC_GEO[8] 座標同步更新為 Sheet 提供的精確座標
+- ⚠️ **D9(10/3) B/C/D團改列 Google Maps 連結「Tower Apartments」**（Reykjavík，已 resolve 短連結查出地點名），取代原「Golden Circle Domes」與「確認中」狀態；另有第二個連結「Keflavik Micro Suites」用途不明，已在 tips 與差異說明標註待確認
+- ⚠️ **D1(9/25) 住宿費**：2026-08-26曾列NT$22,000，這次 Sheet 該欄與描述文字合併後不再顯示獨立金額，改列「―」並在差異說明標註
+- ⚠️ **住宿總計連動**：NT$141,445 → **NT$117,579**（不含 D1/D3 未列金額的兩晚，已在差異說明特別註記避免誤解成真的變便宜）
+- 差異說明區塊本輪淨增：新增「D團加入」新增項＋多筆「待確認」項目，全部依循先前建立的「待辦清單」原則（只留待確認/新增，不留歷史 changelog）
+- HANDOVER.md 住宿費對照表全面改版：A團表格更新、C團表格同步四團合住狀態、**新增 D團專屬對照表**
+- ⚠️ 本次因環境變化（新 session、新 scratchpad 路徑）headless Edge 無法產生任何輸出（`--version` 都無回應），**無法做 DOM smoke test**，僅完成 `node --check` 語法驗證與手動比對 diff。建議 push 後請 owner 實際點開網站確認 D0/D3/D8/D9 幾張卡片顯示正常
+- 尚未 push，依專案流程待 owner 確認後上線
+
 2026-08-26（第五輪：**地圖底圖 CartoDB Voyager 需要 API key 的問題**）：
 - ⚠️ CartoDB 把 `basemaps.cartocdn.com` 這組匿名免費 raster 圖磚鎖起來了，沒有 key 會回傳畫有「API KEY REQUIRED」浮水印的圖磚（不是前端能移除的文字，是伺服器端畫進圖片本身）。官方文件也說這組 raster 圖磚正在走向淘汰
 - 一度改成免key的 OpenStreetMap 標準圖磚，但 owner 覺得樣式跟原本 Voyager 差太多，**要求改回 CartoDB Voyager 網址**，即使目前會顯示浮水印
